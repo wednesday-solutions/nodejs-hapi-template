@@ -3,7 +3,7 @@
 **Request:**
 ```
 curl -X GET \
-  http://localhost:9001/v1.0/perks/1c \
+  http://localhost:9001/v1.0/users/1c \
   -H 'Accept: */*' \
   -H 'Accept-Encoding: gzip, deflate' \
   -H 'Cache-Control: no-cache' \
@@ -35,7 +35,7 @@ Coverage Report:
 
 ![Coverage Report](images/template-test-case.png)
 
-# Spot Core Service
+# Node.js Hapi Template
 
 ## Setup and Configuration. 
 
@@ -63,7 +63,7 @@ Coverage Report:
 `https://github.com/sequelize/sequelize-auto`
 
 Example:
-`sequelize-auto -o "./models" -d spot_dev -h localhost -u root -p 3306 -x password -e mysql`
+`sequelize-auto -o "./models" -d temp_dev -h localhost -u root -p 3306 -x password -e mysql`
 
 
 ### Sequelize 
@@ -82,7 +82,7 @@ Install MySQL
 
 - `brew install mysql`
 
-- This helps in accessing the database(`something_dev`)
+- This helps in accessing the database(`temp_dev`)
 
 `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'`;
 

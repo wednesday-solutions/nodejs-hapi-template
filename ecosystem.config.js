@@ -3,7 +3,7 @@ const databaseConfig = require('config/config');
 module.exports = {
     apps: [
         {
-            name: 'American Express  Service',
+            name: 'Wednesday Solutions',
             script: 'index.js',
             autorestart: true,
             watch: false,

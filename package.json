@@ -1,18 +1,18 @@
 {
-    "name": "amex-perks-be",
+    "name": "Node Template",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wednesday-solutions/amex-perks-be.git"
+        "url": "git+https://github.com/wednesday-solutions/node-js-hapi-template.git"
     },
-    "author": "American Express",
-    "license": "ISC",
+    "author": "Wednesday Solutions",
+    "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wednesday-solutions/amex-perks-be/issues"
+        "url": "https://github.com/wednesday-solutions/node-js-hapi-template/issues"
     },
-    "homepage": "https://github.com/wednesday-solutions/amex-perks-be#readme",
+    "homepage": "https://github.com/wednesday-solutions/node-js-hapi-template#readme",
     "dependencies": {
         "esm": "^3.2.25",
         "@hapi/boom": "^7.4.9",

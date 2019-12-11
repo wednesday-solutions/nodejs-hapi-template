@@ -1,6 +1,6 @@
 {
     "development": {
-        "url": "mysql://root:password@localhost/amex_perks_dev",
+        "url": "mysql://root:password@localhost/temp_dev",
         "options": {
             "dialect": "mysql",
             "pool": {

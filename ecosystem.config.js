@@ -3,7 +3,7 @@ const databaseConfig = require('config/config');
 module.exports = {
     apps: [
         {
-            name: 'Wednesday Solutions',
+            name: 'Node Template',
             script: 'index.js',
             autorestart: true,
             watch: false,

@@ -1,0 +1,17 @@
+{
+    "development": {
+        "url": "mysql://root:password@localhost/temp_dev",
+        "options": {
+            "dialect": "mysql",
+            "pool": {
+                "min": 0,
+                "max": 10,
+                "idle": 10000
+            },
+            "define": {
+                "userscored": true,
+                "timestamps": false
+            }
+        }
+    }
+}

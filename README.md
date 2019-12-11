@@ -1,4 +1,4 @@
-# amex-perks-be
+# Node.js Hapi Template
 
 **Request:**
 ```
@@ -145,7 +145,7 @@ Steps
 
 ```
 
-**PM2:** 
+### PM2 
 [PM2](https://pm2.keymetrics.io/) is a daemon process manager that will help you manage and keep your application online 24/7
 
 

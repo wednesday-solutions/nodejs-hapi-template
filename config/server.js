@@ -19,7 +19,7 @@ export default {
             process.env.NODE_ENV === 'production' ? 'production' : 'development'
         }`
     },
-    host: 'localhost',
+    host: '0.0.0.0',
     port: process.env.PORT,
     routes: {
         validate: {
@@ -37,8 +37,5 @@ export default {
     router: {
         isCaseSensitive: false,
         stripTrailingSlash: true
-    },
-    uri: `https://api${
-        process.env.NODE_ENV === 'production' ? '' : '-sandbox'
-    }.spotparking.com.sg/v${__version.major}.${__version.minor}`
+    }
 };

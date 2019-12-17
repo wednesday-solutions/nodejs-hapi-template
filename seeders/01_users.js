@@ -5,13 +5,13 @@ module.exports = {
                 id: 1,
                 first_name: 'Sharan',
                 last_name: 'Salian',
-                email: 'ss@kun.ai'
+                email: 'sharan@wednesday.is'
             },
             {
                 id: 2,
                 first_name: 'mac',
                 last_name: 'mac',
-                email: '@kun.ai'
+                email: 'mac@wednesday.is'
             }
         ];
         return queryInterface.bulkInsert('users', arr, {});

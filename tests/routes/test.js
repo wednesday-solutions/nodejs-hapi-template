@@ -9,7 +9,7 @@ describe('as', () => {
     it('should return 200', async () => {
         const res = await server.inject({
             method: 'GET',
-            url: '/users/1'
+            url: '/'
         });
         expect(res.statusCode).toEqual(200);
     });

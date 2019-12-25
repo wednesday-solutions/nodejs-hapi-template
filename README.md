@@ -21,7 +21,7 @@ curl -X GET \
         "id": 1,
         "firstName": "Sharan",
         "lastName": "Salian",
-        "email": "ss@kun.ai",
+        "email": "sharan@wednesday.is",
         "createdAt": "2019-12-09T19:14:14.000Z"
     }
 }

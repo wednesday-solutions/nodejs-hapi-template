@@ -7,7 +7,7 @@ export function mockDB() {
             id: 1,
             firstName: 'Sharan',
             lastName: 'Salian',
-            email: 'ss@kun.ai',
+            email: 'sharan@wednesday.is',
             created_at: new Date(),
             updated_at: new Date()
         });

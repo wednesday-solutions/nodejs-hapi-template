@@ -29,5 +29,7 @@ jobs:
         CI: true
     - name: Test
       run: npm run test
+    - name: Amazon ECR "Login" Action for GitHub Actions
+      uses: aws-actions/amazon-ecr-login@v1.0.1
       env:
         CI: true

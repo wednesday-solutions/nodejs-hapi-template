@@ -1,4 +1,5 @@
 import { users } from 'models';
+import { init } from '../lib/testServer';
 export function mockDB() {
     jest.doMock('models', () => {
         const SequelizeMock = require('sequelize-mock');
@@ -21,3 +22,10 @@ export function mockDB() {
 export function bustDB() {
     users.sync({ force: true }); // this will clear all the entries in your table.
 }
+
+export const resetAndMockDB = async mockDBCallback => {
+    jest.resetModules();
+    mockDB(mockDBCallback);
+    const server = await init();
+    return server;
+};

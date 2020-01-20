@@ -1,17 +1,9 @@
 import Boom from '@hapi/boom';
 
-export const badRequest = message => {
-    throw Boom.badRequest(`${message}`);
-};
+export const badRequest = message => Boom.badRequest(message);
 
-export const notFound = message => {
-    throw Boom.notFound(`${message}`);
-};
+export const notFound = message => Boom.notFound(message);
 
-export const unauthorized = message => {
-    throw Boom.unauthorized(`${message}`);
-};
+export const unauthorized = message => Boom.unauthorized(message);
 
-export const badImplementation = message => {
-    throw Boom.badImplementation(`${message}`);
-};
+export const badImplementation = message => Boom.badImplementation(message);

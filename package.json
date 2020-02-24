@@ -29,7 +29,7 @@
         "mysql2": "^1.7.0"
     },
     "scripts": {
-        "start": "pm2 start ecosystem.config.js --env development",
+        "start": "pm2 start ecosystem.config.js --env development && pm2 logs",
         "format": "prettier-standard './**/**/*.js'",
         "lint": "npm run lint:js",
         "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
@@ -74,7 +74,7 @@
         "jest": "^24.0.0",
         "link-module-alias": "^1.2.0",
         "lint-staged": "^9.4.2",
-        "pm2": "^4.1.2",
+        "pm2": "^4.2.3",
         "pre-commit": "1.2.2",
         "prettier": "1.17.0",
         "prettier-config-standard": "^1.0.1",

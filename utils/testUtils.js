@@ -20,7 +20,7 @@ export function mockDB() {
 }
 
 export function bustDB() {
-    users.sync({ force: true }); // this will clear all the entries in your table.
+    users.sync({ force: true });
 }
 
 export const resetAndMockDB = async mockDBCallback => {

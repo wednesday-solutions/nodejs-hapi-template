@@ -5,7 +5,6 @@ describe('as', () => {
     beforeAll(() => {
         mockDB();
     });
-
     it('should return 200', async () => {
         const res = await server.inject({
             method: 'GET',
@@ -13,7 +12,6 @@ describe('as', () => {
         });
         expect(res.statusCode).toEqual(200);
     });
-
     it('should return 200', async () => {
         const res = await server.inject({
             method: 'POST',
@@ -28,6 +26,7 @@ describe('as', () => {
         });
         expect(res.statusCode).toEqual(200);
     });
+
     it('should return 200', async () => {
         const res = await server.inject({
             method: 'PUT',
@@ -35,6 +34,7 @@ describe('as', () => {
         });
         expect(res.statusCode).toEqual(200);
     });
+
     it('should return 200', async () => {
         const res = await server.inject({
             method: 'PATCH',

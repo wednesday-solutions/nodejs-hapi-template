@@ -1,4 +1,9 @@
-import { findOneUser, createOneUser } from '../../lib/daos/userDao';
+import {
+    findOneUser,
+    createOneUser,
+    deleteOneUser,
+    updateOneUser
+} from '../../lib/daos/userDao';
 
 describe('users daos tests', () => {
     it('should return correct user', async () => {
@@ -11,5 +16,15 @@ describe('users daos tests', () => {
     it('should return correct user', async () => {
         const user = await createOneUser(1);
         expect(user.id).toEqual(expect.any(Number));
+    });
+
+    it('should return correct user', async () => {
+        const user = await deleteOneUser({ id: 1 });
+        expect(user).toEqual(1);
+    });
+
+    it('should return correct user', async () => {
+        const user = await updateOneUser({ id: 1 });
+        expect(user).toEqual([1]);
     });
 });

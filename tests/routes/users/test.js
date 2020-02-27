@@ -13,6 +13,18 @@ describe('as', () => {
         });
         expect(res.statusCode).toEqual(200);
     });
+
+    it('should return 404 GET', async () => {
+        mockDB(allDbs => {
+            allDbs.users.findByPk = () => null;
+        });
+        const res = await server.inject({
+            method: 'GET',
+            url: '/users'
+        });
+        expect(res.statusCode).toEqual(404);
+    });
+
     it('should return 200 POST', async () => {
         const res = await server.inject({
             method: 'POST',

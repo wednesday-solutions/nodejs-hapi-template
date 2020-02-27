@@ -19,9 +19,9 @@ export function mockDB() {
     });
 }
 
-export function bustDB() {
+export const bustDB = () => {
     users.sync({ force: true }); // this will clear all the entries in your table.
-}
+};
 
 export const resetAndMockDB = async mockDBCallback => {
     jest.resetModules();

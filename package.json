@@ -19,6 +19,8 @@
         "@hapi/hapi": "^18.4.0",
         "@hapi/joi": "^15.1.1",
         "loadash": "^1.0.0",
+        "hapi-cors": "^1.0.3",
+        "hapi-rate-limit": "^4.1.0",
         "map-keys-deep": "0.0.2",
         "qs": "^6.9.1",
         "semver": "^6.3.0",

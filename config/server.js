@@ -1,7 +1,7 @@
 import Qs from 'qs';
 import semver from 'semver';
-
 import pkg from '../package';
+import { redisCache } from 'utils/cacheConstants';
 
 const __version = semver(pkg.version);
 
@@ -37,5 +37,6 @@ export default {
     router: {
         isCaseSensitive: false,
         stripTrailingSlash: true
-    }
+    },
+    cache: [redisCache]
 };

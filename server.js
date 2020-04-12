@@ -2,6 +2,7 @@ import Hapi from '@hapi/hapi';
 import path from 'path';
 import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
+import mapKeysDeep from 'map-keys-deep';
 import hapiPagination from 'hapi-pagination';
 import hapiSwagger from 'hapi-swagger';
 import inert from '@hapi/inert';
@@ -10,7 +11,7 @@ import Pack from './package.json';
 import serverConfig from 'config/server';
 import hapiPaginationOptions from 'utils/paginationConstants';
 import models from 'models';
-import mapKeysDeep from 'map-keys-deep';
+import { cachedUser } from 'utils/cacheMethods';
 
 const prepDatabase = async () => {
     await models.sequelize
@@ -25,8 +26,10 @@ const prepDatabase = async () => {
         });
 };
 
+export let server;
+
 const initServer = async () => {
-    const server = Hapi.server(serverConfig);
+    server = Hapi.server(serverConfig);
 
     // Register hapi swagger plugin
     await server.register([
@@ -63,6 +66,7 @@ const initServer = async () => {
         }
     });
 
+    await cachedUser(server);
     await server.start();
 
     const onPreHandler = function(request, h) {

@@ -38,7 +38,7 @@ const initServer = async () => {
     await server.register({
         plugin: cors,
         options: {
-            origins: ['http://localhost:9001']
+            origins: ['http://localhost:3000']
         }
     });
 

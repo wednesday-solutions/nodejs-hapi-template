@@ -8,6 +8,9 @@ import hapiSwagger from 'hapi-swagger';
 import inert from '@hapi/inert';
 import vision from '@hapi/vision';
 import Pack from './package.json';
+import rateLimiter from 'hapi-rate-limit';
+
+import cors from 'hapi-cors';
 import serverConfig from 'config/server';
 import hapiPaginationOptions from 'utils/paginationConstants';
 import models from 'models';
@@ -67,6 +70,20 @@ const initServer = async () => {
     });
 
     await cachedUser(server);
+
+    // Register cors plugin
+    await server.register({
+        plugin: cors,
+        options: {
+            origins: ['http://localhost:3000']
+        }
+    });
+
+    // Register rate limiter plugin
+    await server.register({
+        plugin: rateLimiter
+    });
+
     await server.start();
 
     const onPreHandler = function(request, h) {

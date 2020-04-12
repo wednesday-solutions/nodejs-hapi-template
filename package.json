@@ -26,7 +26,11 @@
         "uuid": "^3.3.3",
         "moment": "^2.24.0",
         "sequelize": "^5.21.2",
-        "mysql2": "^1.7.0"
+        "mysql2": "^1.7.0",
+        "hapi-swagger": "https://github.com/wednesday-solutions/hapi-swagger/#master",
+        "@hapi/inert": "5.2.2",
+        "@hapi/vision": "^5.5.4",
+        "hapi-pagination": "^3.0.0"
     },
     "scripts": {
         "start": "pm2 start ecosystem.config.js --env development",

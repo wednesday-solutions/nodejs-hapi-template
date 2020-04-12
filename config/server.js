@@ -22,6 +22,7 @@ export default {
     host: '0.0.0.0',
     port: process.env.PORT,
     routes: {
+        cors: true,
         validate: {
             options: {
                 abortEarly: false

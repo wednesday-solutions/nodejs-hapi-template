@@ -1,9 +1,11 @@
 import Hapi from '@hapi/hapi';
 import path from 'path';
 import wurst from 'wurst';
+import rateLimiter from 'hapi-rate-limit';
+import mapKeysDeep from 'map-keys-deep';
+import cors from 'hapi-cors';
 import serverConfig from 'config/server';
 import models from 'models';
-import mapKeysDeep from 'map-keys-deep';
 import { camelCase, snakeCase } from 'lodash';
 
 const prepDatabase = async () => {
@@ -30,6 +32,19 @@ const initServer = async () => {
             cwd: path.join(__dirname, 'lib/routes'),
             log: true
         }
+    });
+
+    // Register cors plugin
+    await server.register({
+        plugin: cors,
+        options: {
+            origins: ['http://localhost:9001']
+        }
+    });
+
+    // Register rate limiter plugin
+    await server.register({
+        plugin: rateLimiter
     });
 
     await server.start();

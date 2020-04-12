@@ -1,12 +1,20 @@
 import Hapi from '@hapi/hapi';
 import path from 'path';
 import wurst from 'wurst';
-import rateLimiter from 'hapi-rate-limit';
+import { camelCase, snakeCase } from 'lodash';
 import mapKeysDeep from 'map-keys-deep';
+import hapiPagination from 'hapi-pagination';
+import hapiSwagger from 'hapi-swagger';
+import inert from '@hapi/inert';
+import vision from '@hapi/vision';
+import Pack from './package.json';
+import rateLimiter from 'hapi-rate-limit';
+
 import cors from 'hapi-cors';
 import serverConfig from 'config/server';
+import hapiPaginationOptions from 'utils/paginationConstants';
 import models from 'models';
-import { camelCase, snakeCase } from 'lodash';
+import { cachedUser } from 'utils/cacheMethods';
 
 const prepDatabase = async () => {
     await models.sequelize
@@ -21,8 +29,35 @@ const prepDatabase = async () => {
         });
 };
 
+export let server;
+
 const initServer = async () => {
-    const server = Hapi.server(serverConfig);
+    server = Hapi.server(serverConfig);
+
+    // Register hapi swagger plugin
+    await server.register([
+        inert,
+        vision,
+        {
+            plugin: hapiSwagger,
+            swaggerOptions: {
+                documentationPage: true,
+                swaggerUI: true,
+                auth: false,
+                authorization: null,
+                info: {
+                    title: 'Node Hapi Template API documentation',
+                    version: Pack.version
+                }
+            }
+        }
+    ]);
+
+    // Register pagignation plugin
+    await server.register({
+        plugin: hapiPagination,
+        options: hapiPaginationOptions
+    });
 
     // Register Wurst plugin
     await server.register({
@@ -33,6 +68,8 @@ const initServer = async () => {
             log: true
         }
     });
+
+    await cachedUser(server);
 
     // Register cors plugin
     await server.register({

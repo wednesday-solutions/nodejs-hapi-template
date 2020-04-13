@@ -4437,9 +4437,9 @@ hapi-rate-limit@^4.1.0:
     "@hapi/hoek" "^8.5.0"
     "@hapi/joi" "^16.1.4"
 
-"hapi-swagger@https://github.com/wednesday-solutions/hapi-swagger/#master":
+"hapi-swaggerui@https://github.com/wednesday-solutions/hapi-swaggerui/#master":
   version "13.0.1"
-  resolved "https://github.com/wednesday-solutions/hapi-swagger/#01db382ce3e75e0706dbe5033a5b3a925445de0f"
+  resolved "https://github.com/wednesday-solutions/hapi-swaggerui/#01db382ce3e75e0706dbe5033a5b3a925445de0f"
   dependencies:
     "@hapi/boom" "^8.0.1"
     "@hapi/hoek" "^8.2.4"

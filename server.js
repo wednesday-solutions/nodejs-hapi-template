@@ -4,7 +4,7 @@ import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
 import mapKeysDeep from 'map-keys-deep';
 import hapiPagination from 'hapi-pagination';
-import hapiSwagger from 'hapi-swagger';
+import hapiSwagger from 'hapi-swaggerui';
 import inert from '@hapi/inert';
 import vision from '@hapi/vision';
 import Pack from './package.json';

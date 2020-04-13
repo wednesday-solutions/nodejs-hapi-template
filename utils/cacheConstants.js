@@ -11,7 +11,7 @@ export const redisCache = {
     provider: {
         constructor: CatboxRedis,
         options: {
-            partition: 'amex_perks_data',
+            partition: 'temp_dev_data',
             host: '0.0.0.0',
             port: 6379
         }

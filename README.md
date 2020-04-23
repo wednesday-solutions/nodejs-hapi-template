@@ -10,23 +10,13 @@
 - Support for directory based routing
 - Simplified support for migrations and seeders using sequelize
 - DAO layer for all database interactions
-
-**Tests using Jest:** 
-
-`npm test`
-
-Coverage Report:
-
-![Coverage Report](images/template-test-case.png)
-
-# Node.js Hapi Template
+- Tests using jest
 
 ## Setup and Configuration. 
 
 ### Pre-requisites
 
 * node
-* Docker
 
 ### Installation
 
@@ -131,5 +121,3 @@ Steps
 
 ### PM2 
 [PM2](https://pm2.keymetrics.io/) is a daemon process manager that will help you manage and keep your application online 24/7
-
-

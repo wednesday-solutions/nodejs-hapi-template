@@ -1,5 +1,7 @@
 # Node.js Hapi Template
 
+![Nodejs Hapi Template](https://github.com/wednesday-solutions/node-js-hapi-template/workflows/Nodejs%20Hapi%20Template/badge.svg)
+
 ## Out of the box support for
 
 - Authorization middleware

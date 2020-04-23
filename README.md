@@ -1,32 +1,5 @@
 # Node.js Hapi Template
 
-**Request:**
-```
-curl -X GET \
-  http://localhost:9001/v1.0/users/1c \
-  -H 'Accept: */*' \
-  -H 'Accept-Encoding: gzip, deflate' \
-  -H 'Cache-Control: no-cache' \
-  -H 'Connection: keep-alive' \
-  -H 'Host: localhost:9001' \
-  -H 'Postman-Token: bc65b0f2-01f4-4374-817b-8d9e336f5a60,2257a64d-8091-4a18-9d7a-1e5ef4f10011' \
-  -H 'User-Agent: PostmanRuntime/7.20.1' \
-  -H 'cache-control: no-cache'
-```
-
-  **Response:**
- ```
-  {
-    "user": {
-        "id": 1,
-        "firstName": "Sharan",
-        "lastName": "Salian",
-        "email": "sharan@wednesday.is",
-        "createdAt": "2019-12-09T19:14:14.000Z"
-    }
-}
-```
-
 ## Out of the box support for
 
 - Authorization middleware

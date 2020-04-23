@@ -27,6 +27,17 @@ curl -X GET \
 }
 ```
 
+## Out of the box support for
+
+- Authorization middleware
+- Redis Cache
+- Rate Limited endpoints
+- Paginated endpoints
+- Swagger UI
+- Support for directory based routing
+- Simplified support for migrations and seeders using sequelize
+- DAO layer for all database interactions
+
 **Tests using Jest:** 
 
 `npm test`

@@ -17,7 +17,12 @@ export default {
         },
         env: `${
             process.env.NODE_ENV === 'production' ? 'production' : 'development'
-        }`
+        }`,
+        options: {
+            oauth: {
+                access_token_ttl: 60 * 60 * 12 // seconds * minutes * hours
+            }
+        }
     },
     host: '0.0.0.0',
     port: process.env.PORT,

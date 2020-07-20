@@ -9,7 +9,7 @@ import inert from '@hapi/inert';
 import vision from '@hapi/vision';
 import Pack from './package.json';
 import rateLimiter from 'hapi-rate-limit';
-
+import { plugin } from './request-signature';
 import cors from 'hapi-cors';
 import serverConfig from 'config/server';
 import hapiPaginationOptions from 'utils/paginationConstants';
@@ -33,6 +33,13 @@ export let server;
 
 const initServer = async () => {
     server = Hapi.server(serverConfig);
+
+    //register custom plugin
+    await server.register({
+        plugin: plugin
+    });
+
+    server.auth.strategy('signature', 'request-signature', {});
 
     // Register hapi swagger plugin
     await server.register([

@@ -39,7 +39,7 @@
         "wurst": "^4.1.1"
     },
     "scripts": {
-        "start": "nodemon start index.js --env development",
+        "start": "ENV=development nodemon start index.js",
         "format": "prettier-standard './**/**/*.js'",
         "lint": "npm run lint:js",
         "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",

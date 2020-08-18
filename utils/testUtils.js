@@ -8,11 +8,10 @@ export function mockDB() {
             id: 1,
             firstName: 'Sharan',
             lastName: 'Salian',
-            email: 'sharan@wednesday.is',
-            created_at: new Date(),
-            updated_at: new Date()
+            email: 'sharan@wednesday.is'
         });
         userMock.findByPk = query => userMock.findById(query);
+        userMock.count = () => 1;
         return {
             users: userMock
         };

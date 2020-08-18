@@ -30,7 +30,7 @@
 ### Setup
  
 - Run ``` ./setup-local.sh ```
-- This will seed the data in mysql and run the pm2 server. 
+- This will seed the data in mysql and run the server. 
 
 
 ### Auto Generate models from database
@@ -120,6 +120,3 @@ Steps
                 03_alter_student.sql    
 
 ```
-
-### PM2 
-[PM2](https://pm2.keymetrics.io/) is a daemon process manager that will help you manage and keep your application online 24/7

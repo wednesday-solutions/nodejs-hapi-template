@@ -14,6 +14,7 @@ import rateLimiter from 'hapi-rate-limit';
 
 import cors from 'hapi-cors';
 import serverConfig from 'config/server';
+import dbConfig from 'config/db';
 import hapiPaginationOptions from 'utils/paginationConstants';
 import models from 'models';
 import { cachedUser } from 'utils/cacheMethods';
@@ -132,9 +133,9 @@ prepDatabase().then(
         // eslint-disable-next-line no-console
         console.log(
             `Database connection to ${
-                process.env.DB_URI
+                dbConfig.development.url
             } is successful.\nThe following options were applied: ${JSON.stringify(
-                process.env.DB_OPTIONS
+                dbConfig.development.options
             )}`
         );
         // eslint-disable-next-line no-console

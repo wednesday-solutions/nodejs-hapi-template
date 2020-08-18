@@ -21,6 +21,7 @@
         "@hapi/joi": "^16.x.x",
         "@hapi/joi-date": "^2.0.1",
         "@hapi/vision": "^5.5.4",
+        "dotenv": "^8.2.0",
         "esm": "^3.2.25",
         "hapi-auth-bearer-token": "^6.1.6",
         "hapi-cors": "^1.0.3",
@@ -32,6 +33,7 @@
         "map-keys-deep": "0.0.2",
         "moment": "^2.24.0",
         "mysql2": "^1.7.0",
+        "nodemon": "^2.0.4",
         "qs": "^6.9.1",
         "semver": "^6.3.0",
         "sequelize": "^5.21.2",
@@ -39,7 +41,7 @@
         "wurst": "^4.1.1"
     },
     "scripts": {
-        "start": "pm2 start ecosystem.config.js --env development && pm2 logs",
+        "start": "ENV=development nodemon start index.js",
         "format": "prettier-standard './**/**/*.js'",
         "lint": "npm run lint:js",
         "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
@@ -84,7 +86,6 @@
         "jest": "^24.0.0",
         "link-module-alias": "^1.2.0",
         "lint-staged": "^9.4.2",
-        "pm2": "^4.1.2",
         "pre-commit": "1.2.2",
         "prettier": "1.17.0",
         "prettier-config-standard": "^1.0.1",

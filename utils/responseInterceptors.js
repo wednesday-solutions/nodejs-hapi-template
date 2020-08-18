@@ -7,3 +7,5 @@ export const notFound = message => Boom.notFound(message);
 export const unauthorized = message => Boom.unauthorized(message);
 
 export const badImplementation = message => Boom.badImplementation(message);
+
+export const badData = message => Boom.badData(message);

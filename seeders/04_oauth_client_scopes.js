@@ -1,6 +1,8 @@
 module.exports = {
     up: queryInterface => {
-        const { SCOPE_TYPE } = require('../utils/seedData');
+        const { SCOPE_TYPE } = require('esm')(module /* , options */)(
+            '../utils/constants'
+        );
         const arr = Object.values(SCOPE_TYPE).map((scope, index) => ({
             oauth_client_id: index + 1,
             scope,

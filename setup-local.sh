@@ -2,7 +2,7 @@
 #!/bin/sh +x +e
 
 # start msql
-mysql.server start
+# mysql.server start
 
 # Access and drop the database
 mysql -uroot -ppassword -D temp_dev -e "DROP DATABASE temp_dev"

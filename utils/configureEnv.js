@@ -1,9 +1,9 @@
 const dotenv = require('dotenv');
 
 module.exports = () => {
-    if (process.env.ENV === 'development') {
-        dotenv.config({ path: '.env.dev' });
-    } else {
+    if (process.env.ENV === 'production') {
         dotenv.config();
+    } else {
+        dotenv.config({ path: `.env.${process.env.ENV}` });
     }
 };

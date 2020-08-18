@@ -1,5 +1,5 @@
 import { SCOPE_TYPE } from 'utils/constants';
-export const path = [
+export const paths = [
     {
         path: '/me',
         scopes: [SCOPE_TYPE.SUPER_ADMIN, SCOPE_TYPE.ADMIN, SCOPE_TYPE.USER],
@@ -54,5 +54,23 @@ export const path = [
             SCOPE_TYPE.USER
         ],
         method: 'POST'
+    },
+    {
+        path: '/users',
+        scopes: [
+            SCOPE_TYPE.INTERNAL_SERVICE,
+            SCOPE_TYPE.SUPER_ADMIN,
+            SCOPE_TYPE.ADMIN
+        ],
+        method: 'GET'
+    },
+    {
+        path: '/users/{userId}',
+        scopes: [
+            SCOPE_TYPE.INTERNAL_SERVICE,
+            SCOPE_TYPE.SUPER_ADMIN,
+            SCOPE_TYPE.ADMIN
+        ],
+        method: 'GET'
     }
 ];

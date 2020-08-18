@@ -7,41 +7,95 @@ describe('user daos', () => {
         lastName: 'Salian',
         email: 'sharan@wednesday.is'
     };
-    it('must have findOneUser that finds a user by ID', async () => {
-        const { findOneUser } = require('daos/userDao');
-        const testUser = await findOneUser(1);
-        expect(testUser.id).toEqual(1);
-        expect(testUser.firstName).toEqual(mockUser.firstName);
-        expect(testUser.lastName).toEqual(mockUser.lastName);
-        expect(testUser.email).toEqual(mockUser.email);
+    const attributes = ['id', 'first_name', 'last_name', 'email'];
+
+    describe('findOneUser', () => {
+        it('should find a user by ID', async () => {
+            const { findOneUser } = require('daos/userDao');
+            const testUser = await findOneUser(1);
+            expect(testUser.id).toEqual(1);
+            expect(testUser.firstName).toEqual(mockUser.firstName);
+            expect(testUser.lastName).toEqual(mockUser.lastName);
+            expect(testUser.email).toEqual(mockUser.email);
+        });
+        it('should call findOne with the correct parameters', async () => {
+            let spy;
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.users, 'findOne');
+            });
+            const { findOneUser } = require('daos/userDao');
+
+            let userId = 1;
+            await findOneUser(userId);
+            expect(spy).toBeCalledWith({
+                attributes,
+                underscoredAll: false,
+                where: {
+                    id: userId
+                }
+            });
+
+            jest.clearAllMocks();
+            userId = 2;
+            await findOneUser(userId);
+            expect(spy).toBeCalledWith({
+                attributes,
+                underscoredAll: false,
+                where: {
+                    id: userId
+                }
+            });
+        });
     });
 
-    it('must have findOneUser that finds a user by ID', async () => {
+    describe('findAllUser ', () => {
         let spy;
-        await resetAndMockDB(db => {
-            spy = jest.spyOn(db.users, 'findOne');
-        });
-        const { findOneUser } = require('daos/userDao');
+        const where = {};
+        let page = 1;
+        let limit = 10;
+        let offset = (page - 1) * limit;
 
-        const userId = 1;
-        await findOneUser(userId);
-        expect(spy).toBeCalled();
-        expect(spy).toBeCalledWith({
-            attributes: ['id', 'first_name', 'last_name', 'email'],
-            underscoredAll: false,
-            where: {
-                id: userId
-            }
+        it('should find all the users', async () => {
+            const { findAllUser } = require('daos/userDao');
+            const { allUsers } = await findAllUser(1, 10);
+            const firstUser = allUsers[0];
+            expect(firstUser.id).toEqual(1);
+            expect(firstUser.firstName).toEqual(mockUser.firstName);
+            expect(firstUser.lastName).toEqual(mockUser.lastName);
+            expect(firstUser.email).toEqual(mockUser.email);
         });
-    });
 
-    it('must have findAllUser that finds all the users', async () => {
-        const { findAllUser } = require('daos/userDao');
-        const { allUsers } = await findAllUser(1, 10);
-        const firstUser = allUsers[0];
-        expect(firstUser.id).toEqual(1);
-        expect(firstUser.firstName).toEqual(mockUser.firstName);
-        expect(firstUser.lastName).toEqual(mockUser.lastName);
-        expect(firstUser.email).toEqual(mockUser.email);
+        it('should call findAll with the correct parameters', async () => {
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.users, 'findAll');
+            });
+            const { findAllUser } = require('daos/userDao');
+            await findAllUser(page, limit);
+            expect(spy).toBeCalledWith({
+                attributes,
+                where,
+                offset,
+                limit
+            });
+            jest.clearAllMocks();
+            page = 2;
+            limit = 10;
+            offset = (page - 1) * limit;
+            await findAllUser(page, limit);
+            expect(spy).toBeCalledWith({
+                attributes,
+                where,
+                offset,
+                limit
+            });
+        });
+        it('should call count with an empty object', async () => {
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.users, 'count');
+            });
+            const { findAllUser } = require('daos/userDao');
+            await findAllUser(page, limit);
+            expect(spy).toBeCalledWith({ where });
+        });
     });
 });

@@ -1,12 +1,7 @@
-import { resetAndMockDB } from 'utils/testUtils';
+import { resetAndMockDB, mockData } from 'utils/testUtils';
 
 describe('user daos', () => {
-    const mockUser = {
-        id: 1,
-        firstName: 'Sharan',
-        lastName: 'Salian',
-        email: 'sharan@wednesday.is'
-    };
+    const { MOCK_USER: mockUser } = mockData;
     const attributes = ['id', 'first_name', 'last_name', 'email'];
 
     describe('findOneUser', () => {

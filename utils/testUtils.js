@@ -1,15 +1,19 @@
 import { users } from 'models';
 import { init } from '../lib/testServer';
 
-export function configDB() {
-    const SequelizeMock = require('sequelize-mock');
-    const DBConnectionMock = new SequelizeMock();
-    const userMock = DBConnectionMock.define('users', {
+export const mockData = {
+    MOCK_USER: {
         id: 1,
         firstName: 'Sharan',
         lastName: 'Salian',
         email: 'sharan@wednesday.is'
-    });
+    }
+};
+
+export function configDB() {
+    const SequelizeMock = require('sequelize-mock');
+    const DBConnectionMock = new SequelizeMock();
+    const userMock = DBConnectionMock.define('users', mockData.MOCK_USER);
     userMock.findByPk = query => userMock.findById(query);
     userMock.count = () => 1;
     return {

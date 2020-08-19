@@ -25,7 +25,7 @@ export function configDB() {
 
     const oauthClientResourcesMock = DBConnectionMock.define(
         'oauth_client_resources',
-        mockData.MOCK_OAUTH_CLIENT_RESOURCES
+        mockData.MOCK_OAUTH_CLIENT_RESOURCES[0]
     );
     oauthClientResourcesMock.findOne = query =>
         oauthClientResourcesMock.findById(query);

@@ -1,6 +1,9 @@
-import { GRANT_TYPE, SCOPE_TYPE } from './constants';
+import { GRANT_TYPE, SCOPE_TYPE, OAUTH_CLIENT_ID } from './constants';
 
-export const mockMetadata = (scope = SCOPE_TYPE.USER, resourceType) => ({
+export const mockMetadata = (
+    scope = SCOPE_TYPE.ADMIN,
+    resourceType = OAUTH_CLIENT_ID
+) => ({
     oauth_client_scope: {
         get: () => ({
             id: 1,
@@ -34,10 +37,28 @@ export const mockData = {
         grantType: GRANT_TYPE.CLIENT_CREDENTIALS,
         ...mockMetadata()
     },
-    MOCK_OAUTH_CLIENT_RESOURCES: {
-        id: 1,
-        oauthClientId: 'TEST_CLIENT_ID_1',
-        resourceType: 'OAUTH_CLIENT_ID',
-        resourceId: 1
-    }
+    MOCK_OAUTH_CLIENT_RESOURCES: [
+        {
+            id: 1,
+            oauthClientId: 'TEST_CLIENT_ID_1',
+            resourceType: 'OAUTH_CLIENT_ID',
+            resourceId: 1
+        },
+        {
+            id: 1,
+            oauthClientId: 'TEST_CLIENT_ID_1',
+            resourceType: 'OAUTH_CLIENT_ID',
+            resourceId: 1
+        }
+    ]
 };
+
+export const createMockTokenWithScope = scope => ({
+    metadata: {
+        scope: mockMetadata(scope).oauth_client_scope.get(),
+        resources: mockMetadata(
+            scope,
+            OAUTH_CLIENT_ID
+        ).oauth_client_resources[0].get()
+    }
+});

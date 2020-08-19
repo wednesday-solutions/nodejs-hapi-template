@@ -1,6 +1,6 @@
-import { GRANT_TYPE } from './constants';
+import { GRANT_TYPE, SCOPE_TYPE } from './constants';
 
-export const mockMetadata = (scope, resourceType) => ({
+export const mockMetadata = (scope = SCOPE_TYPE.USER, resourceType) => ({
     oauth_client_scope: {
         get: () => ({
             id: 1,
@@ -33,5 +33,11 @@ export const mockData = {
         clientSecret: 'TEST_CLIENT_SECRET',
         grantType: GRANT_TYPE.CLIENT_CREDENTIALS,
         ...mockMetadata()
+    },
+    MOCK_OAUTH_CLIENT_RESOURCES: {
+        id: 1,
+        oauthClientId: 'TEST_CLIENT_ID_1',
+        resourceType: 'OAUTH_CLIENT_ID',
+        resourceId: 1
     }
 };

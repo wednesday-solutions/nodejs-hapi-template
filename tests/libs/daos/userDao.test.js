@@ -1,4 +1,5 @@
-import { resetAndMockDB, mockData } from 'utils/testUtils';
+import { resetAndMockDB } from 'utils/testUtils';
+import { mockData } from 'utils/mockData';
 
 describe('user daos', () => {
     const { MOCK_USER: mockUser } = mockData;

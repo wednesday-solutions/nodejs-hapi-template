@@ -6,7 +6,7 @@ describe('user daos', () => {
     const attributes = ['id', 'first_name', 'last_name', 'email'];
 
     describe('findOneUser', () => {
-        it.only('should find a user by ID', async () => {
+        it('should find a user by ID', async () => {
             const { findOneUser } = require('daos/userDao');
             const testUser = await findOneUser(1);
             expect(testUser.id).toEqual(1);

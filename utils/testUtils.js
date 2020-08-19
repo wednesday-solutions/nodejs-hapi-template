@@ -30,16 +30,16 @@ export function configDB() {
     oauthClientResourcesMock.findOne = query =>
         oauthClientResourcesMock.findById(query);
 
-    const oauthClientScopeMock = DBConnectionMock.define(
-        'oauth_client_scope',
-        mockData.MOCK_OAUTH_CLIENT_SCOPE
+    const oauthClientScopesMock = DBConnectionMock.define(
+        'oauth_client_scopes',
+        mockData.MOCK_OAUTH_CLIENT_SCOPES
     );
     return {
         users: userMock,
         oauth_clients: oauthClientsMock,
         oauth_access_tokens: oauthAccessTokensMock,
         oauth_client_resources: oauthClientResourcesMock,
-        oauth_client_scope: oauthClientScopeMock
+        oauth_client_scopes: oauthClientScopesMock
     };
 }
 

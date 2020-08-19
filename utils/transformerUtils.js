@@ -1,18 +1,11 @@
 import { isArray, snakeCase } from 'lodash';
 import mapKeysDeep from 'map-keys-deep';
 
-export const convertDbResponseToRawResponse = dbResponse => {
-    console.log(
-        dbResponse.get({
-            plain: true,
-            raw: true
-        })
-    );
-    return dbResponse.get({
+export const convertDbResponseToRawResponse = dbResponse =>
+    dbResponse.get({
         plain: true,
         raw: true
     });
-};
 
 /**
  * A funtion that takes an sequelize database array response and converts

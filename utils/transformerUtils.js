@@ -1,18 +1,11 @@
 import { isArray, snakeCase } from 'lodash';
 import mapKeysDeep from 'map-keys-deep';
 
-export const convertDbResponseToRawResponse = dbResponse => {
-    console.log(
-        dbResponse.get({
-            plain: true,
-            raw: true
-        })
-    );
-    return dbResponse.get({
+export const convertDbResponseToRawResponse = dbResponse =>
+    dbResponse.get({
         plain: true,
         raw: true
     });
-};
 
 /**
  * A funtion that takes an sequelize database array response and converts
@@ -20,7 +13,6 @@ export const convertDbResponseToRawResponse = dbResponse => {
  * @param {Object} arr
  */
 export const transformDbArrayResponseToRawResponse = arr => {
-    console.log(arr);
     if (!isArray(arr)) {
         throw new Error('The required type should be an object(array)');
     } else {

@@ -1,11 +1,12 @@
-import { resetAndMockDB, mockData } from 'utils/testUtils';
+import { resetAndMockDB } from 'utils/testUtils';
+import { mockData } from 'utils/mockData';
 
 describe('user daos', () => {
     const { MOCK_USER: mockUser } = mockData;
     const attributes = ['id', 'first_name', 'last_name', 'email'];
 
     describe('findOneUser', () => {
-        it('should find a user by ID', async () => {
+        it.only('should find a user by ID', async () => {
             const { findOneUser } = require('daos/userDao');
             const testUser = await findOneUser(1);
             expect(testUser.id).toEqual(1);

@@ -17,7 +17,6 @@ describe('oauthClientScopes Dao tests', () => {
 
     describe('findScope', () => {
         let spy;
-        // const token = createMockTokenWithScope(SCOPE_TYPE.SUPER_ADMIN);
         it('should call findOne in oauthClientScopes to find the scope of the token that is passed', async () => {
             await resetAndMockDB(db => {
                 spy = jest.spyOn(db.oauth_client_scopes, 'findOne');

@@ -50,10 +50,16 @@ export const mockData = {
             resourceType: 'OAUTH_CLIENT_ID',
             resourceId: 1
         }
-    ]
+    ],
+    MOCK_OAUTH_CLIENT_SCOPES: {
+        id: 1,
+        oauthClientId: 'TEST_CLIENT_ID_1',
+        scope: SCOPE_TYPE.SUPER_ADMIN
+    }
 };
 
 export const createMockTokenWithScope = scope => ({
+    oauthClientId: 'TEST_CLIENT_ID_1',
     metadata: {
         scope: mockMetadata(scope).oauth_client_scope.get(),
         resources: mockMetadata(

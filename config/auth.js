@@ -28,7 +28,10 @@ export default {
                 request.route.method.toUpperCase() ===
                     route.method.toUpperCase()
             ) {
-                isAllowed = includes(route.scopes, client.scope.scope);
+                isAllowed = route.customValidator
+                    ? route.customValidator(credentials, request) &&
+                      includes(route.scopes, client.scope.scope)
+                    : includes(route.scopes, client.scope.scope);
             }
         });
 

@@ -29,3 +29,5 @@ export const SUPER_SCOPES = [
 ];
 
 export const GET_USER_PATH = '/users/{userId}';
+
+export const USER_ID = 'USER_ID';

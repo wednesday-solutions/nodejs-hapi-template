@@ -8,7 +8,8 @@ import {
     ADMINS,
     SCOPE_TYPE,
     OAUTH_CLIENT_ID,
-    SUPER_SCOPES
+    SUPER_SCOPES,
+    USER_ID
 } from 'utils/constants';
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
@@ -103,7 +104,6 @@ export const getScope = oauthClientId =>
 
 export async function hasScopeOverUser(oauthClientId, userId) {
     const scope = await getScope(oauthClientId);
-    console.log({ scope });
     if (includes(SUPER_SCOPES, scope)) {
         return true;
     } else if (scope === SCOPE_TYPE.ADMIN) {
@@ -112,13 +112,12 @@ export async function hasScopeOverUser(oauthClientId, userId) {
         return !isEmpty(
             resources.filter(
                 resource =>
-                    resource.resource_type === 'USER_ID' &&
+                    resource.resource_type === USER_ID &&
                     resource.resource_id === userId
             )
         );
     } else if (scope === SCOPE_TYPE.USER) {
         const result = await findOneUser(userId);
-        console.log({ result }, result.oauth_client_id === oauthClientId);
         if (!isNil(result)) {
             return result.oauth_client_id === oauthClientId;
         }

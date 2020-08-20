@@ -2,9 +2,17 @@ import uuid from 'uuid';
 import get from 'lodash/get';
 import find from 'lodash/find';
 import includes from 'lodash/includes';
-import { ADMINS, SCOPE_TYPE, OAUTH_CLIENT_ID } from 'utils/constants';
+import isNil from 'lodash/isNil';
+import isEmpty from 'lodash/isEmpty';
+import {
+    ADMINS,
+    SCOPE_TYPE,
+    OAUTH_CLIENT_ID,
+    SUPER_SCOPES
+} from 'utils/constants';
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
+import { findUserById } from 'daos/userDao';
 
 export const getEnv = () => {
     switch (process.env.NODE_ENV) {
@@ -92,3 +100,28 @@ export const getScope = oauthClientId =>
     getMetaDataByOAuthClientId(oauthClientId).then(metadata =>
         get(metadata, 'scope.scope')
     );
+
+export async function hasScopeOverUser(oauthClientId, userId) {
+    const scope = await getScope(oauthClientId);
+    console.log({ scope });
+    if (includes(SUPER_SCOPES, scope)) {
+        return true;
+    } else if (scope === SCOPE_TYPE.ADMIN) {
+        const metadata = await getMetaDataByOAuthClientId(oauthClientId);
+        const resources = get(metadata, 'resources', []);
+        return !isEmpty(
+            resources.filter(
+                resource =>
+                    resource.resource_type === 'USER_ID' &&
+                    resource.resource_id === userId
+            )
+        );
+    } else if (scope === SCOPE_TYPE.USER) {
+        const result = await findUserById(userId);
+        console.log({ result }, result.oauth_client_id === oauthClientId);
+        if (!isNil(result)) {
+            return result.oauth_client_id === oauthClientId;
+        }
+        return false;
+    }
+}

@@ -4,7 +4,8 @@ import { updateAccessToken, findAccessToken } from 'daos/oauthAccessTokensDao';
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { unauthorized } from 'utils/responseInterceptors';
 import { paths } from 'config/paths';
-import { SLIDING_WINDOW } from 'utils/constants';
+import { SLIDING_WINDOW, GET_USER_PATH } from 'utils/constants';
+import { hasScopeOverUser } from 'utils';
 
 export default {
     allowQueryToken: false,
@@ -24,11 +25,21 @@ export default {
         paths.forEach(route => {
             if (
                 request.route.path === route.path &&
-                request.route.method === route.method
+                request.route.method.toUpperCase() ===
+                    route.method.toUpperCase()
             ) {
                 isAllowed = includes(route.scopes, client.scope.scope);
             }
         });
+
+        if (request.route.path === GET_USER_PATH) {
+            const hasValidScope = await hasScopeOverUser(
+                credentials.oauthClientId,
+                request.params.userId
+            );
+            isAllowed = hasValidScope && isAllowed;
+        }
+
         updateAccessToken(token, SLIDING_WINDOW);
 
         return {

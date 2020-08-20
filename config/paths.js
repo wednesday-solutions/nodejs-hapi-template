@@ -69,7 +69,8 @@ export const paths = [
         scopes: [
             SCOPE_TYPE.INTERNAL_SERVICE,
             SCOPE_TYPE.SUPER_ADMIN,
-            SCOPE_TYPE.ADMIN
+            SCOPE_TYPE.ADMIN,
+            SCOPE_TYPE.USER
         ],
         method: 'GET'
     }

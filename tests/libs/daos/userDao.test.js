@@ -3,7 +3,13 @@ import { mockData } from 'utils/mockData';
 
 describe('user daos', () => {
     const { MOCK_USER: mockUser } = mockData;
-    const attributes = ['id', 'first_name', 'last_name', 'email'];
+    const attributes = [
+        'id',
+        'first_name',
+        'last_name',
+        'email',
+        'oauth_client_id'
+    ];
 
     describe('findOneUser', () => {
         it('should find a user by ID', async () => {

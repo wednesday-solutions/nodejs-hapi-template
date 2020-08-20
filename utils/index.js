@@ -12,7 +12,7 @@ import {
 } from 'utils/constants';
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
-import { findUserById } from 'daos/userDao';
+import { findOneUser } from 'daos/userDao';
 
 export const getEnv = () => {
     switch (process.env.NODE_ENV) {
@@ -117,7 +117,7 @@ export async function hasScopeOverUser(oauthClientId, userId) {
             )
         );
     } else if (scope === SCOPE_TYPE.USER) {
-        const result = await findUserById(userId);
+        const result = await findOneUser(userId);
         console.log({ result }, result.oauth_client_id === oauthClientId);
         if (!isNil(result)) {
             return result.oauth_client_id === oauthClientId;

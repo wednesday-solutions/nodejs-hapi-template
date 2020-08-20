@@ -130,6 +130,17 @@ describe('oauthClientResources dao', () => {
             await resetAndMockDB();
             await expect(updateResource(resource, userToken)).rejects.toThrow();
         });
+
+        it('should catch an error if findResourceWithOauthClientId fails', async () => {
+            await resetAndMockDB(db => {
+                db.oauth_client_resources.findOne = async () => {
+                    throw new Error('resource not found');
+                };
+            });
+            const { updateResource } = require('daos/oauthClientResourcesDao');
+
+            expect(updateResource(resource, superAdminToken)).rejects.toThrow();
+        });
     });
 
     describe('createOauthResources', () => {

@@ -1,10 +1,19 @@
 import uuid from 'uuid';
 import get from 'lodash/get';
 import find from 'lodash/find';
+import isNil from 'lodash/isNil';
+import isEmpty from 'lodash/isEmpty';
 import includes from 'lodash/includes';
-import { ADMINS, SCOPE_TYPE, OAUTH_CLIENT_ID } from 'utils/constants';
+import {
+    ADMINS,
+    SCOPE_TYPE,
+    OAUTH_CLIENT_ID,
+    SUPER_SCOPES,
+    USER_ID
+} from 'utils/constants';
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
+import { findOneUser } from 'daos/userDao';
 
 export const getEnv = () => {
     switch (process.env.NODE_ENV) {
@@ -72,12 +81,10 @@ export const hasPowerOver = (token, oauthClientId, scope) => {
         return true;
     }
     return (
-        find(
-            get(token, 'metadata.resources', []),
-            resource =>
-                resource.resource_type === OAUTH_CLIENT_ID &&
-                // eslint-disable-next-line eqeqeq
-                resource.resource_id == oauthClientId
+        validateResources(
+            get(token, 'metadata'),
+            OAUTH_CLIENT_ID,
+            oauthClientId
         ) && isScopeHigher(token, scope)
     );
 };
@@ -92,3 +99,69 @@ export const getScope = oauthClientId =>
     getMetaDataByOAuthClientId(oauthClientId).then(metadata =>
         get(metadata, 'scope.scope')
     );
+
+/** Checks whether the provided oauthClientId has scope over a given userId
+ * @param  {String} oauthClientId
+ * @param  {Number} userId
+ * @returns {Boolean}
+ */
+export async function hasScopeOverUser(oauthClientId, userId) {
+    const scope = await getScope(oauthClientId);
+    if (includes(SUPER_SCOPES, scope)) {
+        return true;
+    } else if (scope === SCOPE_TYPE.ADMIN) {
+        const metadata = await getMetaDataByOAuthClientId(oauthClientId);
+        return await validateResources(metadata, USER_ID, userId);
+    } else if (scope === SCOPE_TYPE.USER) {
+        const result = await findOneUser(userId);
+        if (!isNil(result)) {
+            return result.oauth_client_id === oauthClientId;
+        }
+        return false;
+    }
+}
+
+/** Validate if the provided metadata has a given resourceType and resourceId
+ * @param  {Object} metadata
+ * @param  {String} resourceType
+ * @param  {Number} resourceId
+ * @returns {Boolean}
+ */
+export async function validateResources(metadata, resourceType, resourceId) {
+    const resources = get(metadata, 'resources', []);
+    return !isEmpty(
+        find(
+            resources,
+            resource =>
+                resource.resource_type === resourceType &&
+                resource.resource_id === resourceId
+        )
+    );
+}
+/**
+ * Validates the scope of credentials for the request route
+ * @param  {Array} paths
+ * @param  {Object} request
+ * @param  {Object} credentials
+ * @returns {Boolean}
+ */
+export async function validateScopeForRoute(paths, request, credentials) {
+    let isAllowed = true;
+    const client = await getMetaDataByOAuthClientId(credentials.oauthClientId);
+    await Promise.all(
+        paths.map(async route => {
+            if (
+                request.route.path === route.path &&
+                request.route.method.toUpperCase() ===
+                    route.method.toUpperCase()
+            ) {
+                isAllowed =
+                    includes(route.scopes, client.scope.scope) &&
+                    (route.customValidator
+                        ? await route.customValidator(credentials, request)
+                        : true);
+            }
+        })
+    );
+    return isAllowed;
+}

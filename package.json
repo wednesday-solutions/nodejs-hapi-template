@@ -41,8 +41,9 @@
         "wurst": "^4.1.1"
     },
     "scripts": {
-        "start": "ENVIRONMENT_NAME=development node index.js",
+        "start:development": "ENVIRONMENT_NAME=development node index.js",
         "start:local": "ENVIRONMENT_NAME=local nodemon start index.js",
+        "start": "yarn start:local",
         "format": "prettier-standard './**/**/*.js'",
         "lint": "npm run lint:js",
         "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
@@ -84,7 +85,8 @@
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-react": "^7.16.0",
         "eslint-plugin-standard": "^4.0.1",
-        "jest": "^24.0.0",
+        "jest": "^26.4.0",
+        "jest-extended": "^0.11.5",
         "link-module-alias": "^1.2.0",
         "lint-staged": "^9.4.2",
         "pre-commit": "1.2.2",

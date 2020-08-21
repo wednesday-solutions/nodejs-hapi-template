@@ -1,14 +1,23 @@
 #!/bin/bash
 set -a . ".env$ENVIRONMENT_NAME" set +a
+# create the db for local builds
 sleep 10
-npx sequelize db:drop
-npx sequelize db:create
+if [ "$ENVIRONMENT_NAME" == "local" ]
+    then 
+        npx sequelize db:create
+fi
+
+# run migrations
 npx sequelize db:migrate
 
-for file in seeders/*
-do
-   :
-   ./node_modules/.bin/sequelize db:seed --seed $file
-done
+# seed data for local builds 
+if [ "$ENVIRONMENT_NAME" == "local" ]
+    then 
+        for file in seeders/*
+        do
+        :
+        ./node_modules/.bin/sequelize db:seed --seed $file
+        done
+fi
 
-yarn start
+yarn start:$ENVIRONMENT_NAME

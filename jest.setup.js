@@ -3,6 +3,8 @@ import { init } from './lib/testServer';
 import { mockDB } from 'utils/testUtils';
 import { ONE_USER_DATA } from 'utils/constants';
 
+require('jest-extended');
+
 mockDB();
 
 beforeEach(async () => {

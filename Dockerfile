@@ -6,11 +6,10 @@ ADD . /app
 
 WORKDIR /app
 
-RUN apk update &&\
-    apk add git
+RUN apk update && apk add git
 
 RUN yarn
 
-RUN chmod +x wait-for.sh
+CMD ["sh", "./migrate-and-run.sh"]
 
 EXPOSE 9000

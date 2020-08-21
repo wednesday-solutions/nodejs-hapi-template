@@ -11,7 +11,7 @@ services:
     restart: always
     command: mysqld
     ports:
-      - 3307:3306
+      - 3306:3306
     environment: 
       MYSQL_DATABASE: temp_dev
       MYSQL_USER: user

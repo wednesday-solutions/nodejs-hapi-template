@@ -1,0 +1,37 @@
+version: '3'
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  mysql: 
+    image: mysql
+    restart: always
+    command: mysqld
+    ports:
+      - 3307:3306
+    environment: 
+      MYSQL_DATABASE: temp_dev
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+
+  app:
+    build: .
+    restart: always
+    command: sh -c './wait-for.sh mysql:3306 -- sh setup-local.sh'
+    ports:
+      - 9000:9000
+    depends_on:
+      - mysql
+      - redis
+    env_file: 
+      - .env.development
+    environment:
+      DB_HOST: mysql
+      REDIS_HOST: redis
+    links: 
+      - mysql
+      - redis

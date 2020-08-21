@@ -65,7 +65,7 @@ export const isScopeHigher = (token, scope) => {
  * @param {any} token
  * @returns {any}
  */
-const getScopeFromToken = token => get(token, 'metadata.scope.scope');
+export const getScopeFromToken = token => get(token, 'metadata.scope.scope');
 /**
  * Checks if the oauthClientId that is passed is a resource of the
  * token bearer and if the token bearer has the authority to grant the scope that was
@@ -105,8 +105,14 @@ export const getScope = oauthClientId =>
  * @param  {Number} userId
  * @returns {Boolean}
  */
-export async function hasScopeOverUser(oauthClientId, userId) {
-    const scope = await getScope(oauthClientId);
+export async function hasScopeOverUser({
+    oauthClientId,
+    userId,
+    scope = null
+}) {
+    if (scope === null) {
+        scope = await getScope(oauthClientId);
+    }
     if (includes(SUPER_SCOPES, scope)) {
         return true;
     } else if (scope === SCOPE_TYPE.ADMIN) {
@@ -127,7 +133,7 @@ export async function hasScopeOverUser(oauthClientId, userId) {
  * @param  {Number} resourceId
  * @returns {Boolean}
  */
-export async function validateResources(metadata, resourceType, resourceId) {
+export function validateResources(metadata, resourceType, resourceId) {
     const resources = get(metadata, 'resources', []);
     return !isEmpty(
         find(
@@ -145,9 +151,9 @@ export async function validateResources(metadata, resourceType, resourceId) {
  * @param  {Object} credentials
  * @returns {Boolean}
  */
-export async function validateScopeForRoute(paths, request, credentials) {
+export async function validateScopeForRoute({ paths, request, credentials }) {
     let isAllowed = true;
-    const client = await getMetaDataByOAuthClientId(credentials.oauthClientId);
+    const scope = await getScope(credentials.oauthClientId);
     await Promise.all(
         paths.map(async route => {
             if (
@@ -156,9 +162,13 @@ export async function validateScopeForRoute(paths, request, credentials) {
                     route.method.toUpperCase()
             ) {
                 isAllowed =
-                    includes(route.scopes, client.scope.scope) &&
+                    includes(route.scopes, scope) &&
                     (route.customValidator
-                        ? await route.customValidator(credentials, request)
+                        ? await route.customValidator({
+                              oauthClientId: get(credentials, 'oauthClientId'),
+                              userId: get(request, 'params.userId'),
+                              scope
+                          })
                         : true);
             }
         })

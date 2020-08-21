@@ -5,8 +5,8 @@ import { SCOPE_TYPE, GRANT_TYPE } from 'utils/constants';
 describe('oauthClients Dao tests', () => {
     let spy;
     const grantType = GRANT_TYPE.CLIENT_CREDENTIALS;
-    const oauthClient = mockData.MOCK_OAUTH_CLIENTS;
-    const clientId = mockData.MOCK_OAUTH_CLIENTS.clientId;
+    const oauthClient = mockData.MOCK_OAUTH_CLIENTS();
+    const clientId = mockData.MOCK_OAUTH_CLIENTS().clientId;
     let clientSecret = 'TEST';
     const resources = mockData.MOCK_OAUTH_CLIENT_RESOURCES;
     const scope = SCOPE_TYPE.ADMIN;

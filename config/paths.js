@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { SCOPE_TYPE } from 'utils/constants';
 import { hasScopeOverUser } from 'utils/index';
 
@@ -15,7 +14,7 @@ export const paths = [
     },
     {
         path: '/oauth2/resources/{resourceId}',
-        scopes: [SCOPE_TYPE.SUPER_ADMIN, SCOPE_TYPE.ADMIN.lue],
+        scopes: [SCOPE_TYPE.SUPER_ADMIN, SCOPE_TYPE.ADMIN],
         method: 'PATCH'
     },
     {
@@ -56,7 +55,7 @@ export const paths = [
             SCOPE_TYPE.ADMIN,
             SCOPE_TYPE.USER
         ],
-        method: 'POST'
+        method: 'GET'
     },
     {
         path: '/users',
@@ -76,10 +75,6 @@ export const paths = [
             SCOPE_TYPE.USER
         ],
         method: 'GET',
-        customValidator: async (credentials, request) =>
-            await hasScopeOverUser(
-                get(credentials, 'oauthClientId'),
-                get(request, 'params.userId')
-            )
+        customValidator: async payload => await hasScopeOverUser(payload)
     }
 ];

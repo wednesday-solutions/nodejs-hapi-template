@@ -14,11 +14,11 @@ export default {
             throw unauthorized(`Access denied. Unauthorized user.`);
         }
         const artifacts = credentials.metadata;
-        const isValid = await validateScopeForRoute(
+        const isValid = await validateScopeForRoute({
             paths,
             request,
             credentials
-        );
+        });
         updateAccessToken(token, SLIDING_WINDOW);
 
         return {

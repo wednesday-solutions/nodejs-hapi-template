@@ -1,8 +1,9 @@
 import { users } from 'models';
 import { init } from '../lib/testServer';
 import { mockData } from './mockData';
+import { DEFAULT_METADATA_OPTIONS } from './constants';
 
-export function configDB() {
+export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
     const SequelizeMock = require('sequelize-mock');
     const DBConnectionMock = new SequelizeMock();
 
@@ -12,7 +13,7 @@ export function configDB() {
 
     const oauthClientsMock = DBConnectionMock.define(
         'oauth_clients',
-        mockData.MOCK_OAUTH_CLIENTS
+        mockData.MOCK_OAUTH_CLIENTS(metadataOptions)
     );
     oauthClientsMock.findOne = query => oauthClientsMock.findById(query);
 
@@ -47,9 +48,12 @@ export function bustDB() {
     users.sync({ force: true }); // this will clear all the entries in your table.
 }
 
-export async function mockDB(mockCallback = () => {}) {
+export async function mockDB(
+    mockCallback = () => {},
+    metadataOptions = DEFAULT_METADATA_OPTIONS
+) {
     jest.doMock('models', () => {
-        const sequelizeData = configDB();
+        const sequelizeData = configDB(metadataOptions);
         if (mockCallback) {
             mockCallback(sequelizeData);
         }
@@ -57,11 +61,14 @@ export async function mockDB(mockCallback = () => {}) {
     });
 }
 
-export const resetAndMockDB = async mockDBCallback => {
+export const resetAndMockDB = async (
+    mockDBCallback = () => {},
+    metadataOptions = DEFAULT_METADATA_OPTIONS
+) => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     jest.resetModules();
-    mockDB(mockDBCallback);
+    mockDB(mockDBCallback, metadataOptions);
     const server = await init();
     return server;
 };

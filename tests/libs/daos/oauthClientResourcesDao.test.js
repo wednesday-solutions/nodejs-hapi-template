@@ -14,7 +14,7 @@ describe('oauthClientResources dao', () => {
     ];
     let spy;
     const id = 1;
-    const oauthClientId = authClientsMockData.clientId;
+    const oauthClientId = authClientsMockData().clientId;
     const token = { oauthClientId };
     const superAdminToken = createMockTokenWithScope(SCOPE_TYPE.SUPER_ADMIN);
     const userToken = createMockTokenWithScope(SCOPE_TYPE.USER);

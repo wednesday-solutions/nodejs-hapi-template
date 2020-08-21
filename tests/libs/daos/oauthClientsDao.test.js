@@ -5,6 +5,7 @@ import { SCOPE_TYPE, GRANT_TYPE } from 'utils/constants';
 describe('oauthClients Dao tests', () => {
     let spy;
     const grantType = GRANT_TYPE.CLIENT_CREDENTIALS;
+    const oauthClient = mockData.MOCK_OAUTH_CLIENTS;
     const clientId = mockData.MOCK_OAUTH_CLIENTS.clientId;
     let clientSecret = 'TEST';
     const resources = mockData.MOCK_OAUTH_CLIENT_RESOURCES;
@@ -51,6 +52,17 @@ describe('oauthClients Dao tests', () => {
                 })
             );
         });
+        it('should return null if oauthClient was not found', async () => {
+            await resetAndMockDB(db => {
+                db.oauth_clients.findOne = () =>
+                    new Promise(resolve => resolve(null));
+            });
+            const {
+                getMetaDataByOAuthClientId
+            } = require('daos/oauthClientsDao');
+            const metadata = await getMetaDataByOAuthClientId(clientId);
+            expect(metadata).toBe(null);
+        });
     });
 
     describe('createOauthClient', () => {
@@ -91,6 +103,113 @@ describe('oauthClients Dao tests', () => {
                     clientId,
                     clientSecret,
                     grantType
+                }),
+                expect.objectContaining({ transaction })
+            );
+            jest.clearAllMocks();
+            // secret set as '' by default
+            expect(
+                createOauthClient(
+                    {
+                        clientId,
+                        grantType,
+                        scope,
+                        resources
+                    },
+                    transaction
+                )
+            ).rejects.toThrow();
+        });
+        it('should call bulkCreate on oauthClientResources with the correct parameters', async () => {
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.oauth_client_resources, 'bulkCreate');
+            });
+            const { createOauthClient } = require('daos/oauthClientsDao');
+            await createOauthClient(
+                {
+                    clientId,
+                    clientSecret,
+                    grantType,
+                    scope,
+                    resources
+                },
+                transaction
+            );
+            expect(spy).toBeCalledWith(
+                expect.arrayContaining(
+                    resources.map(resource => ({
+                        ...resource,
+                        oauthClientId: oauthClient.id
+                    }))
+                ),
+                expect.objectContaining({ transaction })
+            );
+            jest.clearAllMocks();
+            // no resources passed
+            await createOauthClient(
+                {
+                    clientId,
+                    clientSecret,
+                    grantType,
+                    scope
+                },
+                transaction
+            );
+            expect(spy).not.toBeCalled();
+        });
+        it('should call create on oauth_client_scopes', async () => {
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.oauth_client_scopes, 'create');
+            });
+            const { createOauthClient } = require('daos/oauthClientsDao');
+            await createOauthClient(
+                {
+                    clientId,
+                    clientSecret,
+                    grantType,
+                    scope,
+                    resources
+                },
+                transaction
+            );
+            expect(spy).toBeCalledWith(
+                expect.objectContaining({
+                    scope,
+                    oauthClientId: oauthClient.id
+                }),
+                expect.objectContaining({ transaction })
+            );
+            jest.clearAllMocks();
+            // no scope passed
+            await createOauthClient(
+                {
+                    clientId,
+                    clientSecret,
+                    grantType,
+                    resources
+                },
+                transaction
+            );
+            expect(spy).not.toBeCalled();
+        });
+        it('should work without clientSecret if grantType is not CLIENT_CREDENTIALS', async () => {
+            await resetAndMockDB(db => {
+                spy = jest.spyOn(db.oauth_client_scopes, 'create');
+            });
+            const { createOauthClient } = require('daos/oauthClientsDao');
+            await createOauthClient(
+                {
+                    clientId,
+                    grantType: 'TEST',
+                    scope,
+                    resources
+                },
+                transaction
+            );
+            expect(spy).toBeCalledWith(
+                expect.objectContaining({
+                    scope,
+                    oauthClientId: oauthClient.id
                 }),
                 expect.objectContaining({ transaction })
             );

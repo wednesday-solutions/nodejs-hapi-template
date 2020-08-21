@@ -53,6 +53,16 @@ describe('oauthAccessTokenDao', () => {
                 })
             );
         });
+        it('should catch an error if no metadata is found', async () => {
+            await resetAndMockDB(db => {
+                db.oauth_clients.findOne = () =>
+                    new Promise(resolve => resolve(null));
+            });
+            const { createAccessToken } = require('daos/oauthAccessTokensDao');
+            expect(
+                createAccessToken(authClientsMockData.id, ttl)
+            ).rejects.toThrow();
+        });
     });
 
     describe('findAccessToken', () => {
@@ -65,6 +75,15 @@ describe('oauthAccessTokenDao', () => {
             'oauthClientId'
         ];
         const accessToken = 1;
+
+        it('should return a null token if no tokens are found', async () => {
+            await resetAndMockDB(db => {
+                db.oauth_access_tokens.findOne = async () => null;
+            });
+            const { findAccessToken } = require('daos/oauthAccessTokensDao');
+            expect(await findAccessToken(accessToken)).toEqual(null);
+        });
+
         it('should call findOne in the oauthAccessTokens table with the correct parameters ', async () => {
             await resetAndMockDB(db => {
                 spy = jest.spyOn(db.oauth_access_tokens, 'findOne');

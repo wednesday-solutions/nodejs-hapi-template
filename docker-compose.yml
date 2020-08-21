@@ -1,0 +1,25 @@
+version: "3"
+services:
+  db_mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    restart: always
+    env_file:
+      - .env.development
+  redis:
+    depends_on:
+      - db_mysql
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--bind", "redis", "--port", "6379"]
+  app:
+    depends_on:
+      - redis
+    build: .
+    restart: always
+    ports:
+      - 9000:9000
+    env_file:
+      - .env.development

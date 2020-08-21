@@ -1,6 +1,7 @@
 module.exports = {
     development: {
         url: process.env.DB_URI,
+        host: process.env.MYSQL_HOST,
         logging: true,
         dialect: 'mysql',
         pool: {

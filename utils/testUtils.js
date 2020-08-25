@@ -31,10 +31,19 @@ export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
     oauthClientResourcesMock.findOne = query =>
         oauthClientResourcesMock.findById(query);
 
+    oauthClientResourcesMock.findAll = query =>
+        oauthClientResourcesMock.findById(query);
+
     const oauthClientScopesMock = DBConnectionMock.define(
         'oauth_client_scopes',
         mockData.MOCK_OAUTH_CLIENT_SCOPES
     );
+
+    oauthClientScopesMock.findOne = query =>
+        oauthClientScopesMock.findById(query);
+
+    oauthClientScopesMock.findAll = query =>
+        oauthClientScopesMock.findById(query);
     return {
         users: userMock,
         oauth_clients: oauthClientsMock,

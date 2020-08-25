@@ -45,14 +45,14 @@ export const mockData = {
     }),
     MOCK_OAUTH_CLIENT_TWO: {
         id: 1,
-        clientId: 'TEST_CLIENT_ID_2',
+        clientId: 'TEST_CLIENT_ID_1',
         clientSecret: 'TEST_CLIENT_SECRET',
         grantType: GRANT_TYPE.CLIENT_CREDENTIALS,
         ...mockMetadata(SCOPE_TYPE.USER)
     },
     MOCK_OAUTH_CLIENT_SUPER_USER: {
         id: 1,
-        clientId: 'TEST_CLIENT_ID_2',
+        clientId: 'TEST_CLIENT_ID_1',
         clientSecret: 'TEST_CLIENT_SECRET',
         grantType: GRANT_TYPE.CLIENT_CREDENTIALS,
         ...mockMetadata(SCOPE_TYPE.SUPER_ADMIN)

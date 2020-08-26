@@ -4,6 +4,7 @@
 
 ## Out of the box support for
 
+- Dockerization
 - Authorization middleware
 - Redis Cache
 - Rate Limited endpoints

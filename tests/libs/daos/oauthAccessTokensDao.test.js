@@ -5,6 +5,7 @@ import server from 'config/server';
 describe('oauthAccessTokenDao', () => {
     const { MOCK_OAUTH_CLIENTS: authClientsMockData } = mockData;
     const metaData = mockMetadata();
+    const oauthClientId = authClientsMockData().id;
 
     describe('createAccessToken', () => {
         let spy;
@@ -19,12 +20,12 @@ describe('oauthAccessTokenDao', () => {
                 spy = jest.spyOn(db.oauth_access_tokens, 'create');
             });
             const { createAccessToken } = require('daos/oauthAccessTokensDao');
-            await createAccessToken(authClientsMockData.id, ttl);
+            await createAccessToken(oauthClientId, ttl);
 
             expect(spy).toHaveBeenCalledWith(
                 expect.objectContaining({
                     accessToken: expect.any(String),
-                    oauthClientId: authClientsMockData.id,
+                    oauthClientId: oauthClientId,
                     expiresIn: ttl,
                     expiresOn: expect.any(String),
                     tokenType: BEARER,
@@ -46,10 +47,10 @@ describe('oauthAccessTokenDao', () => {
                 spy = jest.spyOn(db.oauth_clients, 'findOne');
             });
             const { createAccessToken } = require('daos/oauthAccessTokensDao');
-            await createAccessToken(authClientsMockData.id, ttl);
+            await createAccessToken(oauthClientId, ttl);
             expect(spy).toBeCalledWith(
                 expect.objectContaining({
-                    where: { id: authClientsMockData.id }
+                    where: { id: oauthClientId }
                 })
             );
         });
@@ -59,9 +60,7 @@ describe('oauthAccessTokenDao', () => {
                     new Promise(resolve => resolve(null));
             });
             const { createAccessToken } = require('daos/oauthAccessTokensDao');
-            expect(
-                createAccessToken(authClientsMockData.id, ttl)
-            ).rejects.toThrow();
+            expect(createAccessToken(oauthClientId, ttl)).rejects.toThrow();
         });
     });
 

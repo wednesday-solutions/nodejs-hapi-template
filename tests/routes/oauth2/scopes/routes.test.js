@@ -119,7 +119,7 @@ describe('/oauth2/scopes route tests', () => {
             auth: superAdminAuth,
             payload: updatePayload
         });
-        console.log({ res });
+
         expect(res.statusCode).toEqual(200);
         expect(getScopeFromResponse(res).id).toEqual(1);
     });

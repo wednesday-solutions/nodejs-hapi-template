@@ -43,8 +43,8 @@ describe('/user route tests ', () => {
             method: 'GET',
             url: '/users'
         });
+
         expect(res.statusCode).toEqual(200);
-        console.log(res.result);
         const userOne = res.result.results[0];
         expect(userOne.id).toEqual(user.id);
         expect(userOne.first_name).toEqual(user.firstName);

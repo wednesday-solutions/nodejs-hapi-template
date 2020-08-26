@@ -35,7 +35,7 @@ describe('/oauth2/resources route tests', () => {
             auth,
             payload
         });
-        console.log(res.result.oauth_client_resources[0]);
+
         expect(res.statusCode).toEqual(200);
         expect(res.result.client_id).toEqual(auth.credentials.oauthClientId);
         expect(

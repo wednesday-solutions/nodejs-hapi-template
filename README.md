@@ -20,6 +20,9 @@
 ### Pre-requisites
 
 * node
+* docker
+* docker-compose
+* mysql
 
 ### Installation
 

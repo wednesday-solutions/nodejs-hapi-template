@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/wednesday-solutions/serverless/blob/master/serverless_github.svg" width="480" height="460" />
+<img align="left" src="https://github.com/wednesday-solutions/nodejs-hapi-template/blob/master/nodejs_hapi_template_github.svg" width="480" height="460" />
 
 <div>
   <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" align="left" style="margin-left: 0;">
@@ -35,8 +35,6 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 
   <span>We’re always looking for people who value their work, so come and join us. <a href="https://www.wednesday.is/hiring">We are hiring!</a></span>
 </div>
-
-# Node.js Hapi Template
 
 ![Nodejs Hapi Template](https://github.com/wednesday-solutions/node-js-hapi-template/workflows/Nodejs%20Hapi%20Template/badge.svg)
 

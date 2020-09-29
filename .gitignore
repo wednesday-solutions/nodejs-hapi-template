@@ -90,3 +90,9 @@ typings/
 
 # DS_Store
 .DS_Store
+
+# Vim swap/tmp files
+*~
+*.swp
+*.swo
+

@@ -83,6 +83,14 @@ const initServer = async () => {
                     {
                         name: 'reset-cache',
                         description: 'Cache invalidation endpoints'
+                    },
+                    {
+                        name: 'bookings',
+                        description: 'Booking related endpoints'
+                    },
+                    {
+                        name: 'cabs',
+                        description: 'Cabs related endpoints'
                     }
                 ]
             }

@@ -1,0 +1,13 @@
+CREATE TABLE bookings (
+	id              INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	customer_id 	INTEGER,
+	cab_id 		INTEGER,
+	from_loc 	INTEGER,
+	to_loc 		INTEGER,
+	created_at      DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL, 
+	updated_at      DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+	FOREIGN KEY (customer_id) REFERENCES users (id) ON DELETE SET NULL,
+	FOREIGN KEY (cab_id) REFERENCES cabs (id) ON DELETE SET NULL,
+	FOREIGN KEY (from_loc) REFERENCES locations (id) ON DELETE SET NULL,
+	FOREIGN KEY (to_loc) REFERENCES locations (id) ON DELETE SET NULL
+);

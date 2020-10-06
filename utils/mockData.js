@@ -75,6 +75,27 @@ export const mockData = {
         id: 1,
         oauthClientId: 'TEST_CLIENT_ID_1',
         scope: SCOPE_TYPE.SUPER_ADMIN
+    },
+    MOCK_LOCATIONS: [
+        {
+            id: 1,
+            name: 'New Thippasandra',
+            latitude: -36.65831,
+            longitude: 2.51266
+        },
+        {
+            id: 2,
+            name: 'Indiranagar',
+            latitude: -15.04943,
+            longitude: 169.35806
+        }
+    ],
+    MOCK_BOOKING: {
+        id: 1,
+        customerId: 1,
+        cabId: 1,
+        fromLoc: 1,
+        toLoc: 1
     }
 };
 

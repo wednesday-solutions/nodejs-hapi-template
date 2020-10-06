@@ -36,7 +36,8 @@
         "nodemon": "^2.0.4",
         "qs": "^6.9.1",
         "semver": "^6.3.0",
-        "sequelize": "^5.21.2",
+        "sequelize": "^5.22.3",
+        "sequelize-auto": "^0.6.2",
         "uuid": "^3.3.3",
         "wurst": "^4.1.1"
     },

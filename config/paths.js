@@ -76,5 +76,21 @@ export const paths = [
         ],
         method: 'GET',
         customValidator: async payload => await hasScopeOverUser(payload)
-    }
+    },
+    {
+        path: '/cars',
+        method: 'POST'
+    },
+    {
+        path: '/cars',
+        method: 'GET'
+    },
+    {
+        path: '/bookings',
+        method: 'POST'
+    },
+    {
+        path: '/bookings',
+        method: 'GET'
+    },
 ];

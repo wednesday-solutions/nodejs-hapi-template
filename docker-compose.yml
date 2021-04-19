@@ -23,3 +23,6 @@ services:
       - 9000:9000
     env_file:
       - .env.development
+    volumes: # hot reloading
+      - ./:/usr/src/app # copy to /usr/src/app
+      - /usr/src/app/node_modules #do not copy anything to the usr/src/app/node_modules

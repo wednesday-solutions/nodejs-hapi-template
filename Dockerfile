@@ -1,13 +1,9 @@
 FROM node:13-alpine
-
-WORKDIR /usr/src/app
-
-COPY package.json yarn.lock ./
-
+RUN mkdir -p /app
+ADD . /app
+WORKDIR /app
+RUN apk update && apk add git
 RUN yarn
 
-COPY . .
-
-EXPOSE 9000
-
 CMD ["sh", "./migrate-and-run.sh"]
+EXPOSE 9000

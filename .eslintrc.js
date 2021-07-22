@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const prettierOptions = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
+    fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8')
 );
 
 module.exports = {
@@ -20,6 +20,9 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
+        'import/no-webpack-loader-syntax': 0,
+        'key-spacing': [2, { beforeColon: false, afterColon: true }],
+        'arrow-parens': ['error', 'as-needed'],
         'prettier/prettier': ['error', prettierOptions],
         'arrow-body-style': [2, 'as-needed'],
         'class-methods-use-this': 0,

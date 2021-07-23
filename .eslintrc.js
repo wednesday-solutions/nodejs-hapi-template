@@ -7,12 +7,7 @@ const prettierOptions = JSON.parse(
 
 module.exports = {
     parser: 'babel-eslint',
-    extends: [
-        'plugin:prettier/recommended',
-        'prettier/flowtype',
-        'prettier/react',
-        'prettier/standard'
-    ],
+    extends: ['prettier'],
     plugins: ['prettier'],
     env: {
         jest: true,

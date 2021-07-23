@@ -13,6 +13,22 @@
         "url": "https://github.com/wednesday-solutions/node-js-hapi-template/issues"
     },
     "homepage": "https://github.com/wednesday-solutions/node-js-hapi-template#readme",
+    "scripts": {
+        "start:development": "ENVIRONMENT_NAME=development node index.js",
+        "start:local": "ENVIRONMENT_NAME=local nodemon start index.js",
+        "start": "yarn start:local",
+        "format": "prettier-standard './**/**/*.js'",
+        "lint": "npm run lint:js",
+        "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
+        "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
+        "lint:js": "npm run lint:eslint -- . ",
+        "lint:staged": "lint-staged",
+        "prettify": "prettier --write",
+        "precommit": "lint:staged",
+        "postinstall": "link-module-alias",
+        "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+        "test": "jest --coverage"
+    },
     "dependencies": {
         "@hapi/boom": "^9.1.3",
         "@hapi/catbox-redis": "^6.0.2",
@@ -39,22 +55,6 @@
         "sequelize": "^6.6.5",
         "uuid": "^8.3.2",
         "wurst": "^5.0.3"
-    },
-    "scripts": {
-        "start:development": "ENVIRONMENT_NAME=development node index.js",
-        "start:local": "ENVIRONMENT_NAME=local nodemon start index.js",
-        "start": "yarn start:local",
-        "format": "prettier-standard './**/**/*.js'",
-        "lint": "npm run lint:js",
-        "lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts",
-        "lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern internals/scripts --fix",
-        "lint:js": "npm run lint:eslint -- . ",
-        "lint:staged": "lint-staged",
-        "prettify": "prettier --write",
-        "precommit": "lint:staged",
-        "postinstall": "link-module-alias",
-        "preinstall": "command -v link-module-alias && link-module-alias clean || true",
-        "test": "jest --coverage"
     },
     "devDependencies": {
         "@babel/cli": "^7.14.8",
@@ -92,9 +92,9 @@
         "pre-commit": "1.2.2",
         "prettier": "2.3.2",
         "prettier-config-standard": "^1.0.1",
-        "sequelize-cli": "^5.5.1",
+        "sequelize-cli": "^6.2.0",
         "sequelize-mock": "^0.10.2",
-        "shelljs": "^0.8.3"
+        "shelljs": "^0.8.4"
     },
     "precommit": "lint:staged",
     "lint-staged": {

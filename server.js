@@ -129,7 +129,7 @@ const initServer = async () => {
 
     await server.start();
 
-    const onPreHandler = function(request, h) {
+    const onPreHandler = function (request, h) {
         const requestQueryParams = request.query;
         const requestPayload = request.payload;
         request.query = mapKeysDeep(requestQueryParams, keys =>
@@ -139,7 +139,7 @@ const initServer = async () => {
         return h.continue;
     };
 
-    const onPreResponse = function(request, h) {
+    const onPreResponse = function (request, h) {
         const response = request.response;
         const responseSource = response.source;
         response.source = mapKeysDeep(responseSource, keys => snakeCase(keys));

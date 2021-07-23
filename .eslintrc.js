@@ -7,7 +7,12 @@ const prettierOptions = JSON.parse(
 
 module.exports = {
     parser: 'babel-eslint',
-    extends: ['prettier-standard'],
+    extends: [
+        'plugin:prettier/recommended',
+        'prettier/flowtype',
+        'prettier/react',
+        'prettier/standard'
+    ],
     plugins: ['prettier'],
     env: {
         jest: true,
@@ -37,8 +42,8 @@ module.exports = {
         'max-len': 0,
         'newline-per-chained-call': 0,
         'no-confusing-arrow': 0,
-        'no-console': 1,
-        'no-unused-vars': 2,
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-unused-vars': ['error', { args: 'none' }],
         'no-use-before-define': 0,
         'prefer-template': 2,
         'require-yield': 0

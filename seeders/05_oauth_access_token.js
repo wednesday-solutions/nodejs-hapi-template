@@ -5,10 +5,10 @@ module.exports = {
         const { SCOPE_TYPE, OAUTH_CLIENT_ID } = require('esm')(
             module /* , options */
         )('utils/constants');
-
+        const { v4: uuidv4 } = require('uuid');
         const arr = range(1, 3).map(value => ({
             oauth_client_id: value,
-            access_token: require('uuid/v4')().replace(/-/g, ''),
+            access_token: uuidv4().replace(/-/g, ''),
             expires_in: 86400,
             metadata: JSON.stringify({
                 scope: {

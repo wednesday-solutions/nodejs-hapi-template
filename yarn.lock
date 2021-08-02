@@ -1659,7 +1659,7 @@
   dependencies:
     moment "2.x.x"
 
-"@hapi/joi@16.x.x", "@hapi/joi@^16.1.8":
+"@hapi/joi@16.x.x":
   version "16.1.8"
   resolved "https://registry.yarnpkg.com/@hapi/joi/-/joi-16.1.8.tgz#84c1f126269489871ad4e2decc786e0adef06839"
   integrity sha512-wAsVvTPe+FwSrsAurNt5vkg3zo+TblvC5Bb1zMVK6SJzZqw9UrJnexxR+76cpePmtUZKHAPxcQ2Bf7oVHyahhg==
@@ -5374,11 +5374,11 @@ hapi-rate-limit@^5.0.0:
 
 "hapi-swaggerui@https://github.com/wednesday-solutions/hapi-swaggerui/#master":
   version "13.0.1"
-  resolved "https://github.com/wednesday-solutions/hapi-swaggerui/#285fcf6ff7d6405e28a1d556f0f6c445de3a6350"
+  resolved "https://github.com/wednesday-solutions/hapi-swaggerui/#50a8f605781060efe7496f006629bc71af5329fa"
   dependencies:
     "@hapi/boom" "^8.0.1"
     "@hapi/hoek" "^8.2.4"
-    "@hapi/joi" "^16.1.8"
+    "@hapi/joi" "^17.1.1"
     handlebars "^4.5.3"
     http-status "^1.0.1"
     json-schema-ref-parser "^6.1.0"

@@ -12,7 +12,7 @@ function getVersion(currentFileName) {
 }
 
 module.exports = {
-    migrate: async function(currentFileName, queryInterface) {
+    migrate: async function (currentFileName, queryInterface) {
         const version = getVersion(
             currentFileName.split('/')[currentFileName.split('/').length - 1]
         );

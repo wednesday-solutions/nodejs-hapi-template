@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import get from 'lodash/get';
 import find from 'lodash/find';
 import isNil from 'lodash/isNil';
@@ -31,7 +31,7 @@ export const getEnv = () => {
 export const formatWithTimestamp = date =>
     date ? date.format(TIMESTAMP) : null;
 
-export const strippedUUID = () => uuid.v4().replace(/-/g, '');
+export const strippedUUID = () => uuidv4().replace(/-/g, '');
 /**
  * checks if this token belongs to an ADMIN
  * @date 2020-03-21

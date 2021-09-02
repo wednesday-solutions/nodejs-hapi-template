@@ -2,12 +2,12 @@ const fs = require('fs');
 const path = require('path');
 
 const prettierOptions = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
+    fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8')
 );
 
 module.exports = {
     parser: 'babel-eslint',
-    extends: ['prettier-standard'],
+    extends: ['prettier'],
     plugins: ['prettier'],
     env: {
         jest: true,
@@ -20,6 +20,9 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
+        'import/no-webpack-loader-syntax': 0,
+        'key-spacing': [2, { beforeColon: false, afterColon: true }],
+        'arrow-parens': ['error', 'as-needed'],
         'prettier/prettier': ['error', prettierOptions],
         'arrow-body-style': [2, 'as-needed'],
         'class-methods-use-this': 0,
@@ -34,8 +37,8 @@ module.exports = {
         'max-len': 0,
         'newline-per-chained-call': 0,
         'no-confusing-arrow': 0,
-        'no-console': 1,
-        'no-unused-vars': 2,
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'no-unused-vars': ['error', { args: 'none' }],
         'no-use-before-define': 0,
         'prefer-template': 2,
         'require-yield': 0

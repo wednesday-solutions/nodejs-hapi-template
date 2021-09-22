@@ -18,6 +18,10 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
+            - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  threshold: 80
             - name: Install dependencies
               run: npm install
               env:

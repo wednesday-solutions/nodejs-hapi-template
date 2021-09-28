@@ -1,8 +1,8 @@
 name: Jest Coverage Report with Annotations (CI)
 on:
     pull_request:
-        branches: 
-          - master
+        branches:
+            - master
 jobs:
     coverage_report:
         name: Jest Coverage Report
@@ -11,13 +11,13 @@ jobs:
             matrix:
                 node-version: [14.x]
         steps:
+            - uses: actions/checkout@v2
             - name: Get Threshold
               id: threshold
               uses: notiz-dev/github-action-json-property@release
               with:
-                path: 'jest.config.json'
-                prop_path: 'coverageThreshold.global.statements'
-            - uses: actions/checkout@v2
+                  path: 'jest.config.json'
+                  prop_path: 'coverageThreshold.global.statements'
             - name: Test and generate coverage report
               uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
               with:

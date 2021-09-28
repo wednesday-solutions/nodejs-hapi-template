@@ -82,8 +82,8 @@ jobs:
                   author_email: git@wednesday.is
                   message: 'Update badges'
                   add: 'badges/'
-            - name: Push changes
-              uses: ad-m/github-push-action@master
+            - name: Pushing to the protected branch 'protected'
+              uses: CasperWA/push-protected@v2
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: ${{ github.ref }}
+                  token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+                  branch: ${GITHUB_REF#refs/*/}

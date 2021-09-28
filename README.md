@@ -46,6 +46,15 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 <img src='./badges/badge-lines.svg'  height="20"/>
 <img src='./badges/badge-functions.svg' height="20"/>
 </div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+---
+
 ## Out of the box support for
 
 -   Dockerization

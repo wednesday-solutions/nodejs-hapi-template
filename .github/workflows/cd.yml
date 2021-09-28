@@ -71,6 +71,9 @@ jobs:
               with:
                   cache: 'yarn'
                   node-version: ${{ matrix.node-version }}
+            - name: Set branch name
+              id: vars
+              run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
             - name: Install dependencies
               run: yarn install
             - name: Create badges
@@ -83,8 +86,8 @@ jobs:
                   message: 'Update badges'
                   add: 'badges/'
                   push: false
-            - name: Pushing to the protected branch 'protected'
+            - name: Pushing to a protected branch
               uses: CasperWA/push-protected@v2
               with:
                   token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-                  branch: ${GITHUB_REF#refs/*/}
+                  branch: ${{ steps.vars.outputs.stage }}

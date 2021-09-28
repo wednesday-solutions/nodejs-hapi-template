@@ -6,6 +6,7 @@
     "globals": {
         "server": null
     },
+    "coverageReporters": ["json-summary", "text", "lcov"],
     "coverageThreshold": {
         "global": {
             "statements": 88,

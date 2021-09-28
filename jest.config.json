@@ -1,0 +1,17 @@
+{
+    "setupFilesAfterEnv": ["./jest.setup.js"],
+    "clearMocks": true,
+    "restoreMocks": true,
+    "resetMocks": true,
+    "globals": {
+        "server": null
+    },
+    "coverageThreshold": {
+        "global": {
+            "statements": 88,
+            "branches": 88,
+            "functions": 88,
+            "lines": 88
+        }
+    }
+}

@@ -38,6 +38,14 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 
 ![Nodejs Hapi Template](https://github.com/wednesday-solutions/node-js-hapi-template/workflows/Nodejs%20Hapi%20Template/badge.svg)
 
+<div>
+<img src='./badges/badge-statements.svg' height="20"/>
+<img src='./badges/badge-branches.svg' height="20"/>
+</div>
+<div>
+<img src='./badges/badge-lines.svg'  height="20"/>
+<img src='./badges/badge-functions.svg' height="20"/>
+</div>
 ## Out of the box support for
 
 -   Dockerization

@@ -380,7 +380,7 @@ describe('winston logger tests', () => {
         );
     });
 
-    it('should request trace', () => {
+    it('should add request trace', () => {
         jest.mock('cls-rtracer', () => {
             const rTracer = {
                 id: jest.fn().mockReturnValue(7)

@@ -331,3 +331,81 @@ describe('util tests', () => {
         });
     });
 });
+
+describe('winston logger tests', () => {
+    beforeEach(() => {
+        jest.resetModules();
+        jest.mock('winston', () => {
+            const mockFormat = {
+                combine: jest.fn(),
+                timestamp: jest.fn(),
+                errors: jest.fn(),
+                printf: jest.fn()
+            };
+            const mockTransports = {
+                Console: jest.fn()
+            };
+            const mockLogger = {
+                info: jest.fn(),
+                add: jest.fn()
+            };
+            return {
+                format: mockFormat,
+                transports: mockTransports,
+                createLogger: jest.fn(() => mockLogger)
+            };
+        });
+    });
+
+    it('should run mocked winston test', () => {
+        const { format } = require('winston');
+
+        let mockedFn;
+        format.printf.mockImplementation(templateFn => {
+            mockedFn = templateFn;
+        });
+
+        const { logger } = require('../index');
+
+        //invoke the logger.
+        logger().info('Mocking');
+
+        const info = {
+            timestamp: 123,
+            message: 'mock log'
+        };
+        const formatrTracerMock = mockedFn;
+        expect(formatrTracerMock(info)).toBe(
+            `${info.timestamp}: ${info.message}`
+        );
+    });
+
+    it('should add request trace', () => {
+        jest.mock('cls-rtracer', () => {
+            const rTracer = {
+                id: jest.fn().mockReturnValue(7)
+            };
+            return rTracer;
+        });
+
+        const { format } = require('winston');
+
+        let mockedFn;
+        format.printf.mockImplementation(templateFn => {
+            mockedFn = templateFn;
+        });
+
+        const { logger } = require('../index');
+        logger().info('Mocking');
+
+        const info = {
+            timestamp: 123,
+            message: 'mock log'
+        };
+        const tFn1 = mockedFn;
+        // mockedrTracerId
+        expect(tFn1(info)).toBe(
+            `${info.timestamp} [request-id:7]: ${info.message}`
+        );
+    });
+});

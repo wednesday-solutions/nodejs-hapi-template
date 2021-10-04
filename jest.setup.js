@@ -9,6 +9,8 @@ mockDB();
 
 beforeEach(async () => {
     global.server = await init();
+    jest.clearAllMocks();
+    jest.resetAllMocks();
     jest.resetModules();
 });
 

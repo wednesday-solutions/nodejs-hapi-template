@@ -14,6 +14,10 @@ import {
 import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
 import { findOneUser } from 'daos/userDao';
+import { createLogger, format, transports } from 'winston';
+import rTracer from 'cls-rtracer';
+
+const { combine, timestamp, printf } = format;
 
 export const getEnv = () => {
     switch (process.env.NODE_ENV) {
@@ -175,3 +179,16 @@ export async function validateScopeForRoute({ paths, request, credentials }) {
     );
     return isAllowed;
 }
+
+export const logger = () => {
+    const rTracerFormat = printf(info => {
+        const rid = rTracer.id();
+        return rid
+            ? `${info.timestamp} [request-id:${rid}]: ${info.message}`
+            : `${info.timestamp}: ${info.message}`;
+    });
+    return createLogger({
+        format: combine(timestamp(), rTracerFormat),
+        transports: [new transports.Console()]
+    });
+};

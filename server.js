@@ -11,6 +11,7 @@ import inert from '@hapi/inert';
 import vision from '@hapi/vision';
 import Pack from './package.json';
 import rateLimiter from 'hapi-rate-limit';
+import rTracer from 'cls-rtracer';
 
 import cors from 'hapi-cors';
 import serverConfig from 'config/server';
@@ -88,6 +89,10 @@ const initServer = async () => {
             }
         }
     ]);
+
+    await server.register({
+        plugin: rTracer.hapiPlugin
+    });
 
     // Register pagignation plugin
     await server.register({

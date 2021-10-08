@@ -4,7 +4,6 @@ on:
         branches:
             - develop
             - master
-            - 'push-action/**'
 jobs:
     # docker-build-push-deploy:
     #   name: Docker build, push and deploy

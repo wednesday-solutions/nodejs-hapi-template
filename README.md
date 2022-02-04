@@ -70,6 +70,7 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 -   docker
 -   docker-compose
 -   mysql
+-   redis
 
 ### Installation
 
@@ -120,6 +121,21 @@ To Access mysql
 
 -   Stop Server
     `mysql.server stop`
+    
+### redis Setup
+
+Install
+ 
+- `brew install redis`
+
+Start
+
+- `brew services start redis`
+
+Stop
+
+- `brew services stop redis`
+
 
 ### Migrations
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import moment from 'moment';
 import get from 'lodash/get';
 import {

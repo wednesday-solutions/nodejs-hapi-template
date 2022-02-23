@@ -23,7 +23,6 @@ module.exports = {
         'import/no-webpack-loader-syntax': 0,
         'key-spacing': [2, { beforeColon: false, afterColon: true }],
         'arrow-parens': ['error', 'as-needed'],
-        'prettier/prettier': ['error', prettierOptions],
         'arrow-body-style': [2, 'as-needed'],
         'class-methods-use-this': 0,
         'import/imports-first': 0,
@@ -41,7 +40,12 @@ module.exports = {
         'no-unused-vars': ['error', { args: 'none' }],
         'no-use-before-define': 0,
         'prefer-template': 2,
-        'require-yield': 0
+        'require-yield': 0,
+        'max-lines': [
+            'error',
+            { max: 300, skipBlankLines: true, skipComments: true }
+        ],
+        'prettier/prettier': ['error', prettierOptions]
     },
     settings: {
         'import/resolver': {

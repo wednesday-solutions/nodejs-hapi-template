@@ -179,13 +179,30 @@ export async function validateScopeForRoute({ paths, request, credentials }) {
     );
     return isAllowed;
 }
-
+export const stringifyWithCheck = message => {
+    try {
+        return JSON.stringify(message);
+    } catch (err) {
+        if (message.data) {
+            return stringifyWithCheck(message.data);
+        } else {
+            console.log(message);
+            return `unable to unfurl message: ${message}`;
+        }
+    }
+};
 export const logger = () => {
     const rTracerFormat = printf(info => {
         const rid = rTracer.id();
+        const infoSplat = info[Symbol.for('splat')] || [];
+        const infoSplatObject = { ...infoSplat };
         return rid
-            ? `${info.timestamp} [request-id:${rid}]: ${info.message}`
-            : `${info.timestamp}: ${info.message}`;
+            ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(
+                  info.message
+              )} ${stringifyWithCheck(infoSplatObject)}`
+            : `${info.timestamp}: ${stringifyWithCheck(
+                  info.message
+              )} ${stringifyWithCheck(infoSplatObject)}`;
     });
     return createLogger({
         format: combine(timestamp(), rTracerFormat),

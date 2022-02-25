@@ -13,6 +13,7 @@ import {
     mockMetadata
 } from 'utils/mockData';
 import { resetAndMockDB } from 'utils/testUtils';
+import { stringifyWithCheck } from 'utils';
 
 describe('util tests', () => {
     const adminToken = createMockTokenWithScope(SCOPE_TYPE.ADMIN);
@@ -377,7 +378,7 @@ describe('winston logger tests', () => {
         };
         const formatrTracerMock = mockedFn;
         expect(formatrTracerMock(info)).toBe(
-            `${info.timestamp}: ${info.message}`
+            `${info.timestamp}: ${JSON.stringify(info.message)} {}`
         );
     });
 
@@ -406,7 +407,30 @@ describe('winston logger tests', () => {
         const tFn1 = mockedFn;
         // mockedrTracerId
         expect(tFn1(info)).toBe(
-            `${info.timestamp} [request-id:7]: ${info.message}`
+            `${info.timestamp} [request-id:7]: ${JSON.stringify(
+                info.message
+            )} {}`
         );
+    });
+});
+describe('stringifyWithCheck', () => {
+    it('should return the strigified message', () => {
+        const obj = { a: 'b' };
+        const res = stringifyWithCheck(obj);
+        expect(res).toBe(JSON.stringify(obj));
+    });
+    it('should not throw an error if its not able to stringify the object', () => {
+        const obj = { a: 'b' };
+        obj.obj = obj;
+        const res = stringifyWithCheck(obj);
+        expect(res).toBe('unable to unfurl message: [object Object]');
+    });
+
+    it('should stringify the data key if present in the message and unable to stringify the original value', () => {
+        const obj = { a: 'b' };
+        obj.obj = obj;
+        obj.data = { body: 'This is the real answer' };
+        const res = stringifyWithCheck(obj);
+        expect(res).toBe(JSON.stringify(obj.data));
     });
 });

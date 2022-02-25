@@ -38,6 +38,7 @@
         "@hapi/joi": "^17.1.1",
         "@hapi/joi-date": "^2.0.1",
         "@hapi/vision": "^5.5.4",
+        "axios": "^0.26.0",
         "cls-rtracer": "^2.6.0",
         "dotenv": "^10.0.0",
         "esm": "^3.2.25",
@@ -53,6 +54,7 @@
         "moment": "^2.29.1",
         "mysql2": "^2.2.5",
         "nodemon": "^2.0.12",
+        "opossum": "^6.3.0",
         "qs": "^6.10.1",
         "semver": "^6.3.0",
         "sequelize": "^6.6.5",
@@ -123,6 +125,7 @@
         "utils": "utils",
         "models": "lib/models",
         "daos": "lib/daos",
+        "services": "lib/services",
         "config": "config"
     }
 }

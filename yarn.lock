@@ -7634,6 +7634,13 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+node-cron@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-3.0.0.tgz#b33252803e430f9cd8590cf85738efa1497a9522"
+  integrity sha512-DDwIvvuCwrNiaU7HEivFDULcaQualDv7KoNlB/UU1wPW0n1tDEmBJKhEIE6DlF2FuoOHcNbLJ8ITL2Iv/3AWmA==
+  dependencies:
+    moment-timezone "^0.5.31"
+
 node-environment-flags@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/node-environment-flags/-/node-environment-flags-1.0.6.tgz#a30ac13621f6f7d674260a54dede048c3982c088"

@@ -19,6 +19,7 @@ import dbConfig from 'config/db';
 import hapiPaginationOptions from 'utils/paginationConstants';
 import models from 'models';
 import { cachedUser } from 'utils/cacheMethods';
+import { cronJob } from 'utils/cronJob';
 
 const prepDatabase = async () => {
     await models.sequelize
@@ -154,6 +155,14 @@ const initServer = async () => {
     server.ext('onPreHandler', onPreHandler);
     server.ext('onPreResponse', onPreResponse);
 
+    if (process.env.NODE_ENV !== 'production') {
+        let task = cronJob(() => {
+            console.log('I am being called by cron');
+        }, '* * * * *');
+        setTimeout(() => {
+            task.stop();
+        }, 66000);
+    }
     // eslint-disable-next-line no-console
     console.log('Server running on %s', server.info.uri);
 

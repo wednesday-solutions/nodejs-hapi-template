@@ -155,7 +155,7 @@ const initServer = async () => {
     server.ext('onPreHandler', onPreHandler);
     server.ext('onPreResponse', onPreResponse);
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'production') {
         let task = cronJob(() => {
             console.log('I am being called by cron');
         }, '* * * * *');

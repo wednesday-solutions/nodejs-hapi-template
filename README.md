@@ -74,22 +74,9 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 
 ### Installation
 
--   Install dependencies using npm
+-   Install dependencies using yarn
 
-    -   `npm install`
-
-### Setup
-
--   Run `./setup-local.sh`
--   This will seed the data in mysql and run the server.
-
-### Auto Generate models from database
-
--   Automatically generate bare sequelize models from your database.
-    `https://github.com/sequelize/sequelize-auto`
-
-Example:
-`sequelize-auto -o "./models" -d temp_dev -h localhost -u root -p 3306 -x password -e mysql`
+    -   `yarn install`
 
 ### Sequelize
 
@@ -97,7 +84,7 @@ Example:
 
 Install Sequelize:
 
--   `npm install -g sequelize-cli`
+-   `yarn install -g sequelize-cli`
 
 Full documentation: https://sequelize.readthedocs.io/en/latest/
 
@@ -113,29 +100,31 @@ Install MySQL
 
 To Access mysql
 
--   `mysql -uroot -p`
+-   If the sql sever is not running use `mysql.server start`
+-   then enter this command `mysql -uroot -p`
 -   This will ask for password and the altered password is `password`
 
--   Start Server
-    `mysql.server start`
-
--   Stop Server
+-   To stop the server use
     `mysql.server stop`
-    
-### redis Setup
+
+### Redis Setup
 
 Install
- 
-- `brew install redis`
+
+-   `brew install redis`
 
 Start
 
-- `brew services start redis`
+-   `brew services start redis`
 
 Stop
 
-- `brew services stop redis`
+-   `brew services stop redis`
 
+### Initialize Database
+
+-   Run `./setup-local.sh`
+-   This will seed the data in mysql and run the server.
 
 ### Migrations
 
@@ -149,7 +138,7 @@ Steps
 2. Create individual `.sql` files for each table and add it sequentially, by prefixing by 01,02 & so on.
 3. Each file should contain the proper sql syntax.
 4. Point the migration files to `/resources/v1`
-5. Run `npx sequlize db:migrate`
+5. Run `npx sequelize db:migrate`
 
 **Structure with example**
 
@@ -168,7 +157,7 @@ Steps
 1. Create a migration file that prefixes with the timestamp add it in the `/migrations` folder. Ex: `20191014145811-alter-student.js`
 2. Add the .sql file in the `/resources/v2`
 3. Point the new migration file to `/resources/v2`
-4. Run `npx sequlize db:migarte --name migartions/20191014145811-alter-student.js`
+4. Run `npx sequelize db:migrate`
 
 **Structure**
 
@@ -185,3 +174,10 @@ Steps
                 03_alter_student.sql
 
 ```
+
+### Auto Generate models from database
+
+-   Automatically generate bare sequelize models from your database.
+    https://github.com/sequelize/sequelize-auto
+-   Use command - `yarn generate:models`
+-   take a look at the config file [config/sequelize-auto-config.js](config/sequelize-auto-config.js)

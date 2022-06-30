@@ -28,7 +28,8 @@
         "postinstall": "link-module-alias",
         "preinstall": "command -v link-module-alias && link-module-alias clean || true",
         "test": "jest --coverage",
-        "test:badges": "npm run test  && jest-coverage-badges --output './badges'"
+        "test:badges": "npm run test  && jest-coverage-badges --output './badges'",
+        "generate:models": "node ./config/sequelize-auto-config.js && yarn prettify './lib/models'"
     },
     "dependencies": {
         "@hapi/boom": "^9.1.3",
@@ -58,6 +59,7 @@
         "qs": "^6.10.1",
         "semver": "^6.3.0",
         "sequelize": "^6.6.5",
+        "sequelize-auto": "^0.8.8",
         "uuid": "^8.3.2",
         "winston": "^3.3.3",
         "wurst": "^5.0.3"

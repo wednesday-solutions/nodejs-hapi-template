@@ -2,8 +2,10 @@ import Hapi from '@hapi/hapi';
 import path from 'path';
 import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
-import authBearer from 'hapi-auth-bearer-token';
-import authConfig from 'config/auth';
+// import authBearer from 'hapi-auth-bearer-token';
+// import authConfig from 'config/auth';
+import hapiAuthJWT from 'hapi-auth-jwt2';
+import jwtAuthConfig from 'config/jwt-auth';
 import mapKeysDeep from 'map-keys-deep';
 import hapiPagination from 'hapi-pagination';
 import hapiSwaggerUI from 'hapi-swaggerui';
@@ -100,12 +102,10 @@ const initServer = async () => {
         options: hapiPaginationOptions
     });
 
-    // register auth plugin
-    await server.register({
-        plugin: authBearer
-    });
-    server.auth.strategy('bearer', 'bearer-access-token', authConfig);
-    server.auth.default('bearer');
+    // register @hapi/jwt auth plugin
+    await server.register(hapiAuthJWT);
+    server.auth.strategy('jwt', 'jwt', jwtAuthConfig);
+    server.auth.default('jwt');
 
     // Register Wurst plugin
     await server.register({

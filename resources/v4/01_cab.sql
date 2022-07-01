@@ -1,0 +1,1 @@
+CREATE SPATIAL INDEX coordinates ON cabs (coordinates);

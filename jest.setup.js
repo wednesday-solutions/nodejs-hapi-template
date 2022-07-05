@@ -2,7 +2,7 @@
 import { init } from './lib/testServer';
 import { mockDB } from 'utils/testUtils';
 import { ONE_USER_DATA } from 'utils/constants';
-
+require('dotenv').config({ path: './.env.local' });
 require('jest-extended');
 
 mockDB();
@@ -20,7 +20,7 @@ beforeAll(() => {
             ...server,
             methods: {
                 findOneUser: id => {
-                    if (id === '1') {
+                    if (id === '4') {
                         return new Promise(resolve => resolve(ONE_USER_DATA));
                     } else {
                         return new Promise(resolve => resolve(null));

@@ -3,7 +3,7 @@ import JoiDate from '@hapi/joi-date';
 import { SCOPE_TYPE } from './seedData';
 import { GRANT_TYPE } from './constants';
 
-const Joi = JoiBase.extend(JoiDate);
+export const Joi = JoiBase.extend(JoiDate);
 
 export const idAllowedSchema = Joi.number().min(1).required();
 

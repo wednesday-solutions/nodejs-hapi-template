@@ -1,8 +1,7 @@
 export const ONE_USER_DATA = {
-    id: 1,
-    first_name: 'mac',
-    last_name: 'mac',
-    email: 'mac@wednesday.is'
+    id: 4,
+    name: 'test',
+    email: 'test@test.com'
 };
 
 export const GRANT_TYPE = {

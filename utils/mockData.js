@@ -31,10 +31,9 @@ export const mockMetadata = (
 export const mockData = {
     MOCK_USER: {
         id: 1,
-        firstName: 'Sharan',
-        lastName: 'Salian',
-        email: 'sharan@wednesday.is',
-        oauth_client_id: 1
+        name: 'test',
+        email: 'test@test.com',
+        password: '$2a$10$.LJdeAoXUizxDMce17mgm.gLEGnwJ4swAPmIDspARQf32muZbAXYO'
     },
     MOCK_OAUTH_CLIENTS: (metadataOptions = DEFAULT_METADATA_OPTIONS) => ({
         id: 1,

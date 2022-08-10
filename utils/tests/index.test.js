@@ -28,30 +28,6 @@ describe('util tests', () => {
         MOCK_OAUTH_CLIENT_TWO: userClient
     } = mockData;
 
-    describe('getEnv', () => {
-        it('should return the environment that is passed as a string', () => {
-            const environments = {
-                production: 'production',
-                qa: 'qa',
-                staging: 'staging',
-                development: 'development'
-            };
-            const { getEnv } = require('@utils');
-            process.env.NODE_ENV = environments.production;
-            const productionEnv = getEnv();
-            expect(productionEnv).toEqual(environments.production);
-            process.env.NODE_ENV = environments.qa;
-            const qaEnv = getEnv();
-            expect(qaEnv).toEqual(environments.qa);
-            process.env.NODE_ENV = environments.staging;
-            const stagingEnv = getEnv();
-            expect(stagingEnv).toEqual(environments.staging);
-            process.env.NODE_ENV = 'TEST';
-            const defaultEnv = getEnv();
-            expect(defaultEnv).toEqual(environments.development);
-        });
-    });
-
     describe('formatWithTimestamp', () => {
         it('should format the provided moment', () => {
             const now = moment();

@@ -9,7 +9,7 @@ const dotEnvFile =
     process.env.ENVIRONMENT_NAME === 'production'
         ? `.env`
         : `.env.${process.env.ENVIRONMENT_NAME || 'local'}`;
-
+console.log({ dotEnvFile });
 const env = dotenv.config({ path: dotEnvFile }).parsed;
 
 const envKeys = {
@@ -22,6 +22,10 @@ const envKeys = {
         return prev;
     }, {})
 };
+
+delete envKeys['process.env.ENVIRONMENT_NAME'];
+delete envKeys['process.env.NODE_ENV'];
+
 let curDecimal = -1;
 module.exports = (options = {}) => ({
     mode: options.mode,
@@ -116,12 +120,6 @@ module.exports = (options = {}) => ({
                 );
             }
         }),
-        // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
-        // inside your code for any environment checks; Terser will automatically
-        // drop any unreachable code.
-        new webpack.EnvironmentPlugin({
-            NODE_ENV: 'production'
-        }),
         new webpack.DefinePlugin(envKeys)
     ]),
     resolve: {
@@ -138,6 +136,9 @@ module.exports = (options = {}) => ({
         },
 
         extensions: ['.js']
+    },
+    output: {
+        libraryTarget: 'commonjs'
     },
     target: 'node'
 });

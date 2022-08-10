@@ -20,4 +20,4 @@ then
     done
 fi
 
-yarn start:env
+yarn start

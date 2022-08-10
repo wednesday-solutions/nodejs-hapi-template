@@ -15,9 +15,6 @@ export default {
             minor: __version.minor,
             patch: __version.patch
         },
-        env: `${
-            process.env.NODE_ENV === 'production' ? 'production' : 'development'
-        }`,
         options: {
             oauth: {
                 access_token_ttl: 60 * 60 * 12 // seconds * minutes * hours

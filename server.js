@@ -20,7 +20,6 @@ import hapiPaginationOptions from '@utils/paginationConstants';
 import { models } from '@models';
 import { cachedUser } from '@utils/cacheMethods';
 import loadRoutes from '@plugins/loadRoutes';
-require('@utils/configureEnv');
 
 const prepDatabase = async () => {
     await models.sequelize
@@ -38,6 +37,7 @@ const prepDatabase = async () => {
 export let server;
 
 const initServer = async () => {
+    require('@utils/configureEnv');
     server = Hapi.server(serverConfig);
 
     // Register hapi swagger plugin
@@ -114,7 +114,8 @@ const initServer = async () => {
     await loadRoutes.register(server, {
         routes: '**/routes.js',
         cwd: path.join(__dirname, '../lib/routes'),
-        log: true
+        log: true,
+        ignore: '**/routes.test.js'
     });
 
     await cachedUser(server);

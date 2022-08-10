@@ -8,8 +8,6 @@ services:
         env_file:
             - .env.development
     redis:
-        depends_on:
-            - db_mysql
         image: 'redis:alpine'
         ports:
             - '6379:6379'
@@ -17,6 +15,7 @@ services:
     app:
         depends_on:
             - redis
+            - db_mysql
         build:
             context: .
             args:

@@ -19,19 +19,6 @@ import rTracer from 'cls-rtracer';
 
 const { combine, timestamp, printf } = format;
 
-export const getEnv = () => {
-    switch (process.env.NODE_ENV) {
-        case 'production':
-            return 'production';
-        case 'qa':
-            return 'qa';
-        case 'staging':
-            return 'staging';
-        default:
-            return 'development';
-    }
-};
-
 export const formatWithTimestamp = date =>
     date ? date.format(TIMESTAMP) : null;
 

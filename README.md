@@ -80,7 +80,7 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 
 ### Setup
 
--   Run `./setup-local.sh`
+-   Run `./scripts/setup-local.sh`
 -   This will seed the data in mysql and run the server.
 
 ### Auto Generate models from database

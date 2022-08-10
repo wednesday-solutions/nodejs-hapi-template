@@ -221,7 +221,7 @@ describe('util tests', () => {
                 'oauth_clients',
                 userClient
             );
-            await resetAndMockDB(db => (db.oauth_clients = userClientMock));
+            await resetAndMockDB(db => (db.models.oauthClients = userClientMock));
             const { getScope } = require('@utils');
             const scope = await getScope(userClient.id);
             expect(scope).toEqual(SCOPE_TYPE.USER);
@@ -233,7 +233,7 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminClient()
             );
-            await resetAndMockDB(db => (db.oauth_clients = adminClientMock));
+            await resetAndMockDB(db => (db.models.oauthClients = adminClientMock));
             const { getScope } = require('@utils');
             const scope = await getScope(adminClient().id);
             expect(scope).toEqual(SCOPE_TYPE.ADMIN);
@@ -246,7 +246,7 @@ describe('util tests', () => {
                 superClient
             );
             await resetAndMockDB(
-                db => (db.oauth_clients = superadminClientMock)
+                db => (db.models.oauthClients = superadminClientMock)
             );
             const { getScope } = require('@utils');
             const scope = await getScope(superClient.id);
@@ -266,7 +266,7 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminWithUserIdResource
             );
-            await resetAndMockDB(db => (db.oauth_clients = adminClientMock));
+            await resetAndMockDB(db => (db.models.oauthClients = adminClientMock));
             let userId = 1;
             const { hasScopeOverUser } = require('@utils');
             const oauthClientId = adminClient().id;
@@ -290,7 +290,7 @@ describe('util tests', () => {
                 userClient
             );
             await resetAndMockDB(db => {
-                db.oauth_clients = userClientMock;
+                db.models.oauthClients = userClientMock;
             });
             const userId = 1;
             let oauthClientId = userClient.id;

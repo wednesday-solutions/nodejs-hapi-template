@@ -1,7 +1,7 @@
 #!/bin/sh
 set -a . ".env$ENVIRONMENT_NAME" set +a
 # create the db for local builds
-sleep 10
+sleep 30
 if [ "$ENVIRONMENT_NAME" == "local" ]
 then
     npx sequelize db:create

@@ -12,8 +12,8 @@ FROM node:14-alpine
 ARG ENVIRONMENT_NAME
 ENV ENVIRONMENT_NAME $ENVIRONMENT_NAME
 RUN apk add yarn
-RUN yarn global add sequelize@6.6.5 sequelize-cli@6.2.0 mysql2
-RUN yarn add shelljs dotenv
+RUN yarn global add sequelize@6.6.5 sequelize-cli@6.2.0
+RUN yarn add shelljs dotenv mysql2
 ADD scripts/migrate-and-run.sh /
 ADD package.json /
 ADD . /

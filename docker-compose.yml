@@ -6,7 +6,9 @@ services:
             - '3306:3306'
         restart: always
         env_file:
-            - .env.development
+            - .env.docker
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     redis:
         image: 'redis:alpine'
         ports:
@@ -24,4 +26,4 @@ services:
         ports:
             - 9000:9000
         env_file:
-            - .env.development
+            - .env.docker

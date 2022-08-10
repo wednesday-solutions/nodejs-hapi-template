@@ -221,7 +221,9 @@ describe('util tests', () => {
                 'oauth_clients',
                 userClient
             );
-            await resetAndMockDB(db => (db.models.oauthClients = userClientMock));
+            await resetAndMockDB(
+                db => (db.models.oauthClients = userClientMock)
+            );
             const { getScope } = require('@utils');
             const scope = await getScope(userClient.id);
             expect(scope).toEqual(SCOPE_TYPE.USER);
@@ -233,7 +235,9 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminClient()
             );
-            await resetAndMockDB(db => (db.models.oauthClients = adminClientMock));
+            await resetAndMockDB(
+                db => (db.models.oauthClients = adminClientMock)
+            );
             const { getScope } = require('@utils');
             const scope = await getScope(adminClient().id);
             expect(scope).toEqual(SCOPE_TYPE.ADMIN);
@@ -266,7 +270,9 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminWithUserIdResource
             );
-            await resetAndMockDB(db => (db.models.oauthClients = adminClientMock));
+            await resetAndMockDB(
+                db => (db.models.oauthClients = adminClientMock)
+            );
             let userId = 1;
             const { hasScopeOverUser } = require('@utils');
             const oauthClientId = adminClient().id;

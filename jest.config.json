@@ -6,6 +6,11 @@
     "globals": {
         "server": null
     },
+    "moduleNameMapper": {
+        "@root(.*)$": "<rootDir>/$1",
+        "@(models|routes|daos|services)(.*)$": "<rootDir>/lib/$1/$2",
+        "@(utils|config|plugins)(.*)$": "<rootDir>/$1/$2"
+    },
     "coverageReporters": ["json-summary", "text", "lcov"],
     "coverageThreshold": {
         "global": {

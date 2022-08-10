@@ -10,10 +10,10 @@ import {
     OAUTH_CLIENT_ID,
     SUPER_SCOPES,
     USER_ID
-} from 'utils/constants';
-import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
+} from '@utils/constants';
+import { getMetaDataByOAuthClientId } from '@daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
-import { findOneUser } from 'daos/userDao';
+import { findOneUser } from '@daos/userDao';
 import { createLogger, format, transports } from 'winston';
 import rTracer from 'cls-rtracer';
 

@@ -109,7 +109,7 @@ Install MySQL
 
 -   This helps in accessing the database(`temp_dev`)
 
-`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'`;
+`ALTER USER '@root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'`;
 
 To Access mysql
 

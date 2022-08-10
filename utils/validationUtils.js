@@ -1,6 +1,6 @@
 import JoiBase from '@hapi/joi';
 import JoiDate from '@hapi/joi-date';
-import { SCOPE_TYPE } from './seedData';
+import seedData from './seedData';
 import { GRANT_TYPE } from './constants';
 
 const Joi = JoiBase.extend(JoiDate);
@@ -18,7 +18,7 @@ export const urlSchema = Joi.string().uri();
 export const metadataSchema = Joi.object();
 
 export const scopeAllowedSchema = Joi.string().valid(
-    ...Object.keys(SCOPE_TYPE)
+    ...Object.keys(seedData.SCOPE_TYPE)
 );
 
 export const stringSchema = Joi.string().required();
@@ -49,7 +49,11 @@ export const statusSchema = Joi.binary().length(2);
 export const versionStatusSchema = Joi.number().integer().min(0).max(2);
 export const idOrUUIDAllowedSchema = [Joi.string(), Joi.number()];
 export const oneOfAllowedScopes = Joi.string()
-    .valid(SCOPE_TYPE.ADMIN, SCOPE_TYPE.SUPER_ADMIN, SCOPE_TYPE.USER)
+    .valid(
+        seedData.SCOPE_TYPE.ADMIN,
+        seedData.SCOPE_TYPE.SUPER_ADMIN,
+        seedData.SCOPE_TYPE.USER
+    )
     .required();
 export const stringAllowedSchema = Joi.string().required();
 

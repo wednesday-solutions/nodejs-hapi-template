@@ -11,7 +11,6 @@ module.exports = {
     plugins: ['prettier'],
     env: {
         jest: true,
-        browser: true,
         node: true,
         es6: true
     },

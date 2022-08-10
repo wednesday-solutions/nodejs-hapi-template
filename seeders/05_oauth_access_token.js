@@ -4,7 +4,7 @@ module.exports = {
         const moment = require('moment');
         const { SCOPE_TYPE, OAUTH_CLIENT_ID } = require('esm')(
             module /* , options */
-        )('utils/constants');
+        )('../utils/constants');
         const { v4: uuidv4 } = require('uuid');
         const arr = range(1, 3).map(value => ({
             oauth_client_id: value,

@@ -1,9 +1,9 @@
 import isNil from 'lodash/isNil';
-import { updateAccessToken, findAccessToken } from 'daos/oauthAccessTokensDao';
-import { unauthorized } from 'utils/responseInterceptors';
-import { paths } from 'config/paths';
-import { SLIDING_WINDOW } from 'utils/constants';
-import { validateScopeForRoute } from 'utils';
+import { updateAccessToken, findAccessToken } from '@daos/oauthAccessTokensDao';
+import { unauthorized } from '@utils/responseInterceptors';
+import { paths } from '@config/paths';
+import { SLIDING_WINDOW } from '@utils/constants';
+import { validateScopeForRoute } from '@utils';
 
 export default {
     allowQueryToken: false,

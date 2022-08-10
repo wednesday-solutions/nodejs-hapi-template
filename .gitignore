@@ -96,3 +96,5 @@ typings/
 *.swp
 *.swo
 
+
+dist

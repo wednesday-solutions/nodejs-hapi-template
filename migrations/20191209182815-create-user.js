@@ -1,4 +1,4 @@
-const { migrate } = require('utils/migrateUtils');
+const { migrate } = require('./utils');
 
 module.exports = {
     up: queryInterface => migrate(__filename, queryInterface),

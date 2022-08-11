@@ -1,7 +1,7 @@
 import Qs from 'qs';
 import semver from 'semver';
-import pkg from '../package';
-import { redisCache } from 'utils/cacheConstants';
+import pkg from '../package.json';
+import { redisCache } from '@utils/cacheConstants';
 
 const __version = semver(pkg.version);
 
@@ -15,9 +15,6 @@ export default {
             minor: __version.minor,
             patch: __version.patch
         },
-        env: `${
-            process.env.NODE_ENV === 'production' ? 'production' : 'development'
-        }`,
         options: {
             oauth: {
                 access_token_ttl: 60 * 60 * 12 // seconds * minutes * hours

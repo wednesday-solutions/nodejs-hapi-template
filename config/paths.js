@@ -1,5 +1,5 @@
-import { SCOPE_TYPE } from 'utils/constants';
-import { hasScopeOverUser } from 'utils/index';
+import { SCOPE_TYPE } from '@utils/constants';
+import { hasScopeOverUser } from '@utils/index';
 
 export const paths = [
     {

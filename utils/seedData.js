@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     SCOPE_TYPE: {
         INTERNAL_SERVICE: 'INTERNAL_SERVICE',
         SUPER_ADMIN: 'SUPER_ADMIN',

@@ -10,27 +10,14 @@ import {
     OAUTH_CLIENT_ID,
     SUPER_SCOPES,
     USER_ID
-} from 'utils/constants';
-import { getMetaDataByOAuthClientId } from 'daos/oauthClientsDao';
+} from '@utils/constants';
+import { getMetaDataByOAuthClientId } from '@daos/oauthClientsDao';
 import { TIMESTAMP } from './constants';
-import { findOneUser } from 'daos/userDao';
+import { findOneUser } from '@daos/userDao';
 import { createLogger, format, transports } from 'winston';
 import rTracer from 'cls-rtracer';
 
 const { combine, timestamp, printf } = format;
-
-export const getEnv = () => {
-    switch (process.env.NODE_ENV) {
-        case 'production':
-            return 'production';
-        case 'qa':
-            return 'qa';
-        case 'staging':
-            return 'staging';
-        default:
-            return 'development';
-    }
-};
 
 export const formatWithTimestamp = date =>
     date ? date.format(TIMESTAMP) : null;

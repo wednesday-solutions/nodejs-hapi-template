@@ -12,6 +12,8 @@ function getVersion(currentFileName) {
 }
 
 module.exports = {
+    up: async () => {},
+    down: async () => {},
     migrate: async function (currentFileName, queryInterface) {
         const version = getVersion(
             currentFileName.split('/')[currentFileName.split('/').length - 1]

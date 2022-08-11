@@ -6,14 +6,14 @@ import {
     SCOPE_TYPE,
     USER_ID,
     OAUTH_CLIENT_ID
-} from 'utils/constants';
+} from '@utils/constants';
 import {
     createMockTokenWithScope,
     mockData,
     mockMetadata
-} from 'utils/mockData';
-import { resetAndMockDB } from 'utils/testUtils';
-import { stringifyWithCheck } from 'utils';
+} from '@utils/mockData';
+import { resetAndMockDB } from '@utils/testUtils';
+import { stringifyWithCheck } from '@utils';
 
 describe('util tests', () => {
     const adminToken = createMockTokenWithScope(SCOPE_TYPE.ADMIN);
@@ -28,35 +28,11 @@ describe('util tests', () => {
         MOCK_OAUTH_CLIENT_TWO: userClient
     } = mockData;
 
-    describe('getEnv', () => {
-        it('should return the environment that is passed as a string', () => {
-            const environments = {
-                production: 'production',
-                qa: 'qa',
-                staging: 'staging',
-                development: 'development'
-            };
-            const { getEnv } = require('utils');
-            process.env.NODE_ENV = environments.production;
-            const productionEnv = getEnv();
-            expect(productionEnv).toEqual(environments.production);
-            process.env.NODE_ENV = environments.qa;
-            const qaEnv = getEnv();
-            expect(qaEnv).toEqual(environments.qa);
-            process.env.NODE_ENV = environments.staging;
-            const stagingEnv = getEnv();
-            expect(stagingEnv).toEqual(environments.staging);
-            process.env.NODE_ENV = 'TEST';
-            const defaultEnv = getEnv();
-            expect(defaultEnv).toEqual(environments.development);
-        });
-    });
-
     describe('formatWithTimestamp', () => {
         it('should format the provided moment', () => {
             const now = moment();
             const nowFormatted = moment().format(TIMESTAMP);
-            const { formatWithTimestamp } = require('utils');
+            const { formatWithTimestamp } = require('@utils');
             const nowFormattedTest = formatWithTimestamp(now);
             expect(nowFormatted).toEqual(nowFormattedTest);
         });
@@ -64,7 +40,7 @@ describe('util tests', () => {
 
     describe('strippedUUID', () => {
         it('should return a uuid with no `-` ', () => {
-            const { strippedUUID } = require('utils');
+            const { strippedUUID } = require('@utils');
             const uuId = strippedUUID();
             expect(uuId).toEqual(expect.not.stringMatching(/-/g));
         });
@@ -72,7 +48,7 @@ describe('util tests', () => {
 
     describe('isAdmin', () => {
         it('should check if the provided token has a scope status of ADMINS ', async () => {
-            const { isAdmin } = require('utils');
+            const { isAdmin } = require('@utils');
             let adminCheckResult = await isAdmin(adminToken);
             expect(adminCheckResult).toBeTruthy();
             adminCheckResult = await isAdmin(userToken);
@@ -86,7 +62,7 @@ describe('util tests', () => {
 
     describe('isScopeHigher', () => {
         it('should check if the token has higher scope ', async () => {
-            const { isScopeHigher } = require('utils');
+            const { isScopeHigher } = require('@utils');
 
             // user token
             let isScopeHigherCheck = await isScopeHigher(
@@ -142,7 +118,7 @@ describe('util tests', () => {
     });
     describe('getScopeFromToken', () => {
         it('should extract the scope from the metadata of a token', async () => {
-            const { getScopeFromToken } = require('utils');
+            const { getScopeFromToken } = require('@utils');
             let extractedScope = await getScopeFromToken(userToken);
             expect(extractedScope).toEqual(SCOPE_TYPE.USER);
             extractedScope = await getScopeFromToken(adminToken);
@@ -151,7 +127,7 @@ describe('util tests', () => {
     });
     describe('hasPowerOver', () => {
         it('should check if the token has power over a oauthClient', () => {
-            const { hasPowerOver } = require('utils');
+            const { hasPowerOver } = require('@utils');
             // super admin token
             let hasPowerOverResult = hasPowerOver(
                 superAdminToken,
@@ -221,8 +197,10 @@ describe('util tests', () => {
                 'oauth_clients',
                 userClient
             );
-            await resetAndMockDB(db => (db.oauth_clients = userClientMock));
-            const { getScope } = require('utils');
+            await resetAndMockDB(
+                db => (db.models.oauthClients = userClientMock)
+            );
+            const { getScope } = require('@utils');
             const scope = await getScope(userClient.id);
             expect(scope).toEqual(SCOPE_TYPE.USER);
         });
@@ -233,8 +211,10 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminClient()
             );
-            await resetAndMockDB(db => (db.oauth_clients = adminClientMock));
-            const { getScope } = require('utils');
+            await resetAndMockDB(
+                db => (db.models.oauthClients = adminClientMock)
+            );
+            const { getScope } = require('@utils');
             const scope = await getScope(adminClient().id);
             expect(scope).toEqual(SCOPE_TYPE.ADMIN);
         });
@@ -246,9 +226,9 @@ describe('util tests', () => {
                 superClient
             );
             await resetAndMockDB(
-                db => (db.oauth_clients = superadminClientMock)
+                db => (db.models.oauthClients = superadminClientMock)
             );
-            const { getScope } = require('utils');
+            const { getScope } = require('@utils');
             const scope = await getScope(superClient.id);
             expect(scope).toEqual(SCOPE_TYPE.SUPER_ADMIN);
         });
@@ -266,9 +246,11 @@ describe('util tests', () => {
                 'oauth_clients',
                 adminWithUserIdResource
             );
-            await resetAndMockDB(db => (db.oauth_clients = adminClientMock));
+            await resetAndMockDB(
+                db => (db.models.oauthClients = adminClientMock)
+            );
             let userId = 1;
-            const { hasScopeOverUser } = require('utils');
+            const { hasScopeOverUser } = require('@utils');
             const oauthClientId = adminClient().id;
             let scopeCheck = await hasScopeOverUser({
                 oauthClientId,
@@ -290,11 +272,11 @@ describe('util tests', () => {
                 userClient
             );
             await resetAndMockDB(db => {
-                db.oauth_clients = userClientMock;
+                db.models.oauthClients = userClientMock;
             });
             const userId = 1;
             let oauthClientId = userClient.id;
-            const { hasScopeOverUser } = require('utils');
+            const { hasScopeOverUser } = require('@utils');
             let scopeCheck = await hasScopeOverUser({ oauthClientId, userId });
             expect(scopeCheck).toBeTruthy();
             oauthClientId = 2;
@@ -309,7 +291,7 @@ describe('util tests', () => {
 
     describe('validateResources', () => {
         it('should check if the resource type and id matches for the metadata', () => {
-            const { validateResources } = require('utils');
+            const { validateResources } = require('@utils');
             let metadata = get(adminToken, 'metadata');
             let resourcesValidated = validateResources(
                 metadata,

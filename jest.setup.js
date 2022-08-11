@@ -1,7 +1,7 @@
 /* global server */
 import { init } from './lib/testServer';
-import { mockDB } from 'utils/testUtils';
-import { ONE_USER_DATA } from 'utils/constants';
+import { mockDB } from '@utils/testUtils';
+import { ONE_USER_DATA } from '@utils/constants';
 
 require('jest-extended');
 
@@ -15,7 +15,7 @@ beforeEach(async () => {
 });
 
 beforeAll(() => {
-    jest.doMock('root/server', () => ({
+    jest.doMock('@root/server', () => ({
         server: {
             ...server,
             methods: {

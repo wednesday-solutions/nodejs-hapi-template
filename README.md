@@ -80,7 +80,7 @@ An enterprise Hapi template application built using Nodejs showcasing - Testing 
 
 ### Setup
 
--   Run `./setup-local.sh`
+-   Run `./scripts/setup-local.sh`
 -   This will seed the data in mysql and run the server.
 
 ### Auto Generate models from database
@@ -109,7 +109,7 @@ Install MySQL
 
 -   This helps in accessing the database(`temp_dev`)
 
-`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'`;
+`ALTER USER '@root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'`;
 
 To Access mysql
 

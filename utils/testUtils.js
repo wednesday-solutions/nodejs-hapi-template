@@ -1,4 +1,4 @@
-import { users } from 'models';
+import { users } from '@models';
 import { init } from '../lib/testServer';
 import { mockData } from './mockData';
 import { DEFAULT_METADATA_OPTIONS } from './constants';
@@ -12,7 +12,7 @@ export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
     userMock.count = () => 1;
 
     const oauthClientsMock = DBConnectionMock.define(
-        'oauth_clients',
+        'oauthClients',
         mockData.MOCK_OAUTH_CLIENTS(metadataOptions)
     );
     oauthClientsMock.findOne = query => oauthClientsMock.findById(query);
@@ -46,10 +46,10 @@ export function configDB(metadataOptions = DEFAULT_METADATA_OPTIONS) {
         oauthClientScopesMock.findById(query);
     return {
         users: userMock,
-        oauth_clients: oauthClientsMock,
-        oauth_access_tokens: oauthAccessTokensMock,
-        oauth_client_resources: oauthClientResourcesMock,
-        oauth_client_scopes: oauthClientScopesMock
+        oauthClients: oauthClientsMock,
+        oauthAccessTokens: oauthAccessTokensMock,
+        oauthClientResources: oauthClientResourcesMock,
+        oauthClientScopes: oauthClientScopesMock
     };
 }
 
@@ -61,12 +61,12 @@ export async function mockDB(
     mockCallback = () => {},
     metadataOptions = DEFAULT_METADATA_OPTIONS
 ) {
-    jest.doMock('models', () => {
+    jest.doMock('@models', () => {
         const sequelizeData = configDB(metadataOptions);
         if (mockCallback) {
-            mockCallback(sequelizeData);
+            mockCallback({ models: sequelizeData });
         }
-        return sequelizeData;
+        return { models: sequelizeData };
     });
 }
 

@@ -1,9 +1,9 @@
 import Hapi from '@hapi/hapi';
 import path from 'path';
-import wurst from 'wurst';
+// import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
 import authBearer from 'hapi-auth-bearer-token';
-import authConfig from 'config/auth';
+import authConfig from '@config/auth';
 import mapKeysDeep from 'map-keys-deep';
 import hapiPagination from 'hapi-pagination';
 import hapiSwaggerUI from 'hapi-swaggerui';
@@ -14,11 +14,12 @@ import rateLimiter from 'hapi-rate-limit';
 import rTracer from 'cls-rtracer';
 
 import cors from 'hapi-cors';
-import serverConfig from 'config/server';
-import dbConfig from 'config/db';
-import hapiPaginationOptions from 'utils/paginationConstants';
-import models from 'models';
-import { cachedUser } from 'utils/cacheMethods';
+import serverConfig from '@config/server';
+import dbConfig from '@config/db';
+import hapiPaginationOptions from '@utils/paginationConstants';
+import { models } from '@models';
+import { cachedUser } from '@utils/cacheMethods';
+import loadRoutes from '@plugins/loadRoutes';
 
 const prepDatabase = async () => {
     await models.sequelize
@@ -36,6 +37,7 @@ const prepDatabase = async () => {
 export let server;
 
 const initServer = async () => {
+    require('@utils/configureEnv');
     server = Hapi.server(serverConfig);
 
     // Register hapi swagger plugin
@@ -108,13 +110,12 @@ const initServer = async () => {
     server.auth.default('bearer');
 
     // Register Wurst plugin
-    await server.register({
-        plugin: wurst,
-        options: {
-            routes: '**/routes.js',
-            cwd: path.join(__dirname, 'lib/routes'),
-            log: true
-        }
+
+    await loadRoutes.register(server, {
+        routes: '**/routes.js',
+        cwd: path.join(__dirname, '../lib/routes'),
+        log: true,
+        ignore: '**/routes.test.js'
     });
 
     await cachedUser(server);
@@ -169,13 +170,7 @@ process.on('unhandledRejection', err => {
 prepDatabase().then(
     () => {
         // eslint-disable-next-line no-console
-        console.log(
-            `Database connection to ${
-                dbConfig.development.url
-            } is successful.\nThe following options were applied: ${JSON.stringify(
-                dbConfig.development
-            )}`
-        );
+        console.log(`Database connection to ${dbConfig.url} is successful.\n`);
         // eslint-disable-next-line no-console
         console.log(`Initializing the server...`);
 

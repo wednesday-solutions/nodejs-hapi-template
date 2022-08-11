@@ -1,14 +1,14 @@
 import find from 'lodash/find';
-import { paths } from 'config/paths';
+import { paths } from '@config/paths';
 import {
     SCOPE_TYPE,
     USER_ID,
     GET_USER_PATH,
     OAUTH_CLIENT_ID
-} from 'utils/constants';
-import { createMockTokenWithScope } from 'utils/mockData';
-import { resetAndMockDB } from 'utils/testUtils';
-import { findAccessToken } from 'daos/oauthAccessTokensDao';
+} from '@utils/constants';
+import { createMockTokenWithScope } from '@utils/mockData';
+import { resetAndMockDB } from '@utils/testUtils';
+import { findAccessToken } from '@daos/oauthAccessTokensDao';
 
 describe('validateScopeForRoute', () => {
     const adminToken = createMockTokenWithScope(SCOPE_TYPE.ADMIN, USER_ID);
@@ -36,7 +36,7 @@ describe('validateScopeForRoute', () => {
             scope: SCOPE_TYPE.SUPER_ADMIN,
             resourceType: OAUTH_CLIENT_ID
         });
-        const { validateScopeForRoute } = require('utils');
+        const { validateScopeForRoute } = require('@utils');
         const superAdminCredentials = await findAccessToken(superAdminToken);
         superAdminCredentials.oauthClientId = 1;
         let isValid = false;
@@ -56,7 +56,7 @@ describe('validateScopeForRoute', () => {
         });
         const adminCredentials = await findAccessToken(adminToken);
 
-        const { validateScopeForRoute } = require('utils');
+        const { validateScopeForRoute } = require('@utils');
         let isValid = false;
         isValid = validateScopeForRoute({
             paths,
@@ -74,7 +74,7 @@ describe('validateScopeForRoute', () => {
         const userCredentials = await findAccessToken(userToken);
         userCredentials.oauthClientId = 1;
 
-        const { validateScopeForRoute } = require('utils');
+        const { validateScopeForRoute } = require('@utils');
         let isValid = false;
         isValid = await validateScopeForRoute({
             paths,

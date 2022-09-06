@@ -18,6 +18,7 @@ import serverConfig from '@config/server';
 import dbConfig from '@config/db';
 import hapiPaginationOptions from '@utils/paginationConstants';
 import { models } from '@models';
+import { logger } from '@utils';
 import { cachedUser } from '@utils/cacheMethods';
 import loadRoutes from '@plugins/loadRoutes';
 
@@ -149,14 +150,45 @@ const initServer = async () => {
         const response = request.response;
         const responseSource = response.source;
         response.source = mapKeysDeep(responseSource, keys => snakeCase(keys));
+
+        if (response.header) {
+            const requestId = rTracer.id();
+            response.header('x-request-id', requestId);
+            logger().info('API Success: ', response.source);
+        }
+
         return h.continue;
     };
 
+    const onRequest = function (request, h) {
+        const path = request.path;
+        const info = request.info;
+        const query = request.query;
+
+        const requestDetails = {
+            path,
+            info,
+            query
+        };
+
+        logger().info('Request Recieved: ', requestDetails);
+        return h.continue;
+    };
+
+    server.ext('onRequest', onRequest);
     server.ext('onPreHandler', onPreHandler);
     server.ext('onPreResponse', onPreResponse);
 
     // eslint-disable-next-line no-console
     console.log('Server running on %s', server.info.uri);
+
+    server.events.on('request', function (_, error) {
+        if (error) {
+            logger().info('API Failure: ', { error });
+            // eslint-disable-next-line no-console
+            console.log(error);
+        }
+    });
 
     return true;
 };

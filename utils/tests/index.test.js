@@ -60,6 +60,32 @@ describe('util tests', () => {
         });
     });
 
+    describe('getLogger', () => {
+        it('should return console.log for env develop', () => {
+            process.env = {
+                NODE_ENV: 'development'
+            };
+            const { getLogger } = require('@utils');
+            expect(getLogger()).toEqual(console.log);
+        });
+
+        it('should return false for env test', () => {
+            process.env = {
+                NODE_ENV: 'test'
+            };
+            const { getLogger } = require('@utils');
+            expect(getLogger()).toEqual(false);
+        });
+
+        it('should return function type for any other env', () => {
+            process.env = {
+                NODE_ENV: 'prod'
+            };
+            const { getLogger } = require('@utils');
+            expect(typeof getLogger()).toEqual('function');
+        });
+    });
+
     describe('isScopeHigher', () => {
         it('should check if the token has higher scope ', async () => {
             const { isScopeHigher } = require('@utils');

@@ -178,6 +178,7 @@ export const stringifyWithCheck = message => {
         }
     }
 };
+
 export const logger = () => {
     const rTracerFormat = printf(info => {
         const rid = rTracer.id();
@@ -195,4 +196,15 @@ export const logger = () => {
         format: combine(timestamp(), rTracerFormat),
         transports: [new transports.Console()]
     });
+};
+
+export const getLogger = () => {
+    if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        return console.log;
+    } else if (process.env.NODE_ENV === 'test') {
+        return false;
+    } else {
+        return args => logger().info(args);
+    }
 };

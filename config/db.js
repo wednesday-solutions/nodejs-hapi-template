@@ -2,7 +2,6 @@ const mysql2 = require('mysql2');
 module.exports = {
     url: process.env.DB_URI,
     host: process.env.MYSQL_HOST,
-    logging: true,
     dialectModule: mysql2,
     dialect: 'mysql',
     pool: {

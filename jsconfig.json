@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES6",
+    "module": "NodeNext",
     "allowJs": true,
     "checkJs": true,
     "baseUrl": "./",
@@ -13,6 +14,7 @@
       "@config": ["./config"],
       "@config/*": ["./config/*"],
       "@plugins": ["./plugins"],
+      "@plugins/*": ["./plugins/*"],
       "@services": ["./lib/services"],
       "@services/*": ["./lib/services/*"],
       "@models": ["./lib/models"],

@@ -7,8 +7,7 @@ function __setupMocks(f) {
 function newCircuitBreaker() {
   return { fire: () => fire() };
 }
-module.exports = {
-  __setupMocks,
-  newCircuitBreaker,
-  fire,
-};
+
+export default newCircuitBreaker;
+
+export { __setupMocks, fire };

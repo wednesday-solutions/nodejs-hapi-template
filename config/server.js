@@ -1,9 +1,9 @@
 import Qs from 'qs';
-import semver from 'semver';
+import { parse } from 'semver';
 import { redisCache } from '@utils/cacheConstants';
 import pkg from '../package.json';
 
-const __version = semver(pkg.version);
+const version = parse(pkg.version);
 
 export default {
   app: {
@@ -11,9 +11,9 @@ export default {
     docs: pkg.homepage,
     version: pkg.version,
     semver: {
-      major: __version.major,
-      minor: __version.minor,
-      patch: __version.patch,
+      major: version.major,
+      minor: version.minor,
+      patch: version.patch,
     },
     options: {
       oauth: {

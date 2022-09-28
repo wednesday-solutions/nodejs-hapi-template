@@ -1,5 +1,5 @@
 import find from 'lodash/find';
-import { paths } from '@config/paths';
+import paths from '@config/paths';
 import {
   SCOPE_TYPE,
   USER_ID,
@@ -32,7 +32,7 @@ describe('validateScopeForRoute', () => {
   };
 
   it('should validate SCOPE for a SUPER_ADMIN Client', async () => {
-    await resetAndMockDB((db) => {}, {
+    await resetAndMockDB(() => {}, {
       scope: SCOPE_TYPE.SUPER_ADMIN,
       resourceType: OAUTH_CLIENT_ID,
     });
@@ -50,7 +50,7 @@ describe('validateScopeForRoute', () => {
   });
 
   it('should validate SCOPE for an ADMIN Client', async () => {
-    await resetAndMockDB((db) => {}, {
+    await resetAndMockDB(() => {}, {
       scope: SCOPE_TYPE.ADMIN,
       resourceType: USER_ID,
     });

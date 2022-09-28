@@ -101,3 +101,8 @@ dist
 
 __mocks__/*
 internals/scripts
+jest.setup.js
+
+# **/*.test.js
+testUtils.js
+lib/testServer.js

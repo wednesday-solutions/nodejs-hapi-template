@@ -33,22 +33,15 @@ const schemata = {
  * @public
  *
  * @description
- * Initialize auto-loading and prefixing of routes
+ * Get list of file paths based on passed options
+ *
+ * @returns {Promise<Array.<?string>>} List of file paths
  */
-async function init(server, options) {
-  internals.server = server;
-  internals.options = joi.attempt(
-    options,
-    schemata.options,
-    'Invalid options',
-  );
-
-  const filePaths = await getFilePaths();
-
-  Promise.all(filePaths.map(registerRoutes)).then(() => {
-    if (internals.options.log) {
-      logRouteList();
-    }
+function getFilePaths() {
+  return glob(internals.options.routes, {
+    nodir: true,
+    cwd: internals.options.cwd,
+    ignore: internals.options.ignore,
   });
 }
 
@@ -62,8 +55,8 @@ async function init(server, options) {
  * @param {string} path The modified route path
  * @param {string} method The concerning HTTP method
  */
-function extendRouteList({ path, method }) {
-  internals.routeList.push({ path, method });
+function extendRouteList({ path: routePath, method }) {
+  internals.routeList.push({ path: routePath, method });
 }
 
 /**
@@ -86,32 +79,14 @@ function logRouteList() {
  * @public
  *
  * @description
- * Get list of file paths based on passed options
- *
- * @returns {Array.<?string>} List of file paths
- */
-function getFilePaths() {
-  return glob(internals.options.routes, {
-    nodir: true,
-    cwd: internals.options.cwd,
-    ignore: internals.options.ignore,
-  });
-}
-
-/**
- * @function
- * @public
- *
- * @description
  * Load file and clear cache
  *
  * @param {string} absPath The absolute file path to be loaded and registered
  */
 async function loadRoutesOnce(absPath) {
   // eslint-disable-next-line
-    let routes = (
-    await import(`../lib/routes${absPath.split('/lib/routes')[1]}`)
-  ).default;
+  let routes = (await import(`../lib/routes${absPath.split('/lib/routes')[1]}`))
+    .default;
 
   if (!Array.isArray(routes)) {
     routes = Array.of(routes);
@@ -129,21 +104,21 @@ async function loadRoutesOnce(absPath) {
  *
  * @param {Array.<?Object> | Object} absPath The absolute file path to be loaded and registered
  * @param {string} relPath The releative file path to be loaded and registered
- * @returns {Array.<?Object>} The list of routes with prefixed paths
+ * @returns {Promise<Array.<?Object>>} The list of routes with prefixed paths
  */
 function prefixRoutes(absPath, relPath) {
   return loadRoutesOnce(absPath).then((routes) => {
     const pathTree = relPath.split('/').slice(0, -1);
     if (pathTree.length !== 0 || relPath === 'routes.js') {
       return routes.map((route) => {
-        route.path = `/${pathTree.join('/')}${route.path}`.replace(
-          /\/$/,
-          '',
-        );
         extendRouteList(route);
-        return route;
+        return {
+          ...route,
+          path: `/${pathTree.join('/')}${route.path}`.replace(/\/$/, ''),
+        };
       });
     }
+    return [];
   });
 }
 
@@ -163,8 +138,29 @@ function registerRoutes(relPath) {
       prefixedRoutes.forEach((route) => {
         try {
           internals.server.route(route);
+          // eslint-disable-next-line no-empty
         } catch {}
       });
+    }
+  });
+}
+
+/**
+ * @function
+ * @public
+ *
+ * @description
+ * Initialize auto-loading and prefixing of routes
+ */
+async function init(server, options) {
+  internals.server = server;
+  internals.options = joi.attempt(options, schemata.options, 'Invalid options');
+
+  const filePaths = await getFilePaths();
+
+  Promise.all(filePaths.map(registerRoutes)).then(() => {
+    if (internals.options.log) {
+      logRouteList();
     }
   });
 }

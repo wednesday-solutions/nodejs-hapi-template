@@ -1,8 +1,9 @@
+const { SCOPE_TYPE } = require('esm')(module /* , options */)(
+  '../utils/constants'
+);
+
 module.exports = {
   up: (queryInterface) => {
-    const { SCOPE_TYPE } = require('esm')(module /* , options */)(
-      '../utils/constants',
-    );
     const arr = Object.values(SCOPE_TYPE).map((scope, index) => ({
       oauth_client_id: index + 1,
       scope,
@@ -11,5 +12,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('oauth_client_scopes', arr, {});
   },
-  down: (queryInterface) => queryInterface.bulkDelete('oauth_client_scopes', null, {}),
+  down: (queryInterface) =>
+    queryInterface.bulkDelete('oauth_client_scopes', null, {}),
 };

@@ -1,7 +1,7 @@
 import { SCOPE_TYPE } from '@utils/constants';
 import { hasScopeOverUser } from '@utils/index';
 
-export const paths = [
+const paths = [
   {
     path: '/me',
     scopes: [SCOPE_TYPE.SUPER_ADMIN, SCOPE_TYPE.ADMIN, SCOPE_TYPE.USER],
@@ -75,6 +75,8 @@ export const paths = [
       SCOPE_TYPE.USER,
     ],
     method: 'GET',
-    customValidator: async (payload) => await hasScopeOverUser(payload),
+    customValidator: async (payload) => hasScopeOverUser(payload),
   },
 ];
+
+export default paths;

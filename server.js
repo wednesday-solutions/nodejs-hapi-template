@@ -18,7 +18,7 @@ import dbConfig from '@config/db';
 import hapiPaginationOptions from '@utils/paginationConstants';
 import { models } from '@models';
 import { logger } from '@utils';
-import { cachedUser } from '@utils/cacheMethods';
+import cachedUser from '@utils/cacheMethods';
 import loadRoutes from '@plugins/loadRoutes';
 import Pack from './package.json';
 
@@ -35,9 +35,11 @@ const prepDatabase = async () => {
     });
 };
 
+// eslint-disable-next-line import/prefer-default-export, import/no-mutable-exports
 export let server;
 
 const initServer = async () => {
+  // eslint-disable-next-line global-require
   require('@utils/configureEnv');
   server = Hapi.server(serverConfig);
 
@@ -158,13 +160,13 @@ const initServer = async () => {
     return h.continue;
   };
 
-  const onRequest = function (request, h) {
-    const { path } = request;
+  const onRequest = (request, h) => {
+    const { path: requestPath } = request;
     const { info } = request;
     const { query } = request;
 
     const requestDetails = {
-      path,
+      path: requestPath,
       info,
       query,
     };
@@ -209,5 +211,5 @@ prepDatabase().then(
   (error) => {
     // eslint-disable-next-line no-console
     console.error(error, 'Server startup failed...');
-  },
+  }
 );

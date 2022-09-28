@@ -6,21 +6,19 @@ const webpack = require('webpack');
 const dotenv = require('dotenv');
 require('@babel/register');
 
-const dotEnvFile = process.env.ENVIRONMENT_NAME === 'production'
-  ? '.env'
-  : `.env.${process.env.ENVIRONMENT_NAME || 'local'}`;
+const dotEnvFile =
+  process.env.ENVIRONMENT_NAME === 'production'
+    ? '.env'
+    : `.env.${process.env.ENVIRONMENT_NAME || 'local'}`;
 console.log({ dotEnvFile });
 const env = dotenv.config({ path: dotEnvFile }).parsed;
-
+const stringifyENVVariables = (prev, next) => ({
+  ...prev,
+  [`process.env.${next}`]: JSON.stringify(process.env[next]),
+});
 const envKeys = {
-  ...Object.keys(process.env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(process.env[next]);
-    return prev;
-  }, {}),
-  ...Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(env[next]);
-    return prev;
-  }, {}),
+  ...Object.keys(process.env).reduce(stringifyENVVariables, {}),
+  ...Object.keys(env).reduce(stringifyENVVariables, {}),
 };
 
 delete envKeys['process.env.ENVIRONMENT_NAME'];
@@ -111,12 +109,12 @@ module.exports = (options = {}) => ({
   plugins: options.plugins.concat([
     new webpack.ProgressPlugin((percentage, message, ...args) => {
       const percentDecimal = parseInt((percentage * 10).toString(), 10);
-      if (percentDecimal != curDecimal) {
+      if (percentDecimal !== curDecimal) {
         curDecimal = percentDecimal;
         console.info(
-          parseFloat(percentage * 100).toFixed(2),
+          parseFloat(String(percentage * 100)).toFixed(2),
           message,
-          ...args,
+          ...args
         );
       }
     }),

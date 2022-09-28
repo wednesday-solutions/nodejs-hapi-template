@@ -20,7 +20,7 @@ describe('util tests', () => {
   const userToken = createMockTokenWithScope(SCOPE_TYPE.USER);
   const superAdminToken = createMockTokenWithScope(SCOPE_TYPE.SUPER_ADMIN);
   const internalServiceToken = createMockTokenWithScope(
-    SCOPE_TYPE.INTERNAL_SERVICE,
+    SCOPE_TYPE.INTERNAL_SERVICE
   );
   const {
     MOCK_OAUTH_CLIENTS: adminClient,
@@ -91,36 +91,24 @@ describe('util tests', () => {
       const { isScopeHigher } = require('@utils');
 
       // user token
-      let isScopeHigherCheck = await isScopeHigher(
-        userToken,
-        SCOPE_TYPE.USER,
-      );
+      let isScopeHigherCheck = await isScopeHigher(userToken, SCOPE_TYPE.USER);
+      expect(isScopeHigherCheck).toBeFalsy();
+      isScopeHigherCheck = await isScopeHigher(userToken, SCOPE_TYPE.ADMIN);
       expect(isScopeHigherCheck).toBeFalsy();
       isScopeHigherCheck = await isScopeHigher(
         userToken,
-        SCOPE_TYPE.ADMIN,
-      );
-      expect(isScopeHigherCheck).toBeFalsy();
-      isScopeHigherCheck = await isScopeHigher(
-        userToken,
-        SCOPE_TYPE.SUPER_ADMIN,
+        SCOPE_TYPE.SUPER_ADMIN
       );
       expect(isScopeHigherCheck).toBeFalsy();
 
       // admin token
-      isScopeHigherCheck = await isScopeHigher(
-        adminToken,
-        SCOPE_TYPE.USER,
-      );
+      isScopeHigherCheck = await isScopeHigher(adminToken, SCOPE_TYPE.USER);
       expect(isScopeHigherCheck).toBeTruthy();
-      isScopeHigherCheck = await isScopeHigher(
-        adminToken,
-        SCOPE_TYPE.ADMIN,
-      );
+      isScopeHigherCheck = await isScopeHigher(adminToken, SCOPE_TYPE.ADMIN);
       expect(isScopeHigherCheck).toBeFalsy();
       isScopeHigherCheck = await isScopeHigher(
         adminToken,
-        SCOPE_TYPE.SUPER_ADMIN,
+        SCOPE_TYPE.SUPER_ADMIN
       );
       expect(isScopeHigherCheck).toBeFalsy();
 
@@ -131,10 +119,11 @@ describe('util tests', () => {
         allScopes.map(async (scope) => {
           isScopeHigherCheck = await isScopeHigher(
             superAdminToken,
-            SCOPE_TYPE[scope],
+            SCOPE_TYPE[scope]
           );
-          if (scope !== SCOPE_TYPE.INTERNAL_SERVICE) expect(isScopeHigherCheck).toBeTruthy();
-        }),
+          if (scope !== SCOPE_TYPE.INTERNAL_SERVICE)
+            expect(isScopeHigherCheck).toBeTruthy();
+        })
       );
 
       isScopeHigherCheck = await isScopeHigher(superAdminToken, null);
@@ -157,19 +146,19 @@ describe('util tests', () => {
       let hasPowerOverResult = hasPowerOver(
         superAdminToken,
         superClient.id,
-        SCOPE_TYPE.SUPER_ADMIN,
+        SCOPE_TYPE.SUPER_ADMIN
       );
       expect(hasPowerOverResult).toBeTruthy();
       hasPowerOverResult = hasPowerOver(
         superAdminToken,
         adminClient().id,
-        SCOPE_TYPE.ADMIN,
+        SCOPE_TYPE.ADMIN
       );
       expect(hasPowerOverResult).toBeTruthy();
       hasPowerOverResult = hasPowerOver(
         superAdminToken,
         userClient.id,
-        SCOPE_TYPE.USER,
+        SCOPE_TYPE.USER
       );
       expect(hasPowerOverResult).toBeTruthy();
 
@@ -177,19 +166,19 @@ describe('util tests', () => {
       hasPowerOverResult = hasPowerOver(
         adminToken,
         superClient.id,
-        SCOPE_TYPE.SUPER_ADMIN,
+        SCOPE_TYPE.SUPER_ADMIN
       );
       expect(hasPowerOverResult).toBeFalsy();
       hasPowerOverResult = hasPowerOver(
         adminToken,
         adminClient().id,
-        SCOPE_TYPE.ADMIN,
+        SCOPE_TYPE.ADMIN
       );
       expect(hasPowerOverResult).toBeFalsy();
       hasPowerOverResult = hasPowerOver(
         adminToken,
         userClient.id,
-        SCOPE_TYPE.USER,
+        SCOPE_TYPE.USER
       );
       expect(hasPowerOverResult).toBeTruthy();
 
@@ -197,19 +186,19 @@ describe('util tests', () => {
       hasPowerOverResult = hasPowerOver(
         userToken,
         superClient.id,
-        SCOPE_TYPE.SUPER_ADMIN,
+        SCOPE_TYPE.SUPER_ADMIN
       );
       expect(hasPowerOverResult).toBeFalsy();
       hasPowerOverResult = hasPowerOver(
         userToken,
         adminClient().id,
-        SCOPE_TYPE.ADMIN,
+        SCOPE_TYPE.ADMIN
       );
       expect(hasPowerOverResult).toBeFalsy();
       hasPowerOverResult = hasPowerOver(
         userToken,
         userClient.id,
-        SCOPE_TYPE.USER,
+        SCOPE_TYPE.USER
       );
       expect(hasPowerOverResult).toBeFalsy();
     });
@@ -220,11 +209,9 @@ describe('util tests', () => {
       const DBConnectionMock = new SequelizeMock();
       const userClientMock = DBConnectionMock.define(
         'oauth_clients',
-        userClient,
+        userClient
       );
-      await resetAndMockDB(
-        (db) => (db.models.oauthClients = userClientMock),
-      );
+      await resetAndMockDB((db) => (db.models.oauthClients = userClientMock));
       const { getScope } = require('@utils');
       const scope = await getScope(userClient.id);
       expect(scope).toEqual(SCOPE_TYPE.USER);
@@ -234,11 +221,9 @@ describe('util tests', () => {
       const DBConnectionMock = new SequelizeMock();
       const adminClientMock = DBConnectionMock.define(
         'oauth_clients',
-        adminClient(),
+        adminClient()
       );
-      await resetAndMockDB(
-        (db) => (db.models.oauthClients = adminClientMock),
-      );
+      await resetAndMockDB((db) => (db.models.oauthClients = adminClientMock));
       const { getScope } = require('@utils');
       const scope = await getScope(adminClient().id);
       expect(scope).toEqual(SCOPE_TYPE.ADMIN);
@@ -248,10 +233,10 @@ describe('util tests', () => {
       const DBConnectionMock = new SequelizeMock();
       const superadminClientMock = DBConnectionMock.define(
         'oauth_clients',
-        superClient,
+        superClient
       );
       await resetAndMockDB(
-        (db) => (db.models.oauthClients = superadminClientMock),
+        (db) => (db.models.oauthClients = superadminClientMock)
       );
       const { getScope } = require('@utils');
       const scope = await getScope(superClient.id);
@@ -269,11 +254,9 @@ describe('util tests', () => {
       };
       const adminClientMock = DBConnectionMock.define(
         'oauth_clients',
-        adminWithUserIdResource,
+        adminWithUserIdResource
       );
-      await resetAndMockDB(
-        (db) => (db.models.oauthClients = adminClientMock),
-      );
+      await resetAndMockDB((db) => (db.models.oauthClients = adminClientMock));
       let userId = 1;
       const { hasScopeOverUser } = require('@utils');
       const oauthClientId = adminClient().id;
@@ -294,7 +277,7 @@ describe('util tests', () => {
       const DBConnectionMock = new SequelizeMock();
       const userClientMock = DBConnectionMock.define(
         'oauth_clients',
-        userClient,
+        userClient
       );
       await resetAndMockDB((db) => {
         db.models.oauthClients = userClientMock;
@@ -318,24 +301,13 @@ describe('util tests', () => {
     it('should check if the resource type and id matches for the metadata', () => {
       const { validateResources } = require('@utils');
       let metadata = get(adminToken, 'metadata');
-      let resourcesValidated = validateResources(
-        metadata,
-        OAUTH_CLIENT_ID,
-        1,
-      );
+      let resourcesValidated = validateResources(metadata, OAUTH_CLIENT_ID, 1);
       expect(resourcesValidated).toBeTruthy();
-      const userToken = createMockTokenWithScope(
-        SCOPE_TYPE.USER,
-        USER_ID,
-      );
+      const userToken = createMockTokenWithScope(SCOPE_TYPE.USER, USER_ID);
       metadata = get(userToken, 'metadata');
       resourcesValidated = validateResources(metadata, USER_ID, 1);
       expect(resourcesValidated).toBeTruthy();
-      resourcesValidated = validateResources(
-        metadata,
-        OAUTH_CLIENT_ID,
-        1,
-      );
+      resourcesValidated = validateResources(metadata, OAUTH_CLIENT_ID, 1);
       expect(resourcesValidated).toBeFalsy();
     });
   });
@@ -385,7 +357,7 @@ describe('winston logger tests', () => {
     };
     const formatrTracerMock = mockedFn;
     expect(formatrTracerMock(info)).toBe(
-      `${info.timestamp}: ${JSON.stringify(info.message)} {}`,
+      `${info.timestamp}: ${JSON.stringify(info.message)} {}`
     );
   });
 
@@ -414,9 +386,7 @@ describe('winston logger tests', () => {
     const tFn1 = mockedFn;
     // mockedrTracerId
     expect(tFn1(info)).toBe(
-      `${info.timestamp} [request-id:7]: ${JSON.stringify(
-        info.message,
-      )} {}`,
+      `${info.timestamp} [request-id:7]: ${JSON.stringify(info.message)} {}`
     );
   });
 });

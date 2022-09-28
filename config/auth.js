@@ -6,25 +6,25 @@ import { SLIDING_WINDOW } from '@utils/constants';
 import { validateScopeForRoute } from '@utils';
 
 export default {
-    allowQueryToken: false,
-    allowCookieToken: false,
-    validate: async (request, token, h) => {
-        const credentials = await findAccessToken(token);
-        if (isNil(credentials)) {
-            throw unauthorized(`Access denied. Unauthorized user.`);
-        }
-        const artifacts = credentials.metadata;
-        const isValid = await validateScopeForRoute({
-            paths,
-            request,
-            credentials
-        });
-        updateAccessToken(token, SLIDING_WINDOW);
-
-        return {
-            isValid,
-            credentials,
-            artifacts
-        };
+  allowQueryToken: false,
+  allowCookieToken: false,
+  validate: async (request, token, h) => {
+    const credentials = await findAccessToken(token);
+    if (isNil(credentials)) {
+      throw unauthorized('Access denied. Unauthorized user.');
     }
+    const artifacts = credentials.metadata;
+    const isValid = await validateScopeForRoute({
+      paths,
+      request,
+      credentials,
+    });
+    updateAccessToken(token, SLIDING_WINDOW);
+
+    return {
+      isValid,
+      credentials,
+      artifacts,
+    };
+  },
 };

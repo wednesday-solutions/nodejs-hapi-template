@@ -10,7 +10,7 @@ import pkg from '../package.json';
  * Internally used data
  */
 const internals = {
-    routeList: []
+  routeList: [],
 };
 
 /**
@@ -20,12 +20,12 @@ const internals = {
  * Store joi schemata
  */
 const schemata = {
-    options: joi.object({
-        routes: joi.string().default('**/*.js'),
-        ignore: [joi.string(), joi.array().items(joi.string())],
-        cwd: joi.string().default(process.cwd()),
-        log: joi.boolean().default(false)
-    })
+  options: joi.object({
+    routes: joi.string().default('**/*.js'),
+    ignore: [joi.string(), joi.array().items(joi.string())],
+    cwd: joi.string().default(process.cwd()),
+    log: joi.boolean().default(false),
+  }),
 };
 
 /**
@@ -36,20 +36,20 @@ const schemata = {
  * Initialize auto-loading and prefixing of routes
  */
 async function init(server, options) {
-    internals.server = server;
-    internals.options = joi.attempt(
-        options,
-        schemata.options,
-        'Invalid options'
-    );
+  internals.server = server;
+  internals.options = joi.attempt(
+    options,
+    schemata.options,
+    'Invalid options',
+  );
 
-    const filePaths = await getFilePaths();
+  const filePaths = await getFilePaths();
 
-    Promise.all(filePaths.map(registerRoutes)).then(() => {
-        if (internals.options.log) {
-            logRouteList();
-        }
-    });
+  Promise.all(filePaths.map(registerRoutes)).then(() => {
+    if (internals.options.log) {
+      logRouteList();
+    }
+  });
 }
 
 /**
@@ -63,7 +63,7 @@ async function init(server, options) {
  * @param {string} method The concerning HTTP method
  */
 function extendRouteList({ path, method }) {
-    internals.routeList.push({ path, method });
+  internals.routeList.push({ path, method });
 }
 
 /**
@@ -74,11 +74,11 @@ function extendRouteList({ path, method }) {
  * Log the built list of prefixed routes into console
  */
 function logRouteList() {
-    console.info(`\n${pkg.name} prefixed the following routes`);
+  console.info(`\n${pkg.name} prefixed the following routes`);
 
-    internals.routeList.forEach(route => {
-        console.info('  ', `[${route.method}]`.padEnd(8), route.path);
-    });
+  internals.routeList.forEach((route) => {
+    console.info('  ', `[${route.method}]`.padEnd(8), route.path);
+  });
 }
 
 /**
@@ -91,11 +91,11 @@ function logRouteList() {
  * @returns {Array.<?string>} List of file paths
  */
 function getFilePaths() {
-    return glob(internals.options.routes, {
-        nodir: true,
-        cwd: internals.options.cwd,
-        ignore: internals.options.ignore
-    });
+  return glob(internals.options.routes, {
+    nodir: true,
+    cwd: internals.options.cwd,
+    ignore: internals.options.ignore,
+  });
 }
 
 /**
@@ -108,16 +108,16 @@ function getFilePaths() {
  * @param {string} absPath The absolute file path to be loaded and registered
  */
 async function loadRoutesOnce(absPath) {
-    // eslint-disable-next-line
+  // eslint-disable-next-line
     let routes = (
-        await import(`../lib/routes${absPath.split('/lib/routes')[1]}`)
-    ).default;
+    await import(`../lib/routes${absPath.split('/lib/routes')[1]}`)
+  ).default;
 
-    if (!Array.isArray(routes)) {
-        routes = Array.of(routes);
-    }
-    delete require.cache[absPath];
-    return routes;
+  if (!Array.isArray(routes)) {
+    routes = Array.of(routes);
+  }
+  delete require.cache[absPath];
+  return routes;
 }
 
 /**
@@ -132,19 +132,19 @@ async function loadRoutesOnce(absPath) {
  * @returns {Array.<?Object>} The list of routes with prefixed paths
  */
 function prefixRoutes(absPath, relPath) {
-    return loadRoutesOnce(absPath).then(routes => {
-        const pathTree = relPath.split('/').slice(0, -1);
-        if (pathTree.length !== 0 || relPath === 'routes.js') {
-            return routes.map(route => {
-                route.path = `/${pathTree.join('/')}${route.path}`.replace(
-                    /\/$/,
-                    ''
-                );
-                extendRouteList(route);
-                return route;
-            });
-        }
-    });
+  return loadRoutesOnce(absPath).then((routes) => {
+    const pathTree = relPath.split('/').slice(0, -1);
+    if (pathTree.length !== 0 || relPath === 'routes.js') {
+      return routes.map((route) => {
+        route.path = `/${pathTree.join('/')}${route.path}`.replace(
+          /\/$/,
+          '',
+        );
+        extendRouteList(route);
+        return route;
+      });
+    }
+  });
 }
 
 /**
@@ -157,19 +157,19 @@ function prefixRoutes(absPath, relPath) {
  * @param {string} relPath The releative file path to be loaded and registered
  */
 function registerRoutes(relPath) {
-    const absPath = path.join(internals.options.cwd, relPath);
-    return prefixRoutes(absPath, relPath).then(prefixedRoutes => {
-        if (prefixedRoutes) {
-            prefixedRoutes.forEach(route => {
-                try {
-                    internals.server.route(route);
-                } catch {}
-            });
-        }
-    });
+  const absPath = path.join(internals.options.cwd, relPath);
+  return prefixRoutes(absPath, relPath).then((prefixedRoutes) => {
+    if (prefixedRoutes) {
+      prefixedRoutes.forEach((route) => {
+        try {
+          internals.server.route(route);
+        } catch {}
+      });
+    }
+  });
 }
 
 export default {
-    register: init,
-    pkg
+  register: init,
+  pkg,
 };

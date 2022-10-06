@@ -175,7 +175,12 @@ export const isTestEnv = () =>
   process.env.ENVIRONMENT_NAME === 'test' || process.env.NODE_ENV === 'test';
 export const isLocalEnv = () => process.env.ENVIRONMENT_NAME === 'local';
 
+
 export const stringifyWithCheck = (message) => {
+  if (!message) { 
+    return '';
+  }
+  
   try {
     return JSON.stringify(message);
   } catch (err) {

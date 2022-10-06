@@ -171,6 +171,10 @@ export async function validateScopeForRoute({ paths, request, credentials }) {
   );
   return isAllowed;
 }
+export const isTestEnv = () =>
+  process.env.ENVIRONMENT_NAME === 'test' || process.env.NODE_ENV === 'test';
+export const isLocalEnv = () => process.env.ENVIRONMENT_NAME === 'local';
+
 export const stringifyWithCheck = (message) => {
   try {
     return JSON.stringify(message);
@@ -178,7 +182,7 @@ export const stringifyWithCheck = (message) => {
     if (message.data) {
       return stringifyWithCheck(message.data);
     }
-    console.log(message);
+    console.log({message});
     return `unable to unfurl message: ${message}`;
   }
 };
@@ -186,15 +190,16 @@ export const stringifyWithCheck = (message) => {
 export const logger = () => {
   const rTracerFormat = printf((info) => {
     const rid = rTracer.id();
-    const infoSplat = info[Symbol.for('splat').toString()] || [];
-    const infoSplatObject = { ...infoSplat };
-    return rid
-      ? `${info.timestamp} [request-id:${rid}]: ${stringifyWithCheck(
-          info.message
-        )} ${stringifyWithCheck(infoSplatObject)}`
-      : `${info.timestamp}: ${stringifyWithCheck(
-          info.message
-        )} ${stringifyWithCheck(infoSplatObject)}`;
+    // @ts-ignore
+    const infoSplat = info[Symbol.for('splat')] || [];
+
+    let message = `${info.timestamp}: ${stringifyWithCheck(
+      info.message
+    )} ${stringifyWithCheck(...infoSplat)}`;
+    if (rid) { 
+      message = `[request-id:${rid}]: ${message}`
+    } 
+    return message
   });
   return createLogger({
     format: combine(timestamp(), rTracerFormat),

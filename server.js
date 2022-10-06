@@ -1,5 +1,7 @@
 import Hapi from '@hapi/hapi';
 import path from 'path';
+import cluster from 'cluster';
+import os from 'os';
 // import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
 import authBearer from 'hapi-auth-bearer-token';
@@ -17,10 +19,12 @@ import serverConfig from '@config/server';
 import dbConfig from '@config/db';
 import hapiPaginationOptions from '@utils/paginationConstants';
 import { models } from '@models';
-import { logger } from '@utils';
+import { isLocalEnv, isTestEnv, logger } from '@utils';
 import cachedUser from '@utils/cacheMethods';
 import loadRoutes from '@plugins/loadRoutes';
 import Pack from './package.json';
+
+const totalCPUs = os.cpus().length;
 
 const prepDatabase = async () => {
   await models.sequelize
@@ -180,7 +184,7 @@ const initServer = async () => {
   server.ext('onPreResponse', onPreResponse);
 
   // eslint-disable-next-line no-console
-  logger().info('Server running on %s', server.info.uri);
+  logger().info('Server running on: ', server.info.uri);
 
   server.events.on('request', (_, error) => {
     if (error) {
@@ -198,18 +202,34 @@ process.on('unhandledRejection', (err) => {
   logger().info(err);
   process.exit(1);
 });
+if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
+  console.log(`Number of CPUs is ${totalCPUs}`);
+  console.log(`Master ${process.pid} is running`);
 
-prepDatabase().then(
-  () => {
-    // eslint-disable-next-line no-console
-    logger().info(`Database connection to ${dbConfig.url} is successful.\n`);
-    // eslint-disable-next-line no-console
-    logger().info('Initializing the server...');
-
-    return initServer();
-  },
-  (error) => {
-    // eslint-disable-next-line no-console
-    logger().error(error, 'Server startup failed...');
+  // Fork workers.
+  for (let i = 0; i < totalCPUs; i += 1) {
+    cluster.fork();
   }
-);
+
+  cluster.on('exit', (worker) => {
+    console.log(`worker ${worker.process.pid} died`);
+    console.log("Let's fork another worker!");
+    cluster.fork();
+  });
+} else {
+  prepDatabase().then(
+    () => {
+      // eslint-disable-next-line no-console
+      logger().info(`Database connection to ${dbConfig.url} is successful.\n`);
+      // eslint-disable-next-line no-console
+      logger().info('Initializing the server...');
+
+      return initServer();
+    },
+    (error) => {
+      // eslint-disable-next-line no-console
+      logger().error(error, 'Server startup failed...');
+    }
+  );
+
+}

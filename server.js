@@ -27,11 +27,11 @@ const prepDatabase = async () => {
     .authenticate()
     .then(() => {
       // eslint-disable-next-line no-console
-      console.log('Connection has been established successfully.');
+      logger().info('Connection has been established successfully.');
     })
     .catch((err) => {
       // eslint-disable-next-line no-console
-      console.error('Unable to connect to the database:', err);
+      logger().error('Unable to connect to the database:', err);
     });
 };
 
@@ -180,13 +180,13 @@ const initServer = async () => {
   server.ext('onPreResponse', onPreResponse);
 
   // eslint-disable-next-line no-console
-  console.log('Server running on %s', server.info.uri);
+  logger().info('Server running on %s', server.info.uri);
 
   server.events.on('request', (_, error) => {
     if (error) {
       logger().info('API Failure: ', { error });
       // eslint-disable-next-line no-console
-      console.log(error);
+      logger().info(error);
     }
   });
 
@@ -195,21 +195,21 @@ const initServer = async () => {
 
 process.on('unhandledRejection', (err) => {
   // eslint-disable-next-line no-console
-  console.log(err);
+  logger().info(err);
   process.exit(1);
 });
 
 prepDatabase().then(
   () => {
     // eslint-disable-next-line no-console
-    console.log(`Database connection to ${dbConfig.url} is successful.\n`);
+    logger().info(`Database connection to ${dbConfig.url} is successful.\n`);
     // eslint-disable-next-line no-console
-    console.log('Initializing the server...');
+    logger().info('Initializing the server...');
 
     return initServer();
   },
   (error) => {
     // eslint-disable-next-line no-console
-    console.error(error, 'Server startup failed...');
+    logger().error(error, 'Server startup failed...');
   }
 );

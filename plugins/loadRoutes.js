@@ -66,11 +66,12 @@ function extendRouteList({ path: routePath, method }) {
  * @description
  * Log the built list of prefixed routes into console
  */
-function logRouteList() {
-  console.info(`\n${pkg.name} prefixed the following routes`);
+async function logRouteList() {
+  const {logger} = await import("@utils")
+  logger().info(`\n${pkg.name} prefixed the following routes`);
 
   internals.routeList.forEach((route) => {
-    console.info('  ', `[${route.method}]`.padEnd(8), route.path);
+    logger().info('  ', `[${route.method}]`.padEnd(8), route.path);
   });
 }
 

@@ -1,6 +1,6 @@
 {
   "exec": "export ENVIRONMENT_NAME=local && yarn build:dev && yarn start",
-  "watch": ["lib/*", "utils/*"],
+  "watch": ["server.js", "lib/**/*.*", "utils/**/*.*"],
   "ignore": ["**/__tests__/**", "*.test.js", "*.spec.js"],
   "events": {
     "restart": "kill-port 9000",

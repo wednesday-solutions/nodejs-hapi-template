@@ -2,7 +2,6 @@ import Hapi from '@hapi/hapi';
 import path from 'path';
 import cluster from 'cluster';
 import os from 'os';
-// import wurst from 'wurst';
 import { camelCase, snakeCase } from 'lodash';
 import authBearer from 'hapi-auth-bearer-token';
 import authConfig from '@config/auth';

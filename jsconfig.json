@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "NodeNext",
+    "allowJs": true,
+    "checkJs": true,
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "@root": ["./"],
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"],
+      "@config": ["./config"],
+      "@config/*": ["./config/*"],
+      "@plugins": ["./plugins"],
+      "@plugins/*": ["./plugins/*"],
+      "@services": ["./lib/services"],
+      "@services/*": ["./lib/services/*"],
+      "@models": ["./lib/models"],
+      "@daos": ["./lib/daos"],
+      "@daos/*": ["./lib/daos/*"],
+      "@routes": ["./lib/routes"]
+    },
+    "typeRoots": ["test.globals.d.ts"]
+  }
+}

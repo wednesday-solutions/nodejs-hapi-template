@@ -1,14 +1,13 @@
 let fire;
 
 function __setupMocks(f) {
-    fire = f;
+  fire = f;
 }
 
 function newCircuitBreaker() {
-    return { fire: () => fire() };
+  return { fire: () => fire() };
 }
-module.exports = {
-    __setupMocks,
-    newCircuitBreaker,
-    fire
-};
+
+export default newCircuitBreaker;
+
+export { __setupMocks, fire };

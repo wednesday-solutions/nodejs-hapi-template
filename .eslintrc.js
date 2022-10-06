@@ -1,62 +1,36 @@
-const fs = require('fs');
-const path = require('path');
-
-const prettierOptions = JSON.parse(
-    fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8')
-);
-
 module.exports = {
-    parser: 'babel-eslint',
-    extends: ['prettier'],
-    plugins: ['prettier'],
-    env: {
-        jest: true,
-        node: true,
-        es6: true
+  env: {
+    es2021: true,
+    node: true,
+    jest: true,
+  },
+  extends: ['airbnb-base', 'prettier'],
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  rules: {},
+  settings: {
+    'import/resolver': {
+      node: {},
+      webpack: {
+        config: './webpack/production.config.js',
+      },
     },
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: 'module'
+  },
+  overrides: [
+    {
+      files: '*.test.js',
+      rules: {
+        'no-promise-executor-return': 'off',
+        'global-require': 'off',
+        'no-param-reassign': 'off',
+        'no-shadow': 'off',
+        'no-underscore-dangle': 'off',
+        'no-undef': 'off',
+        'consistent-return': 'off',
+        'no-return-assign': 'off',
+      },
     },
-    rules: {
-        'import/no-webpack-loader-syntax': 0,
-        'key-spacing': [2, { beforeColon: false, afterColon: true }],
-        'arrow-parens': ['error', 'as-needed'],
-        'arrow-body-style': [2, 'as-needed'],
-        'class-methods-use-this': 0,
-        'import/imports-first': 0,
-        'import/newline-after-import': 0,
-        'import/no-dynamic-require': 0,
-        'import/no-extraneous-dependencies': 0,
-        'import/no-named-as-default': 0,
-        'import/no-unresolved': 0,
-        'import/prefer-default-export': 0,
-        'no-param-reassign': 0,
-        'max-len': 0,
-        'newline-per-chained-call': 0,
-        'no-confusing-arrow': 0,
-        'no-unused-vars': ['error', { args: 'none' }],
-        'no-use-before-define': 0,
-        'prefer-template': 2,
-        'require-yield': 0,
-        'max-lines': [
-            'error',
-            { max: 300, skipBlankLines: true, skipComments: true }
-        ],
-        'prettier/prettier': ['error', prettierOptions]
-    },
-    settings: {
-        'import/resolver': {
-            node: {
-                app: './app',
-                context: 'app',
-                resolve: {
-                    app: './app',
-                    paths: ['app'],
-                    modules: ['app', 'node_modules'],
-                    extensions: ['.js', '.json', '.coffee']
-                }
-            }
-        }
-    }
+  ],
 };

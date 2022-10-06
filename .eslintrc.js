@@ -31,6 +31,6 @@ module.exports = {
         'consistent-return': 'off',
         'no-return-assign': 'off',
       },
-    },
+    }
   ],
 };

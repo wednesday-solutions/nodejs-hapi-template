@@ -30,6 +30,9 @@
     "test": "jest --coverage",
     "test:badges": "npm run test  && jest-coverage-badges --output './badges'"
   },
+  "peerDependencies": {
+    "@hapi/boom": "^9.1.0"
+  },
   "dependencies": {
     "@babel/register": "^7.18.9",
     "@hapi/catbox-redis": "^6.0.2",
@@ -86,7 +89,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "eslint": "^8.2.0",
+    "eslint": "^8.24.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-webpack": "^0.13.2",

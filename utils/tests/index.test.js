@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+import rTracer from 'cls-rtracer'
 import moment from 'moment';
 import get from 'lodash/get';
 import {
@@ -13,7 +14,7 @@ import {
   mockMetadata,
 } from '@utils/mockData';
 import { resetAndMockDB } from '@utils/testUtils';
-import { stringifyWithCheck } from '@utils';
+import { logger, stringifyWithCheck } from '@utils';
 
 describe('util tests', () => {
   const adminToken = createMockTokenWithScope(SCOPE_TYPE.ADMIN);
@@ -312,81 +313,37 @@ describe('util tests', () => {
     });
   });
 });
-
 describe('winston logger tests', () => {
-  beforeEach(() => {
-    jest.resetModules();
-    jest.mock('winston', () => {
-      const mockFormat = {
-        combine: jest.fn(),
-        timestamp: jest.fn(),
-        errors: jest.fn(),
-        printf: jest.fn(),
-      };
-      const mockTransports = {
-        Console: jest.fn(),
-      };
-      const mockLogger = {
-        info: jest.fn(),
-        add: jest.fn(),
-      };
-      return {
-        format: mockFormat,
-        transports: mockTransports,
-        createLogger: jest.fn(() => mockLogger),
-      };
-    });
-  });
-
   it('should run mocked winston test', () => {
-    const { format } = require('winston');
-
-    let mockedFn;
-    format.printf.mockImplementation((templateFn) => {
-      mockedFn = templateFn;
-    });
-
-    const { logger } = require('../index');
-
-    // invoke the logger.
-    logger().info('Mocking');
-
-    const info = {
-      timestamp: 123,
-      message: 'mock log',
-    };
-    const formatrTracerMock = mockedFn;
-    expect(formatrTracerMock(info)).toBe(
-      `${info.timestamp}: ${JSON.stringify(info.message)} {}`
+    // @ts-ignore
+    const spy = jest.spyOn(console._stdout, 'write');
+    const message = 'this is the message';
+    const argument = { arg: '1' };
+    logger().info(message, argument);
+    expect(spy).toBeCalledWith(
+      `${moment().utc().format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')}: ${JSON.stringify(
+        message
+      )} ${JSON.stringify(argument)}
+`
     );
   });
 
   it('should add request trace', () => {
-    jest.mock('cls-rtracer', () => {
-      const rTracer = {
-        id: jest.fn().mockReturnValue(7),
-      };
-      return rTracer;
-    });
+    const id = 7;
 
-    const { format } = require('winston');
-
-    let mockedFn;
-    format.printf.mockImplementation((templateFn) => {
-      mockedFn = templateFn;
-    });
-
-    const { logger } = require('../index');
-    logger().info('Mocking');
-
-    const info = {
-      timestamp: 123,
-      message: 'mock log',
-    };
-    const tFn1 = mockedFn;
-    // mockedrTracerId
-    expect(tFn1(info)).toBe(
-      `${info.timestamp} [request-id:7]: ${JSON.stringify(info.message)} {}`
+    jest.spyOn(rTracer, 'id').mockImplementation(() => id);
+    // @ts-ignore
+    const spy = jest.spyOn(console._stdout, 'write');
+    const message = 'this is the message';
+    const argument = { arg: '1' };
+    logger().info(message, argument);
+    expect(spy).toBeCalledWith(
+      `[request-id:${id}]: ${moment()
+        .utc()
+        .format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')}: ${JSON.stringify(
+        message
+      )} ${JSON.stringify(argument)}
+`
     );
   });
 });

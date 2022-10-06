@@ -32,11 +32,9 @@
   },
   "dependencies": {
     "@babel/register": "^7.18.9",
-    "@hapi/boom": "^9.1.3",
     "@hapi/catbox-redis": "^6.0.2",
     "@hapi/hapi": "^20.1.5",
     "@hapi/inert": "5.2.2",
-    "@hapi/joi": "^17.1.1",
     "@hapi/joi-date": "^2.0.1",
     "@hapi/vision": "^5.5.4",
     "axios": "^0.26.0",

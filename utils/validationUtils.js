@@ -1,4 +1,4 @@
-import JoiBase from '@hapi/joi';
+import JoiBase from 'joi';
 import JoiDate from '@hapi/joi-date';
 import seedData from './seedData';
 import { GRANT_TYPE } from './constants';

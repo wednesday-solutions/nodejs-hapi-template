@@ -1,4 +1,6 @@
 /* global server */
+import mockdate from 'mockdate'
+mockdate.set(0)
 import { mockDB } from '@utils/testUtils';
 import { ONE_USER_DATA } from '@utils/constants';
 import { init } from './lib/testServer';

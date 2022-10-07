@@ -1,4 +1,4 @@
-<img align="left" src="https://github.com/wednesday-solutions/nodejs-hapi-template/blob/master/nodejs_hapi_template_github.svg" width="480" height="560" />
+<img align="left" src="https://github.com/wednesday-solutions/nodejs-hapi-template/blob/main/nodejs_hapi_template_github.svg" width="480" height="560" />
 
 <div>
   <a href="https://www.wednesday.is?utm_source=gthb&utm_medium=repo&utm_campaign=serverless" align="left" style="margin-left: 0;">

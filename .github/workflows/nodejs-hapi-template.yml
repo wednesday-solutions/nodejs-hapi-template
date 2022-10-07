@@ -2,10 +2,10 @@ name: Nodejs Hapi Template
 on:
     push:
         branches:
-            - master
+            - main
     pull_request:
         branches:
-            - master
+            - main
 jobs:
     build_and_test:
         name: Build & Test
@@ -19,5 +19,7 @@ jobs:
               run: yarn
             - name: Lint
               run: yarn lint
+            - name: Build
+              run: yarn build:dev
             - name: Test
               run: yarn test

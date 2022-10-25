@@ -5068,13 +5068,6 @@ hapi-auth-bearer-token@^8.0.0:
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-hapi-cors@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/hapi-cors/-/hapi-cors-1.0.3.tgz#47db547d9d6b3ae52bbeec34b2b6cfc82c5a8892"
-  integrity sha512-45fkvy13d+Awp25OXuMj8imQSoD3x5SJ99D+P/WBEwruHArpoHdj+zMlrXOoixgo/O281/lls6rAZBnkBtNOpg==
-  dependencies:
-    joi "^7.0.1"
-
 hapi-pagination@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/hapi-pagination/-/hapi-pagination-4.0.0.tgz#714c01b8e078da0e7955fc7ccf6101ac84369a35"
@@ -5193,16 +5186,6 @@ hbs@^4.1.2:
   dependencies:
     handlebars "4.7.7"
     walk "2.3.15"
-
-hoek@3.x.x:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/hoek/-/hoek-3.0.4.tgz#268adff66bb6695c69b4789a88b1e0847c3f3123"
-  integrity sha512-VIMFzySNWnvVqBZIWJSHzun/dvtgYYxv0DypA8Mr9ue+kjXyf1mkq4/EOU/a33cIoW+fFyk9+t8W6ZSqucKYpA==
-
-hoek@4.x.x:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
-  integrity sha512-QLg82fGkfnJ/4iy1xZ81/9SIJiq1NGFUMGs6ParyjBZr6jW2Ufj/snDqTHixNlHdPNwN2RLVD0Pi3igeK9+JfA==
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -5729,11 +5712,6 @@ isarray@1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
   integrity sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==
-
-isemail@2.x.x:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/isemail/-/isemail-2.2.1.tgz#0353d3d9a62951080c262c2aa0a42b8ea8e9e2a6"
-  integrity sha512-LPjFxaTatluwGAJlGe4FtRdzg0a9KlXrahHoHAR4HwRNf90Ttwi6sOQ9zj+EoCPmk9yyK+WFUqkm0imUo8UJbw==
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -6346,16 +6324,6 @@ joi@^17.6.1:
     "@sideway/address" "^4.1.3"
     "@sideway/formula" "^3.0.0"
     "@sideway/pinpoint" "^2.0.0"
-
-joi@^7.0.1:
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/joi/-/joi-7.3.0.tgz#4d9c9f181830444083665b5b6cd5b8ca6779a5e9"
-  integrity sha512-7ysLFfGtSg5L1MWnIkJGvJLAsdZPLZK2+qAi+0D9QdsnlPVSk+dBZxEl1ezveJuhEcvZKLK+AZSkmnXeATcB0A==
-  dependencies:
-    hoek "3.x.x"
-    isemail "2.x.x"
-    moment "2.x.x"
-    topo "2.x.x"
 
 js-beautify@^1.14.0:
   version "1.14.5"
@@ -8701,13 +8669,6 @@ to-regex@^3.0.1, to-regex@^3.0.2:
     extend-shallow "^3.0.2"
     regex-not "^1.0.2"
     safe-regex "^1.1.0"
-
-topo@2.x.x:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/topo/-/topo-2.0.2.tgz#cd5615752539057c0dc0491a621c3bc6fbe1d182"
-  integrity sha512-QMfJ9TC5lKcmLZImOZ/BTSWJeVbay7XK2nlzvFALW3BA5OkvBnbs0poku4EsRpDMndDVnM58EU/8D3ZcoVehWg==
-  dependencies:
-    hoek "4.x.x"
 
 toposort-class@^1.0.1:
   version "1.0.1"

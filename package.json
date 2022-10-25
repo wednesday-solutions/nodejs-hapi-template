@@ -46,7 +46,6 @@
     "esm": "^3.2.25",
     "glob-promise": "^5.0.0",
     "hapi-auth-bearer-token": "^8.0.0",
-    "hapi-cors": "^1.0.3",
     "hapi-pagination": "^4.0.0",
     "hapi-rate-limit": "^5.0.0",
     "hapi-swaggerui": "https://github.com/wednesday-solutions/hapi-swaggerui/#master",

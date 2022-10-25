@@ -13,7 +13,6 @@ import vision from '@hapi/vision';
 import rateLimiter from 'hapi-rate-limit';
 import rTracer from 'cls-rtracer';
 
-import cors from 'hapi-cors';
 import serverConfig from '@config/server';
 import dbConfig from '@config/db';
 import hapiPaginationOptions from '@utils/paginationConstants';
@@ -126,14 +125,6 @@ const initServer = async () => {
 
   await cachedUser(server);
 
-  // Register cors plugin
-  await server.register({
-    plugin: cors,
-    options: {
-      origins: ['http://localhost:3000'],
-    },
-  });
-
   // Register rate limiter plugin
   await server.register({
     plugin: rateLimiter,
@@ -230,5 +221,4 @@ if (!isTestEnv() && !isLocalEnv() && cluster.isMaster) {
       logger().error(error, 'Server startup failed...');
     }
   );
-
 }

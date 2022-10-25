@@ -2,8 +2,8 @@ name: node-hapi (Dev & Prod)
 on:
     push:
         branches:
-            - develop
-            - master
+            - dev
+            - main
 jobs:
     # docker-build-push-deploy:
     #   name: Docker build, push and deploy
@@ -16,7 +16,7 @@ jobs:
     #       run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
     #     - name: Set env.ENV_NAME
     #       run: |
-    #         if [[ ${{steps.vars.outputs.stage}} == 'master' ]]; then
+    #         if [[ ${{steps.vars.outputs.stage}} == 'main' ]]; then
     #             echo "ENV_NAME=prod" >> "$GITHUB_ENV"
     #         else
     #             echo "ENV_NAME=dev" >> "$GITHUB_ENV"

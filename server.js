@@ -52,17 +52,18 @@ const initServer = async () => {
     vision,
     {
       plugin: hapiSwaggerUI,
-      swaggerOptions: {
+      options: {
         documentationPage: true,
         swaggerUI: true,
         auth: false,
-        authorization: null,
+        templates: path.join(
+          __dirname,
+          '../node_modules/hapi-swaggerui/templates'
+        ),
         info: {
           title: 'Node Hapi Template API documentation',
           version: Pack.version,
         },
-      },
-      options: {
         grouping: 'tags',
         tags: [
           {
@@ -110,13 +111,12 @@ const initServer = async () => {
 
   // register auth plugin
   await server.register({
-    plugin: authBearer,
+    plugin: authBearer
   });
   server.auth.strategy('bearer', 'bearer-access-token', authConfig);
   server.auth.default('bearer');
 
   // Register Wurst plugin
-
   await loadRoutes.register(server, {
     routes: '**/routes.js',
     cwd: path.join(__dirname, '../lib/routes'),
@@ -152,13 +152,16 @@ const initServer = async () => {
   const onPreResponse = function (request, h) {
     const { response } = request;
     const responseSource = response.source;
-    response.source = mapKeysDeep(responseSource, (keys) => snakeCase(keys));
-
-    if (response.header) {
-      const requestId = rTracer.id();
-      response.header('x-request-id', requestId);
-      logger().info('API Success: ', response.source);
+    // hack for hapi-swagger
+    if (!["/documentation", "/swaggerui/"].map(p => p.includes(request.path))) { 
+      response.source = mapKeysDeep(responseSource, (keys) => snakeCase(keys));
+      if (response.header) {
+        const requestId = rTracer.id();
+        response.header('x-request-id', requestId);
+        logger().info('API Success: ', response.source);
+      }
     }
+    
 
     return h.continue;
   };
@@ -184,6 +187,7 @@ const initServer = async () => {
 
   // eslint-disable-next-line no-console
   logger().info('Server running on: ', server.info.uri);
+
 
   server.events.on('request', (_, error) => {
     if (error) {

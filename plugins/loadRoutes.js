@@ -71,7 +71,7 @@ async function logRouteList() {
   logger().info(`\n${pkg.name} prefixed the following routes`);
 
   internals.routeList.forEach((route) => {
-    logger().info('  ', `[${route.method}]`.padEnd(8), route.path);
+    logger().info(`[${route.method}]`.padEnd(8), route.path);
   });
 }
 
@@ -112,7 +112,10 @@ function prefixRoutes(absPath, relPath) {
     const pathTree = relPath.split('/').slice(0, -1);
     if (pathTree.length !== 0 || relPath === 'routes.js') {
       return routes.map((route) => {
-        extendRouteList(route);
+        extendRouteList({
+          method: route.method,
+          path: `/${pathTree.join('/')}${route.path}`.replace(/\/$/, ''),
+        });
         return {
           ...route,
           path: `/${pathTree.join('/')}${route.path}`.replace(/\/$/, ''),

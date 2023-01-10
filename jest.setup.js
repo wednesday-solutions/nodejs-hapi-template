@@ -1,11 +1,13 @@
 /* global server */
-import mockdate from 'mockdate'
-mockdate.set(0)
+import mockdate from 'mockdate';
+mockdate.set(0);
 import { mockDB } from '@utils/testUtils';
 import { ONE_USER_DATA } from '@utils/constants';
 import { init } from './lib/testServer';
 
 require('jest-extended');
+
+process.env.ENVIRONMENT_NAME = 'local';
 
 mockDB();
 

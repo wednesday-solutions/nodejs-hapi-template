@@ -7,6 +7,8 @@ services:
         restart: always
         env_file:
             - .env.docker
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     redis:
         image: 'redis:alpine'
         ports:
@@ -19,7 +21,7 @@ services:
         build:
             context: .
             args:
-                ENVIRONMENT_NAME: docker
+                ENVIRONMENT_NAME: ${ENVIRONMENT_NAME}
         restart: always
         ports:
             - 9000:9000

@@ -13,7 +13,7 @@ export const redisCache = {
     options: {
       partition: 'temp_dev_data',
       host: process.env.REDIS_HOST,
-      port: 6379,
+      port: process.env.REDIS_PORT,
     },
   },
 };

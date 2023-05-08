@@ -4,6 +4,7 @@ set -a . ".env$ENVIRONMENT_NAME" set +a
 sleep 30
 if [ "$ENVIRONMENT_NAME" == "local" ]
 then
+    npx sequelize db:drop
     npx sequelize db:create
 fi
 

@@ -61,37 +61,37 @@ jobs:
   #     - name: Logout of Amazon ECR
   #       if: always()
   #       run: docker logout ${{ steps.login-ecr.outputs.registry }}
-  # create_badges:
-  #   name: Create Badges
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x]
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup environment
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         cache: 'yarn'
-  #         node-version: ${{ matrix.node-version }}
-  #     - name: Set branch name
-  #       id: vars
-  #       run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
-  #     - name: Install dependencies
-  #       run: yarn install
-  #     - name: Create badges
-  #       run: yarn run test:badges
-  #     - name: Commit badges
-  #       uses: EndBug/add-and-commit@v7
-  #       with:
-  #         author_name: Gitflow
-  #         author_email: git@wednesday.is
-  #         message: 'Update badges'
-  #         add: 'badges/'
-  #         push: false
-  #     - name: Pushing to a protected branch
-  #       uses: CasperWA/push-protected@v2
-  #       with:
-  #         token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
-  #         branch: ${{ steps.vars.outputs.stage }}
-  #         unprotect_reviews: true
+  create_badges:
+    name: Create Badges
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup environment
+        uses: actions/setup-node@v2
+        with:
+          cache: 'yarn'
+          node-version: ${{ matrix.node-version }}
+      - name: Set branch name
+        id: vars
+        run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
+      - name: Install dependencies
+        run: yarn install
+      - name: Create badges
+        run: yarn run test:badges
+      - name: Commit badges
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Gitflow
+          author_email: git@wednesday.is
+          message: 'Update badges'
+          add: 'badges/'
+          push: false
+      - name: Pushing to a protected branch
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.PUSH_TO_PROTECTED_BRANCH }}
+          branch: ${{ steps.vars.outputs.stage }}
+          unprotect_reviews: true

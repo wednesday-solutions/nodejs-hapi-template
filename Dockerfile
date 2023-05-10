@@ -1,5 +1,5 @@
 FROM node:14
-ARG ENVIRONMENT_NAME
+ARG BUILD_ENV
 ARG BUILD_NAME
 RUN mkdir -p /app-build
 ADD . /app-build
@@ -9,7 +9,7 @@ RUN yarn
 RUN yarn build:$BUILD_NAME
 
 FROM node:14-alpine
-ARG ENVIRONMENT_NAME
+ARG BUILD_ENV
 ARG BUILD_NAME
 RUN apk add yarn
 RUN yarn global add sequelize@6.28.0 sequelize-cli@6.2.0

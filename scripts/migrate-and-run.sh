@@ -1,7 +1,9 @@
 #!/bin/sh
-set -a . ".env$ENVIRONMENT_NAME" set +a
+set -a . ".env$BUILD_ENV" set +a
 # create the db for local builds
 sleep 30
+
+echo $BUILD_ENV
 
 if [ "$BUILD_NAME" == "local" ]
 then

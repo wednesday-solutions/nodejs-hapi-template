@@ -14,13 +14,16 @@ jobs:
   #     - name: Get branch name
   #       id: vars
   #       run: echo ::set-output name=stage::${GITHUB_REF#refs/*/}
-  #     - name: Set env.ENV_NAME
+
+  #     - name: Set env.ENV_NAME and env.BUILD_NAME
   #       run: |
   #         if [[ ${{steps.vars.outputs.stage}} == 'main' ]]; then
-  #             echo "ENV_NAME=prod" >> "$GITHUB_ENV"
+  #             echo "BUILD_NAME=prod" >> "$GITHUB_ENV"
   #         else
-  #             echo "ENV_NAME=dev" >> "$GITHUB_ENV"
+  #             echo "ENV_NAME=.development" >> "$GITHUB_ENV"
+  #             echo "BUILD_NAME=dev" >> "$GITHUB_ENV"
   #         fi
+
   #     - name: Install dependencies
   #       run: yarn
 
@@ -40,7 +43,7 @@ jobs:
   #         AWS_REGION: ${{ secrets.AWS_REGION }}
   #         IMAGE_TAG: ${{ github.sha }}
   #       run: |
-  #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg ENVIRONMENT_NAME=${{ env.ENV_NAME }}
+  #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg ENVIRONMENT_NAME=${{ env.ENV_NAME }} --build-arg BUILD_NAME=${{ env.BUILD_NAME }}
   #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
   #     - name: Render Amazon ECS task definition
   #       id: node-hapi-container

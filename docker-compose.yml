@@ -24,6 +24,7 @@ services:
       context: .
       args:
         ENVIRONMENT_NAME: docker
+        BUILD_NAME: docker
     restart: always
     ports:
       - 9000:9000

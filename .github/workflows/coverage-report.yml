@@ -1,27 +1,38 @@
 name: Jest Coverage Report with Annotations (CI)
 on:
-    pull_request:
-        branches:
-            - main
+  pull_request_target:
+    branches:
+      - main
 jobs:
-    coverage_report:
-        name: Jest Coverage Report
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [20.x]
-        steps:
-            - uses: actions/checkout@v3
-            - name: Get Threshold
-              id: threshold
-              uses: notiz-dev/github-action-json-property@release
-              with:
-                  path: 'jest.config.json'
-                  prop_path: 'coverageThreshold.global.statements'
-            - name: Test and generate coverage report
-              uses: ArtiomTr/jest-coverage-report-action@v2
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  threshold: ${{steps.threshold.outputs.prop}}
-                  package-manager: yarn
-                  custom-title: Jest Coverage Report
+  coverage_report:
+    name: Jest Coverage Report
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - name: Get Threshold
+        id: threshold
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'jest.config.json'
+          prop_path: 'coverageThreshold.global.statements'
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Test and generate coverage report
+        uses: artiomtr/jest-coverage-report-action@v2.0-rc.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          threshold: ${{steps.threshold.outputs.prop}}
+          package-manager: yarn
+          custom-title: Jest Coverage Report

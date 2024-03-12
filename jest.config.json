@@ -1,29 +1,30 @@
 {
-    "setupFilesAfterEnv": ["./jest.setup.js"],
-    "clearMocks": true,
-    "restoreMocks": true,
-    "resetMocks": true,
-    "globals": {
-        "server": null
-    },
-    "moduleNameMapper": {
-        "@root(.*)$": "<rootDir>/$1",
-        "@(models|routes|daos|services)(.*)$": "<rootDir>/lib/$1/$2",
-        "@(utils|config|plugins)(.*)$": "<rootDir>/$1/$2"
-    },
-    "coverageReporters": ["json-summary", "text", "lcov"],
-    "coverageThreshold": {
-        "global": {
-            "statements": 85,
-            "branches": 85,
-            "functions": 85,
-            "lines": 85
-        }
-    },
-    "coveragePathIgnorePatterns": [
-        "<rootDir>/node_modules/",
-        "<rootDir>/utils/testUtils.js",
-        "<rootDir>/utils/mockData.js",
-        "<rootDir>/lib/testServer.js"
-    ]
+  "setupFilesAfterEnv": ["./jest.setup.js"],
+  "clearMocks": true,
+  "restoreMocks": true,
+  "resetMocks": true,
+  "globals": {
+    "server": null
+  },
+  "moduleNameMapper": {
+    "@root(.*)$": "<rootDir>/$1",
+    "@(models|routes|daos|services)(.*)$": "<rootDir>/lib/$1/$2",
+    "@(utils|config|plugins)(.*)$": "<rootDir>/$1/$2"
+  },
+  "coverageReporters": ["json-summary", "text", "lcov"],
+  "coverageThreshold": {
+    "global": {
+      "statements": 85,
+      "branches": 85,
+      "functions": 85,
+      "lines": 85
+    }
+  },
+  "testTimeout": 20000,
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/node_modules/",
+    "<rootDir>/utils/testUtils.js",
+    "<rootDir>/utils/mockData.js",
+    "<rootDir>/lib/testServer.js"
+  ]
 }

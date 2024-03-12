@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:20.11.1
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 RUN mkdir -p /app-build
@@ -8,7 +8,7 @@ RUN --mount=type=cache,target=/root/.yarn YARN_CACHE_FOLDER=/root/.yarn yarn --f
 RUN yarn
 RUN yarn build:$BUILD_NAME
 
-FROM node:14-alpine
+FROM node:20.11.1-alpine
 ARG ENVIRONMENT_NAME
 ARG BUILD_NAME
 RUN apk add yarn

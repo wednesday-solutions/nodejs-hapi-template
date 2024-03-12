@@ -9,7 +9,7 @@ export const redisCacheType = {
 export const redisCache = {
   name: 'redis',
   provider: {
-    constructor: CatboxRedis,
+    constructor: CatboxRedis.Engine,
     options: {
       partition: 'temp_dev_data',
       host: process.env.REDIS_HOST,

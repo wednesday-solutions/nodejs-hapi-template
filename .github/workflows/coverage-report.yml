@@ -17,7 +17,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
 
       - name: Get Threshold
         id: threshold
@@ -27,7 +26,7 @@ jobs:
           prop_path: 'coverageThreshold.global.statements'
 
       - name: Install dependencies
-        run: yarn
+        run: rm yarn.lock && yarn
 
       - name: Test and generate coverage report
         uses: artiomtr/jest-coverage-report-action@v2.0-rc.4

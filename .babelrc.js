@@ -4,6 +4,7 @@ module.exports = {
         '@babel/plugin-proposal-throw-expressions',
         '@babel/plugin-proposal-class-properties',
         '@babel/transform-runtime',
-        '@babel/plugin-syntax-import-assertions'
+        '@babel/plugin-syntax-import-assertions',
+        ['babel-plugin-istanbul', {}, 'keploy-babel-plugin-istanbul'],
     ]
 };

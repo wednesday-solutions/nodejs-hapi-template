@@ -18,7 +18,7 @@
     "build:docker": "export ENVIRONMENT_NAME=docker && rm -rf dist && webpack --mode development --config  webpack/dev.config.js",
     "build:dev": "export ENVIRONMENT_NAME=development && rm -rf dist && webpack --mode development --config  webpack/dev.config.js",
     "build:prod": "export ENVIRONMENT_NAME=production && rm -rf dist && webpack --mode production --config webpack/production.config.js",
-    "start": "node dist/main.js",
+    "start": "nyc node dist/main.js",
     "start:local": "nodemon",
     "start:dev": "ENVIRONMENT_NAME=development node dist/main.js",
     "start:prod": "ENVIRONMENT_NAME=production node dist/main.js",
@@ -113,6 +113,28 @@
     "sequelize-cli": "^6.6.2",
     "sequelize-mock": "^0.10.2",
     "webpack-cli": "^5.1.4"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "lib/**/*.js",
+      "server.js"
+    ],
+    "exclude": [
+      "**/*.test.js",
+      "/proc/**",
+      "/sys/**"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "temp-dir": "./coverage_keploy/.nyc_output",
+    "sourceMap": true,
+    "instrument": true
   },
   "precommit": "lint:staged",
   "lint-staged": {

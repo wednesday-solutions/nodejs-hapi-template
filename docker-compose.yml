@@ -1,7 +1,7 @@
 version: '3'
 services:
   db_mysql:
-    image: mysql:5.7
+    image: mysql:latest
     ports:
       - '3306:3306'
     restart: always
@@ -17,6 +17,7 @@ services:
     command: ['redis-server', '--bind', 'redis', '--port', '6379']
 
   app:
+    container_name: app
     depends_on:
       - redis
       - db_mysql
@@ -25,8 +26,10 @@ services:
       args:
         ENVIRONMENT_NAME: .docker
         BUILD_NAME: docker
+        APP_PATH: ${APP_PATH}
     restart: always
     ports:
       - 9000:9000
     env_file:
       - .env.docker
+    stop_grace_period: 50s

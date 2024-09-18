@@ -1,0 +1,97 @@
+path: ""
+appId: 0
+appName: app
+command: docker compose --env-file .env.docker up
+templatize:
+    testSets: []
+port: 0
+dnsPort: 26789
+proxyPort: 16789
+debug: false
+disableTele: false
+disableANSI: false
+containerName: app
+networkName: ""
+buildDelay: 30
+test:
+    selectedTests: {}
+    globalNoise:
+        global:
+          header:
+            X-Ratelimit-Pathremaining: []
+            X-Ratelimit-Pathreset: []
+            X-Ratelimit-Userreset: []
+            X-Ratelimit-Userremaining: []
+        test-sets: {}
+    delay: 45 
+    host: ""
+    port: 0
+    apiTimeout: 5
+    skipCoverage: false
+    coverageReportPath: ""
+    ignoreOrdering: true
+    mongoPassword: default@123
+    language: ""
+    removeUnusedMocks: false
+    fallBackOnMiss: false
+    jacocoAgentPath: ""
+    basePath: ""
+    mocking: true
+    ignoredTests: {}
+    disableLineCoverage: false
+    disableMockUpload: false
+    useLocalMock: false
+    updateTemplate: false
+    freezeTime: false
+record:
+    filters: []
+    recordTimer: 0s
+configPath: ""
+bypassRules: []
+generateGithubActions: false
+keployContainer: keploy-v2
+keployNetwork: keploy-network
+cmdType: native
+contract:
+    services: []
+    tests: []
+    path: ""
+    download: false
+    generate: false
+    driven: consumer
+    mappings:
+        servicesMapping: {}
+        self: ""
+inCi: false
+autogen:
+    filters: []
+    recordTimer: 0s
+    schemaPath: ""
+dedup:
+    selectedTests: {}
+    globalNoise:
+        global: {}
+        test-sets: {}
+    delay: 0
+    host: ""
+    port: 0
+    apiTimeout: 0
+    skipCoverage: false
+    coverageReportPath: ""
+    ignoreOrdering: false
+    mongoPassword: ""
+    language: ""
+    removeUnusedMocks: false
+    fallBackOnMiss: false
+    jacocoAgentPath: ""
+    basePath: ""
+    mocking: true
+    ignoredTests: {}
+    disableLineCoverage: false
+    disableMockUpload: false
+    useLocalMock: false
+    updateTemplate: false
+    rm: false
+    freezeTime: false
+
+# Visit [https://keploy.io/docs/running-keploy/configuration-file/] to learn about using keploy through configration file.

@@ -1,32 +1,45 @@
-version: '3'
 services:
   db_mysql:
-    image: mysql:5.7
+    image: mysql:8.0.35
     ports:
       - '3306:3306'
     restart: always
     env_file:
       - .env.docker
-    environment:
-      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: 'redis:alpine'
     ports:
       - '6379:6379'
-    command: ['redis-server', '--bind', 'redis', '--port', '6379']
+    command: ['redis-server', '--bind', '0.0.0.0', '--port', '6379']
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  app:
-    depends_on:
-      - redis
-      - db_mysql
-    build:
-      context: .
-      args:
-        ENVIRONMENT_NAME: .docker
-        BUILD_NAME: docker
-    restart: always
-    ports:
-      - 9000:9000
-    env_file:
-      - .env.docker
+volumes:
+  mysql_data: 
+      
+
+  # app:
+  #   depends_on:
+  #     - redis
+  #     - db_mysql
+  #   build:
+  #     context: .
+  #     args:
+  #       ENVIRONMENT_NAME: .docker
+  #       BUILD_NAME: docker
+  #   restart: always
+  #   ports:
+  #     - 9000:9000
+  #   env_file:
+  #     - .env.docker
